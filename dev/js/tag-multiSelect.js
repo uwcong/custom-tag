@@ -5,8 +5,9 @@ var Selector = {
    * @date 2016/12/14
    * @param {object} dom
    * @param {object} obj
-   * @param {string} obj.title
    * @param {string} obj.id
+   * @param {string} obj.title
+   * @param {string} obj.name
    * @param {array}  obj.data
    */
   renderData: function(dom, obj) {
@@ -16,7 +17,7 @@ var Selector = {
       temp += '<option value="' + item + '">' + item + '</option>'
     }
     // debugger
-    dom.innerHTML = '<div class="form-group col-md-4"><label class="control-label col-md-3">' + obj['title'] + '</label><div class="col-md-9"><select class="form-control" id="' + obj['id'] + '" name="pns" multiple>' + temp + '</select></div>';
+    dom.innerHTML = '<div class="form-group col-md-4"><label class="control-label col-md-3">' + obj['title'] + '</label><div class="col-md-9"><select class="form-control" id="' + obj['id'] + '" name="' + obj['name'] + '" multiple>' + temp + '</select></div>';
 
     $('#'+obj['id']).select2({
       placeholder: 'please select',
@@ -39,13 +40,15 @@ var Selector = {
     proto.createdCallback = function() {
       console.log("createdCallback");
       
-      var title = this.getAttribute('data-title');
       var id = this.getAttribute('data-id');
+      var title = this.getAttribute('data-title');
+      var name = this.getAttribute('data-name');
       var url = this.getAttribute('data-url');
       var selectorDefaultData = ['Data Loading...'];
       that.renderData(this, {
-        'title': title,
         'id': id,
+        'title': title,
+        'name': name,
         'data': selectorDefaultData
       });
 
@@ -59,8 +62,9 @@ var Selector = {
           console.log('%csuccess', 'background: green');
           // debugger
           that.renderData(_this, {
-            'title': title,
             'id': id,
+            'title': title,
+            'name': name,
             'data': res.data
           });
         },
@@ -76,7 +80,7 @@ var Selector = {
     };
 
     // debugger
-    document.registerElement('tag-selector', {prototype: proto});
+    document.registerElement('tag-multiSelect', {prototype: proto});
   },
 }
 
