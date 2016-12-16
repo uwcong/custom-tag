@@ -18,6 +18,11 @@
 
 
 /* tag-table */
+table.dataTable th,
+table.dataTable td {
+    white-space: nowrap;
+}
+
 .w_tableEmptyLoading {
     @extend %display_flex;
     @include flex_justify_content(center);

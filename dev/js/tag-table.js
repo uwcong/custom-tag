@@ -35,6 +35,7 @@ var Table = {
       totalCount = obj['data'].page.recordCount;
       // 每页行数
       pageSize = obj['data'].page.pageSize;
+      console.log(totalCount);
 
       
 
@@ -61,11 +62,22 @@ var Table = {
         "pageLength": pageSize + 1, // 算上“合计”一行，加1
         "lengthChange": false,
         "searching": false,
-        // "lengthMenu": [[1, 2, 3, -1], [1, 2, 3, "All"]],
-        "language": {
-          "info": "总数：" + totalCount,
-          // "lengthMenu": "每页显示 _MENU_ records"
-        }
+        // "language": {
+        //   "info": "总数：" + totalCount,
+        //   "lengthMenu": "每页显示 _MENU_ records"
+        // }
+        serverSide: true,  //启用服务器端分页
+        ajax: function(data, callback, settings) {
+          var param = {};
+          // param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+          // param.start = data.start;//开始的记录序号
+          // param.page = (data.start / data.length)+1;//当前页码
+          param.draw = data.draw;
+          param.start = data.start;
+          // param.length
+          debugger
+
+        } 
       })
 
 
@@ -76,7 +88,6 @@ var Table = {
     else {
       dom.innerHTML = '<div class="w_tableEmptyLoading">Table is loading...</div>';
     }
-
   },
 
   /**
@@ -106,14 +117,13 @@ var Table = {
         contentType: "application/json",
         success: function(res) {
           console.log('%csuccess', 'background: green; color: white;');
-          // debugger
+          // 为了延迟看loading
           setTimeout(function() {
             that._renderData(_this, {
               'id': id,
               'data': res.data
             });
-            console.log(res);
-          }, 2000)
+          }, 500)
             
         },
         error: function() {
