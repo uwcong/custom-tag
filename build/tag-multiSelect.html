@@ -9,19 +9,26 @@
     <script src="resource/js/jquery-3.1.1.min.js"></script>
     <script src="resource/js/bootstrap.min.js"></script>
     <script src="resource/js/select2.min.js"></script>
+    <script src="resource/js/jquery.cookie.js"></script>
 </head>
 <body>
-    <div class="row">
-        <!--
-            @tagName: tag-multiSelect
-            @attributes: 
-                data-id
-                data-title
-                data-url
-        -->
-        <tag-multiSelect data-id="multiSelect1" data-title="multiSelect1" data-url="/js/bag.json"></tag-multiSelect>
-        <tag-multiSelect data-id="multiSelect2" data-title="multiSelect2" data-url="/js/dimension.json" ></tag-multiSelect>
-    </div>
+    <form class="form-horizontal" data-cookie="gamesingleCookie">
+        <div class="row">
+            <!--
+                @tagName: tag-multiSelect
+                @attributes: 
+                    data-id
+                    data-title
+                    data-name
+                    data-url
+            -->
+            <tag-multiSelect data-id="multiSelect1" data-title="多选1" data-name="multiSelect1" data-url="/js/bag.json" data-cookie="gamesingleCookie"></tag-multiSelect>
+            <tag-multiSelect data-id="multiSelect2" data-title="多选2" data-name="multiSelect2" data-url="/js/dimension.json" data-cookie="gamesingleCookie"></tag-multiSelect>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary col-md-offset-1" id="submit">查询</button>
+        </div>
+    </form>
 
     <script src="js/tag-multiSelect.js"></script>
 </body>

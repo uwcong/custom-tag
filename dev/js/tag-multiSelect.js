@@ -4,6 +4,7 @@
  * @date 2016/12/14
  */
 var Selector = {
+
   /**
    * private function 渲染选项数据
    * @param {object} dom
@@ -121,7 +122,7 @@ var Selector = {
         dataType: "json",
         contentType: "application/json",
         success: function(res) {
-          console.log('%csuccess', 'background: green');
+          console.log('%csuccess', 'background: green; color: white;');
           // debugger
           that._renderData(_this, {
             'id': id,
@@ -132,7 +133,7 @@ var Selector = {
           });
         },
         error: function() {
-          console.log('%cerror', 'background: red');
+          console.log('%cerror', 'background: red; color: white;');
         }
       });
     };

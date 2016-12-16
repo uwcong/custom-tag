@@ -1,341 +1,804 @@
- h1.page-header {
-    margin-top: -5px;
+@charset "UTF-8";
+/**
+ * main.scss
+ * @author Cc 
+ * @date 2016-12-16
+ *
+ */
+/* mixin */
+/**
+ * _mixin.scss 常见样式封装、兼容性封装、常见工具方法
+ * @author Cc
+ * @date 2015-04-23
+ *
+ * --- prefixer --- 
+ * update in 2016-01-18
+ *
+ * --- flex ----
+ * display_flex
+ * flex
+ * flex_grow
+ * flex_shrink
+ * flex_basis
+ * flex_align_items
+ * flex_justify_content
+ * flex_childPos
+ *
+ * --- layout  ---
+ * box_sizing
+ * clear
+ *
+ * --- appearance ---
+ * text_ellipsis
+ * opacity
+ * box_shadow
+ * appearance
+ * bg_gradient
+ *   #twoColor
+ *   #threeColor
+ *
+ * --- transform ---
+ * transform
+ * scale
+ * skew
+ * translate
+ * rotate
+ * perspective
+ * origin
+ *
+ * --- transition ---
+ * transition
+ * transition-transform
+ *
+ * --- animation ---
+ * animation
+ * keyframes
+ *
+ * --- media ---
+ * screenResolution
+ * screenForIE10AndLater
+ * screenForIE8
+ * media
+ *
+ * --- other ---
+ * inlineBlock
+ * square
+ * absoluteCenter
+ * triangle
+ * bfc
+ * retina 1px line
+ * update in 2016-05-18
+ * setFontSizeForRem
+ *
+ * --- function ---
+ * update in 2016-01-21
+ * stripUnits
+ * px2Rem
+ * 
+ */
+/* ------------------------------ prefixer ------------------------------ */
+/* 是否支持某个浏览器的前缀，如果你不想支持，可以设置为false */
+/* ------------------------------ flex ------------------------------ */
+/* display_flex */
+/* line 117, ../sass/_mixin.scss */
+.w_tableEmptyLoading {
+  display: -o-box;
+  display: -moz-box;
+  display: -webkit-box;
+  display: box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
 }
 
-.sidebar {
-	padding-left: 0;
+/**
+ * 容器的属性
+ * flex-direction、flex-wrap、flex-flow、justify-content、align-items、align-content
+ */
+/**
+ * flex_direction 伸缩流方向，决定主轴 main axis 的方向
+ * @param: row | row-reverse | column | column-reverse
+ */
+/* 
+ * flex_justify_content 属性定义了项目在主轴上的对齐方式
+ * @param: flex-start | flex-end | center | space-between | space-around
+ */
+/* 
+ * flex_align_items 属性定义项目在交叉轴上如何对齐
+ * @param: flex-start | flex-end | center | baseline | stretch
+ */
+/* flex_childPos horizontal/vertical */
+/**
+ * flex_align_content 属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用，所以此时 flex-wrap 必须为 wrap。
+ * @param: flex-start | flex-end | center | space-between | space-around | stretch
+ */
+/**
+ * 项目的属性
+ * order、flex-grow、flex-shrink、flex-basis、flex、align-self
+ */
+/* 
+ * flex_grow 属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。
+ * @param: <number>(default 0)
+ */
+/* 
+ * flex_shrink 属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。
+ * @param: <number>(default 1)
+ */
+/* 
+ * flex_basis 属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。
+ * @param: <length> | auto(default)
+ */
+/* 
+ * flex 是flex-grow, flex-shrink 和 flex-basis的简写，默认值为 0 1 auto，后两个属性可选。
+ * @param: flex-grow flex-shrink flex-basis
+ */
+/* 
+ * align_self 属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。
+ * @param: auto(default) | flex-start | flex-end | center | baseline | stretch
+ */
+/* ------------------------------ layout ------------------------------ */
+/* box_sizing */
+/* clear */
+/* ------------------------------ appearance ------------------------------ */
+/* text_ellipsis */
+/* opacity */
+/* box_shadow */
+/* appearance */
+/* bg_gradient 跨浏览器的渐变背景 */
+/* twoColor 两种颜色的渐变 */
+/* 垂直渐变，自上而下 */
+/* 水平渐变，自左而右 */
+/* threeColor 三种颜色的渐变 */
+/* 垂直渐变，自上而下 */
+/* 水平渐变，自左而右 */
+/* ------------------------------ transform ------------------------------ */
+/* transform */
+/* scale */
+/* skew */
+/* translate */
+/* rotate */
+/* perspective */
+/* origin */
+/* ------------------------------ transition ------------------------------ */
+/* transition */
+/* ------------------------------ animation ------------------------------ */
+/* animation */
+/* keyframes */
+/* ------------------------------ media ------------------------------ */
+/* screenResolution */
+/* screenForIE10AndLater 兼容IE10&11 */
+/* screenForIE8 */
+/**
+  * media 通用media设置
+  * @param {String} $attr (eg: "min-width" "max-width")
+  * @param {String} $val (eg: "1024px")
+  */
+/* ------------------------------ other ------------------------------ */
+/* inlineBlock */
+/* square 产生正方形的宽高 */
+/* absoluteCenter */
+/* triangle 小三角 */
+/* bfc */
+/* retina 1px line */
+/**
+ * setFontSizeForRem
+ * 如果要精确控制，则用js来计算设置html的fontSize，如下：
+ * 
+ * (function (doc, win) {
+    var docEl = doc.documentElement,
+    resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+    recalc = function () {
+      var clientWidth = docEl.clientWidth;
+      if (!clientWidth) return;
+      docEl.style.fontSize = 37.5 * (clientWidth / 375) + 'px';
+    };
+
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener('DOMContentLoaded', recalc, false); // DOM加载之后及资源加载之前去执行，即对应jQuery中的document ready
+    })(document, window);
+ * 
+ */
+/* ------------------------------ function ------------------------------ */
+/* stripUnits */
+/* px2Rem */
+/* reset 重置样式 */
+/**
+ * _reset.scss 重置样式
+ * @author Cc
+ * @date 2015-04-23
+ */
+/* line 8, ../sass/_reset.scss */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, figure {
+  margin: 0;
+  padding: 0;
 }
 
-.main-container { 
-	background: #FFF;
-	padding-top: 15px;
-	margin-top: -20px;
+/* line 13, ../sass/_reset.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
 }
 
-.footer {
-	width: 100%;
-}  
+/* line 17, ../sass/_reset.scss */
+body, input, textarea, select, button {
+  outline: none;
+  -webkit-text-size-adjust: none;
+}
 
+/* line 22, ../sass/_reset.scss */
+input, textarea, select, button {
+  font-size: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* line 27, ../sass/_reset.scss */
+input, textarea, fieldset, img {
+  border: none;
+}
+
+/* line 31, ../sass/_reset.scss */
+ul, ol, li {
+  list-style: none;
+}
+
+/* line 35, ../sass/_reset.scss */
+html, body {
+  height: 100%;
+  position: relative;
+}
+
+/* line 40, ../sass/_reset.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: inherit;
+}
+
+/* line 46, ../sass/_reset.scss */
+textarea {
+  overflow: auto;
+}
+
+/* line 50, ../sass/_reset.scss */
+img {
+  max-width: 100%;
+}
+
+/* line 54, ../sass/_reset.scss */
 :focus {
-	outline: none;
+  outline: none;
 }
 
+/* line 58, ../sass/_reset.scss */
+input[type=radio]::-ms-check, input[type=checkbox]::-ms-check {
+  display: none;
+}
+
+/* line 62, ../sass/_reset.scss */
+select::-ms-expand {
+  display: none;
+}
+
+/* base 基础样式，一般改这个，看不同项目的需要 */
+/**
+ * _base.scss 项目基础样式、项目用方法、项目用function
+ * @author Cc
+ * @date 2015-04-23
+ *
+ */
+/* line 9, ../sass/_base.scss */
+body, input, textarea, select, button {
+  font-family: "Helvetica Neue", STheiti, sans-serif;
+}
+
+/* line 13, ../sass/_base.scss */
+body {
+  background: #fff;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #000;
+  word-break: break-all;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* line 22, ../sass/_base.scss */
+a {
+  color: #1d8ae5;
+  -webkit-tap-highlight-color: transparent;
+  /* 扩大通用a标签点击时的表现区域 */
+}
+/* line 26, ../sass/_base.scss */
+a, a:hover, a:active {
+  outline: none;
+}
+/* line 29, ../sass/_base.scss */
+a, a:hover {
+  text-decoration: none;
+}
+/* line 33, ../sass/_base.scss */
+a:active {
+  position: relative;
+}
+/* line 35, ../sass/_base.scss */
+a:active:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  /* key note：事件穿透 */
+  top: -6px;
+  left: -6px;
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+}
+
+/* 为适配旧版不支持flex的缩写方法，要设置这样一个空标签 */
+/* line 50, ../sass/_base.scss */
+.func_growSpace {
+  display: block;
+  width: 0;
+  -ms-flex: 1;
+  -moz-box-flex-grow: 1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -ms-box-flex: 1;
+  -o-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-grow: 1;
+  flex-grow: 1;
+  -webkit-box-flex-basis: 0;
+  -moz-box-flex-basis: 0;
+  -webkit-flex-basis: 0;
+  -ms-flex-basis: 0;
+  flex-basis: 0;
+}
+
+/* tag-table */
+/* line 21, ../sass/main.scss */
+.w_tableEmptyLoading {
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -o-align-items: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* line 35, ../sass/main.scss */
+.sidebar {
+  padding-left: 0;
+}
+
+/* line 39, ../sass/main.scss */
+.main-container {
+  background: #FFF;
+  padding-top: 15px;
+  margin-top: -20px;
+}
+
+/* line 45, ../sass/main.scss */
+.footer {
+  width: 100%;
+}
+
+/* line 49, ../sass/main.scss */
+:focus {
+  outline: none;
+}
+
+/* line 53, ../sass/main.scss */
 .side-menu {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	background-color: #f8f8f8;
-	border-right: 1px solid #e7e7e7;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #f8f8f8;
+  border-right: 1px solid #e7e7e7;
 }
+
+/* line 60, ../sass/main.scss */
 .side-menu .navbar {
-	border: none;
+  border: none;
 }
+
+/* line 63, ../sass/main.scss */
 .side-menu .navbar-header {
-	width: 100%;
-	border-bottom: 1px solid #e7e7e7;
+  width: 100%;
+  border-bottom: 1px solid #e7e7e7;
 }
+
+/* line 67, ../sass/main.scss */
 .side-menu .navbar-nav .active a {
-	background-color: transparent;
-	margin-right: -1px;
-	border-right: 5px solid #e7e7e7;
+  background-color: transparent;
+  margin-right: -1px;
+  border-right: 5px solid #e7e7e7;
 }
+
+/* line 72, ../sass/main.scss */
 .side-menu .navbar-nav li {
-	display: block;
-	width: 100%;
-	border-bottom: 1px solid #e7e7e7;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #e7e7e7;
 }
+
+/* line 77, ../sass/main.scss */
 .side-menu .navbar-nav li a {
-	padding: 15px;
+  padding: 15px;
 }
+
+/* line 80, ../sass/main.scss */
 .side-menu .navbar-nav li a .glyphicon {
-	padding-right: 10px;
+  padding-right: 10px;
 }
+
+/* line 83, ../sass/main.scss */
 .side-menu #dropdown {
-	border: 0;
-	margin-bottom: 0;
-	border-radius: 0;
-	background-color: transparent;
-	box-shadow: none;
+  border: 0;
+  margin-bottom: 0;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
 }
+
+/* line 90, ../sass/main.scss */
 .side-menu #dropdown .caret {
-	float: right;
-	margin: 9px 5px 0;
+  float: right;
+  margin: 9px 5px 0;
 }
+
+/* line 94, ../sass/main.scss */
 .side-menu #dropdown .indicator {
-	float: right;
+  float: right;
 }
+
+/* line 97, ../sass/main.scss */
 .side-menu #dropdown > a {
-	border-bottom: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;
 }
+
+/* line 100, ../sass/main.scss */
 .side-menu #dropdown .panel-body {
-	padding: 0;
-	background-color: #f3f3f3;
+  padding: 0;
+  background-color: #f3f3f3;
 }
+
+/* line 104, ../sass/main.scss */
 .side-menu #dropdown .panel-body .navbar-nav {
-	width: 100%;
+  width: 100%;
 }
+
+/* line 107, ../sass/main.scss */
 .side-menu #dropdown .panel-body .navbar-nav li {
-	padding-left: 15px;
-	border-bottom: 1px solid #e7e7e7;
+  padding-left: 15px;
+  border-bottom: 1px solid #e7e7e7;
 }
+
+/* line 111, ../sass/main.scss */
 .side-menu #dropdown .panel-body .navbar-nav li:last-child {
-	border-bottom: none;
+  border-bottom: none;
 }
+
+/* line 114, ../sass/main.scss */
 .side-menu #dropdown .panel-body .panel > a {
-	margin-left: -20px;
-	padding-left: 35px;
+  margin-left: -20px;
+  padding-left: 35px;
 }
+
+/* line 118, ../sass/main.scss */
 .side-menu #dropdown .panel-body .panel-body {
-	margin-left: -15px;
+  margin-left: -15px;
 }
+
+/* line 121, ../sass/main.scss */
 .side-menu #dropdown .panel-body .panel-body li {
-	padding-left: 30px;
+  padding-left: 30px;
 }
+
+/* line 124, ../sass/main.scss */
 .side-menu #dropdown .panel-body .panel-body li:last-child {
-	border-bottom: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;
 }
+
+/* line 127, ../sass/main.scss */
 .side-menu #search-trigger {
-	background-color: #f3f3f3;
-	border: 0;
-	border-radius: 0;
-	position: absolute;
-	top: 0;
-	right: 0;
-	padding: 15px 18px;
+  background-color: #f3f3f3;
+  border: 0;
+  border-radius: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 15px 18px;
 }
+
+/* line 136, ../sass/main.scss */
 .side-menu .brand-name-wrapper {
-	min-height: 50px;
+  min-height: 50px;
 }
+
+/* line 139, ../sass/main.scss */
 .side-menu .brand-name-wrapper .navbar-brand {
-	display: block;
+  display: block;
 }
+
+/* line 142, ../sass/main.scss */
 .side-menu #search {
-	position: relative;
-	z-index: 1000;
+  position: relative;
+  z-index: 1000;
 }
+
+/* line 146, ../sass/main.scss */
 .side-menu #search .panel-body {
-	padding: 0;
+  padding: 0;
 }
+
+/* line 149, ../sass/main.scss */
 .side-menu #search .panel-body .navbar-form {
-	padding: 0;
-	padding-right: 50px;
-	width: 100%;
-	margin: 0;
-	position: relative;
-	border-top: 1px solid #e7e7e7;
+  padding: 0;
+  padding-right: 50px;
+  width: 100%;
+  margin: 0;
+  position: relative;
+  border-top: 1px solid #e7e7e7;
 }
+
+/* line 157, ../sass/main.scss */
 .side-menu #search .panel-body .navbar-form .form-group {
-	width: 100%;
-	position: relative;
+  width: 100%;
+  position: relative;
 }
+
+/* line 161, ../sass/main.scss */
 .side-menu #search .panel-body .navbar-form input {
-	border: 0;
-	border-radius: 0;
-	box-shadow: none;
-	width: 100%;
-	height: 50px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  width: 100%;
+  height: 50px;
 }
+
+/* line 168, ../sass/main.scss */
 .side-menu #search .panel-body .navbar-form .btn {
-	position: absolute;
-	right: 0;
-	top: 0;
-	border: 0;
-	border-radius: 0;
-	background-color: #f3f3f3;
-	padding: 15px 18px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: #f3f3f3;
+  padding: 15px 18px;
 }
+
 /* Main body section */
+/* line 178, ../sass/main.scss */
 .side-body {
-	margin-left: 310px;
+  margin-left: 310px;
 }
+
 /* small screen */
 @media (max-width: 768px) {
-	.side-menu {
-		position: relative;
-		width: 100%;
-		height: 0;
-		border-right: 0;
-	}
+  /* line 183, ../sass/main.scss */
+  .side-menu {
+    position: relative;
+    width: 100%;
+    height: 0;
+    border-right: 0;
+  }
 
-	.side-menu .navbar {
-		z-index: 999;
-		position: relative;
-		height: 0;
-		min-height: 0;
-		background-color:none !important;
-		border-color: none !important;
-	}
-	.side-menu .brand-name-wrapper .navbar-brand {
-		display: inline-block;
-	}
-	/* Slide in animation */
-	@-moz-keyframes slidein {
-		0% {
-			left: -300px;
-		}
-		100% {
-			left: 10px;
-		}
-	}
-	@-webkit-keyframes slidein {
-		0% {
-			left: -300px;
-		}
-		100% {
-			left: 10px;
-		}
-	}
-	@keyframes slidein {
-		0% {
-			left: -300px;
-		}
-		100% {
-			left: 10px;
-		}
-	}
-	@-moz-keyframes slideout {
-		0% {
-			left: 0;
-		}
-		100% {
-			left: -300px;
-		}
-	}
-	@-webkit-keyframes slideout {
-		0% {
-			left: 0;
-		}
-		100% {
-			left: -300px;
-		}
-	}
-	@keyframes slideout {
-		0% {
-			left: 0;
-		}
-		100% {
-			left: -300px;
-		}
-	}
-	/* Slide side menu*/
-	/* Add .absolute-wrapper.slide-in for scrollable menu -> see top comment */
-	.side-menu-container > .navbar-nav.slide-in {
-		-moz-animation: slidein 300ms forwards;
-		-o-animation: slidein 300ms forwards;
-		-webkit-animation: slidein 300ms forwards;
-		animation: slidein 300ms forwards;
-		-webkit-transform-style: preserve-3d;
-		transform-style: preserve-3d;
-	}
-	.side-menu-container > .navbar-nav {
-		/* Add position:absolute for scrollable menu -> see top comment */
-		position: fixed;
-		left: -300px;
-		width: 300px;
-		top: 43px;
-		height: 100%;
-		border-right: 1px solid #e7e7e7;
-		background-color: #f8f8f8;
-		overflow: auto;
-		-moz-animation: slideout 300ms forwards;
-		-o-animation: slideout 300ms forwards;
-		-webkit-animation: slideout 300ms forwards;
-		animation: slideout 300ms forwards;
-		-webkit-transform-style: preserve-3d;
-		transform-style: preserve-3d;
-	}
-	@-moz-keyframes bodyslidein {
-		0% {
-			left: 0;
-		}
-		100% {
-			left: 300px;
-		}
-	}
-	@-webkit-keyframes bodyslidein {
-		0% {
-			left: 0;
-		}
-		100% {
-			left: 300px;
-		}
-	}
-	@keyframes bodyslidein {
-		0% {
-			left: 0;
-		}
-		100% {
-			left: 300px;
-		}
-	}
-	@-moz-keyframes bodyslideout {
-		0% {
-			left: 300px;
-		}
-		100% {
-			left: 0;
-		}
-	}
-	@-webkit-keyframes bodyslideout {
-		0% {
-			left: 300px;
-		}
-		100% {
-			left: 0;
-		}
-	}
-	@keyframes bodyslideout {
-		0% {
-			left: 300px;
-		}
-		100% {
-			left: 0;
-		}
-	}
-	/* Slide side body*/
-	.side-body {
-		margin-left: 5px;
-		margin-top: 70px;
-		position: relative;
-		-moz-animation: bodyslideout 300ms forwards;
-		-o-animation: bodyslideout 300ms forwards;
-		-webkit-animation: bodyslideout 300ms forwards;
-		animation: bodyslideout 300ms forwards;
-		-webkit-transform-style: preserve-3d;
-		transform-style: preserve-3d;
-	}
-	.body-slide-in {
-		-moz-animation: bodyslidein 300ms forwards;
-		-o-animation: bodyslidein 300ms forwards;
-		-webkit-animation: bodyslidein 300ms forwards;
-		animation: bodyslidein 300ms forwards;
-		-webkit-transform-style: preserve-3d;
-		transform-style: preserve-3d;
-	}
-	/* Hamburger */
-	.navbar-toggle-sidebar {
-		border: 0;
-		float: left;
-		padding: 18px;
-		margin: 0;
-		border-radius: 0;
-		background-color: #f3f3f3;
-	}
-	/* Search */
-	#search .panel-body .navbar-form {
-		border-bottom: 0;
-	}
-	#search .panel-body .navbar-form .form-group {
-		margin: 0;
-	}
-	.side-menu .navbar-header {
-		/* this is probably redundant */
-		position: fixed;
-		z-index: 3;
-		background-color: #f8f8f8;
-	}
-	/* Dropdown tweek */
-	#dropdown .panel-body .navbar-nav {
-		margin: 0;
-	}
+  /* line 190, ../sass/main.scss */
+  .side-menu .navbar {
+    z-index: 999;
+    position: relative;
+    height: 0;
+    min-height: 0;
+    background-color: none !important;
+    border-color: none !important;
+  }
+
+  /* line 198, ../sass/main.scss */
+  .side-menu .brand-name-wrapper .navbar-brand {
+    display: inline-block;
+  }
+
+  /* Slide in animation */
+  @-moz-keyframes slidein {
+    0% {
+      left: -300px;
+    }
+    100% {
+      left: 10px;
+    }
+  }
+  @-webkit-keyframes slidein {
+    0% {
+      left: -300px;
+    }
+    100% {
+      left: 10px;
+    }
+  }
+  @keyframes slidein {
+    0% {
+      left: -300px;
+    }
+    100% {
+      left: 10px;
+    }
+  }
+  @-moz-keyframes slideout {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: -300px;
+    }
+  }
+  @-webkit-keyframes slideout {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: -300px;
+    }
+  }
+  @keyframes slideout {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: -300px;
+    }
+  }
+  /* Slide side menu*/
+  /* Add .absolute-wrapper.slide-in for scrollable menu -> see top comment */
+  /* line 252, ../sass/main.scss */
+  .side-menu-container > .navbar-nav.slide-in {
+    -moz-animation: slidein 300ms forwards;
+    -o-animation: slidein 300ms forwards;
+    -webkit-animation: slidein 300ms forwards;
+    animation: slidein 300ms forwards;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+
+  /* line 260, ../sass/main.scss */
+  .side-menu-container > .navbar-nav {
+    /* Add position:absolute for scrollable menu -> see top comment */
+    position: fixed;
+    left: -300px;
+    width: 300px;
+    top: 43px;
+    height: 100%;
+    border-right: 1px solid #e7e7e7;
+    background-color: #f8f8f8;
+    overflow: auto;
+    -moz-animation: slideout 300ms forwards;
+    -o-animation: slideout 300ms forwards;
+    -webkit-animation: slideout 300ms forwards;
+    animation: slideout 300ms forwards;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+
+  @-moz-keyframes bodyslidein {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: 300px;
+    }
+  }
+  @-webkit-keyframes bodyslidein {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: 300px;
+    }
+  }
+  @keyframes bodyslidein {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: 300px;
+    }
+  }
+  @-moz-keyframes bodyslideout {
+    0% {
+      left: 300px;
+    }
+    100% {
+      left: 0;
+    }
+  }
+  @-webkit-keyframes bodyslideout {
+    0% {
+      left: 300px;
+    }
+    100% {
+      left: 0;
+    }
+  }
+  @keyframes bodyslideout {
+    0% {
+      left: 300px;
+    }
+    100% {
+      left: 0;
+    }
+  }
+  /* Slide side body*/
+  /* line 326, ../sass/main.scss */
+  .side-body {
+    margin-left: 5px;
+    margin-top: 70px;
+    position: relative;
+    -moz-animation: bodyslideout 300ms forwards;
+    -o-animation: bodyslideout 300ms forwards;
+    -webkit-animation: bodyslideout 300ms forwards;
+    animation: bodyslideout 300ms forwards;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+
+  /* line 337, ../sass/main.scss */
+  .body-slide-in {
+    -moz-animation: bodyslidein 300ms forwards;
+    -o-animation: bodyslidein 300ms forwards;
+    -webkit-animation: bodyslidein 300ms forwards;
+    animation: bodyslidein 300ms forwards;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+
+  /* Hamburger */
+  /* line 346, ../sass/main.scss */
+  .navbar-toggle-sidebar {
+    border: 0;
+    float: left;
+    padding: 18px;
+    margin: 0;
+    border-radius: 0;
+    background-color: #f3f3f3;
+  }
+
+  /* Search */
+  /* line 355, ../sass/main.scss */
+  #search .panel-body .navbar-form {
+    border-bottom: 0;
+  }
+
+  /* line 358, ../sass/main.scss */
+  #search .panel-body .navbar-form .form-group {
+    margin: 0;
+  }
+
+  /* line 361, ../sass/main.scss */
+  .side-menu .navbar-header {
+    /* this is probably redundant */
+    position: fixed;
+    z-index: 3;
+    background-color: #f8f8f8;
+  }
+
+  /* Dropdown tweek */
+  /* line 368, ../sass/main.scss */
+  #dropdown .panel-body .navbar-nav {
+    margin: 0;
+  }
 }

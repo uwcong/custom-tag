@@ -17,26 +17,20 @@ var Table = {
         totalCount = 0,
         pageSize = "1",
         sortKeyArr = [];
-    
-    // 初次加载，返回数据后
+
     if(obj['data'] instanceof Object && obj['data'].sort.length > 0) {
-      // 添加表头
-      var headData = obj['data'].head;
-      console.log(headData);
-      for(var i=0; i<headData.length; i++) {
-        headTemp += '<th>' + headData[i] + '</th>';
-      }
-      dom.innerHTML = '<table id="' + obj['id'] + '" class="display" cellspacing="0" width="100%"><thead><tr>' + headTemp + '</tr></thead><tbody></tbody></table>';
-
-
-
       sortKeyArr = obj['data'].sort;
       // 具体数据行数
       totalCount = obj['data'].page.recordCount;
       // 每页行数
       pageSize = obj['data'].page.pageSize;
 
-      
+      // 表头行
+      var headData = obj['data'].head;
+      console.log(headData);
+      for(var i=0; i<headData.length; i++) {
+        headTemp += '<th>' + headData[i] + '</th>';
+      }
 
       // 总计行
       var totalData = obj['data'].total;
@@ -55,28 +49,30 @@ var Table = {
           listTemp += '<tr>' + itemTemp + '</tr>';
         }
       }
-
-      $('#'+obj['id']).DataTable({
-        "order": [[1, "desc"]],
-        "pageLength": pageSize + 1, // 算上“合计”一行，加1
-        "lengthChange": false,
-        "searching": false,
-        // "lengthMenu": [[1, 2, 3, -1], [1, 2, 3, "All"]],
-        "language": {
-          "info": "总数：" + totalCount,
-          // "lengthMenu": "每页显示 _MENU_ records"
-        }
-      })
-
-
-
+    } else {
+      headTemp = '<td>' + obj['data'] + '</td>';
+      totalTemp = '<td>-</td>';
+      listTemp = '<tr><td>-</td></tr>'
     }
 
-    // 初次加载，返回数据前
-    else {
-      dom.innerHTML = '<div class="w_tableEmptyLoading">Table is loading...</div>';
-    }
+    dom.innerHTML = '<table id="' + obj['id'] + '" class="display" cellspacing="0" width="100%"><thead><tr>' + headTemp + '</tr></thead><tbody><tr>' + totalTemp + '</tr>' + listTemp + '</tbody></table>';
 
+    $('#'+obj['id']).DataTable({
+      "order": [[1, "desc"]],
+      "pageLength": 10 + 1, // 算上“合计”一行，加1
+      "lengthChange": false,
+      "searching": false,
+      renderer: "bootstrap",
+      // "lengthMenu": [[1, 2, 3, -1], [1, 2, 3, "All"]],
+      "language": {
+        "info": "总数：" + totalCount,
+        // "lengthMenu": "每页显示 _MENU_ records"
+      }
+    })
+
+    $('#table_next').bind('click', function() {
+      console.log('page change')
+    });
   },
 
   /**
@@ -89,15 +85,14 @@ var Table = {
     // 创建元素实例回调
     proto.createdCallback = function() {
       console.log("createdCallback");
+      
       var id = this.getAttribute('data-id');
       var url = this.getAttribute('data-url');
+      // that._renderData(this, {
+      //   'id': id,
+      //   'data': '无表头数据'
+      // });
 
-      // 初次加载，返回数据前
-      that._renderData(this, {
-        'id': id
-      });
-
-      // 初次加载，返回数据后
       var _this = this;
       $.ajax({
         method: "GET",
@@ -107,20 +102,16 @@ var Table = {
         success: function(res) {
           console.log('%csuccess', 'background: green; color: white;');
           // debugger
-          setTimeout(function() {
-            that._renderData(_this, {
-              'id': id,
-              'data': res.data
-            });
-            console.log(res);
-          }, 2000)
-            
+          that._renderData(_this, {
+            'id': id,
+            'data': res.data
+          });
+          console.log(res);
         },
         error: function() {
           console.log('%cerror', 'background: red; color: white;');
         }
       });
-
     };
 
     // 向文档插入实例回调

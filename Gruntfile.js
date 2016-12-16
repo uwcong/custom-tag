@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 
     connect: {
       options: {
-        hostname: '127.0.0.1',
+        hostname: '192.168.0.227',
         port: 9000,
         base: config.devFolder,
         livereload: lrPort,
@@ -36,14 +36,6 @@ module.exports = function(grunt) {
           middleWare: lrMiddleware
         }
       }
-    },
-
-    watch: {
-      options: {
-        livereload: lrPort
-      },
-      files: [config.devFolder + '/{,**/}*'],
-      // tasks: ['clean', 'copy']
     },
 
     clean: {
@@ -82,6 +74,22 @@ module.exports = function(grunt) {
 			}
 		},
 
+    compass: {
+      dev: {
+        options: {
+          config: 'config.rb',
+        }
+      }
+    },
+
+    watch: {
+      options: {
+        livereload: lrPort
+      },
+      files: [config.devFolder + '/{,**/}*'],
+      tasks: ['compass']
+    },
+
   });
 
   grunt.loadNpmTasks('grunt-contrib-connect');
@@ -89,6 +97,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-compass');
 
   grunt.registerTask('start', ['connect', 'watch']);
   grunt.registerTask('build', ['clean', 'copy', 'uglify']);
