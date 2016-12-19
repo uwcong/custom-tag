@@ -80,13 +80,13 @@ var Table = {
         "processing": true,
         "serverSide": true,  //启用服务器端分页
         "ajax": function(data, callback, settings) {
-          // console.log(data);
+          console.log(data);
           var param = {};
           param.pageSize = obj['pageSize'];
           param.currentPage = (data.start / data.length) + 1;
 
           $.ajax({
-            type: "GET",
+            type: obj['ajaxType'],
             url: dom.getAttribute('data-url'),
             cache: false,  //禁用缓存
             data: param,  //传入组装的参数
@@ -194,6 +194,7 @@ var Table = {
     proto.createdCallback = function() {
       console.log("createdCallback");
       var id = this.getAttribute('data-id');
+      var ajaxType = this.getAttribute('data-ajaxType');
       var url = this.getAttribute('data-url');
       var pageSize = this.getAttribute('data-pageSize');
       var cookieKey = this.getAttribute('data-cookie');
@@ -206,7 +207,7 @@ var Table = {
       // 初次加载，返回数据后
       var _this = this;
       $.ajax({
-        method: "GET",
+        type: ajaxType,
         url: url,
         dataType: "json",
         contentType: "application/json",
@@ -216,6 +217,7 @@ var Table = {
           setTimeout(function() {
             that._renderData(_this, {
               'id': id,
+              'ajaxType': ajaxType,
               'pageSize': pageSize,
               'cookieKey': cookieKey,
               'data': res.data
