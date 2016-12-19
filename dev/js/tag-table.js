@@ -11,6 +11,7 @@ var Table = {
    * @param {object} obj
    */
   _renderData: function(dom, obj) {
+    var that = this;
     var headTemp = "";
     
     // 初次加载，返回数据后
@@ -19,12 +20,18 @@ var Table = {
       var headData = obj['data'].head;
       console.log(headData);
       for(var i=0; i<headData.length; i++) {
-        headTemp += '<th>' + headData[i] + '</th>';
+        headTemp += '<th>' + headData[i] + '<span class="hideColumn" title="隐藏" data-column=' + i + '>×</span></th>';
       }
-      dom.innerHTML = '<table id="' + obj['id'] + '" class="display" cellspacing="0" width="100%"><thead><tr>' + headTemp + '</tr></thead><tbody></tbody></table>';
+      dom.innerHTML = '<table id="' + obj['id'] + '" class="display dt-bootstrap" cellspacing="0" width="100%"><thead><tr>' + headTemp + '</tr></thead><tbody></tbody></table>';
       
       // 只对当前页进行排序，引入tablesorter
-      $('#'+obj['id']).tablesorter();
+      $('#'+obj['id']).tablesorter().bind('sortEnd', function(sorter) {
+        var cookieKey = obj['cookieKey'];
+        var sortList = sorter.target.config.sortList;
+        var cookieStr = 'orderColumn=' + sortList[0][0] + '&orderDir=' + sortList[0][1];
+        that.setCookie(cookieKey, cookieStr, 7)
+        console.log(sorter.target.config.sortList);
+      });
 
       // 设置列表表头字段顺序
       var columns = [], sort = obj['data'].sort;
@@ -62,7 +69,7 @@ var Table = {
       };
 
       // 渲染表格主体
-      $('#'+obj['id']).DataTable({
+      var dataTableContent = $('#'+obj['id']).DataTable({
         "pageLength": obj['data'].page.pageSize + 1, // 算上“合计”一行，加1
         "lengthChange": false,
         "searching": false,
@@ -101,9 +108,13 @@ var Table = {
 
                 // 动态插入数据排序
                 $('#'+obj['id']).trigger("update");
+                // 初始化排序
                 setTimeout(function() {
-                  var sorting = [[1,1]]; 
-                  // 触发排序事件
+                  var sorting = [[1,1]],
+                      cookies = that.getCookie(obj['cookieKey']);
+                  if(cookies) {
+                    sorting = [[parseInt(cookies.orderColumn[0]),parseInt(cookies.orderDir[0])]]
+                  }
                   $('#'+obj['id']).trigger("sorton",[sorting]);
                 }, 1)   
             }
@@ -112,12 +123,59 @@ var Table = {
         // 设置列表表头字段顺序
         "columns": columns
       });
+
+      $('.hideColumn').bind('click', function(e) {
+        console.log(1);
+        // debugger
+        e.stopPropagation();
+        dataTableContent.column($(this).attr('data-column')).visible(false);
+      })
     }
 
     // 初次加载，返回数据前
     else {
-      dom.innerHTML = '<div class="w_tableEmptyLoading">Table is loading...</div>';
+      dom.innerHTML = '<div class="w_tableEmptyLoading">表格加载中，请稍后...</div>';
     }
+  },
+
+  /**
+   * public function 设置cookie
+   */
+  setCookie: function(cookieKey, cookieStr, day) {
+    $.cookie(cookieKey, cookieStr, { expires: day })
+  },
+
+  /**
+   * public function 获取cookie
+   */
+  getCookie: function(cookieKey) {
+    var cookieStr = window.decodeURIComponent($.cookie(cookieKey));
+    var cookiesObj = {};
+    if(cookieStr) {
+      var arr = cookieStr.split('&');
+      // console.log(arr);
+      var checkKey;
+  
+      for(var j=0; j<arr.length; j++) {
+          var key = arr[j].split('=')[0];
+          var value = arr[j].split('=')[1];
+          var _arr = [];
+
+          if(checkKey !== key) {
+            checkKey = key;
+            _arr.push(value);
+            cookiesObj[checkKey] = _arr;
+          } else {
+            if(cookiesObj[key] instanceof Array) {
+              _arr = cookiesObj[key];
+            }
+            _arr.push(value);
+            cookiesObj[key] = _arr;
+          }
+      }
+      // console.log(cookiesObj);
+    }
+    return cookiesObj;
   },
 
   /**
@@ -133,6 +191,7 @@ var Table = {
       var id = this.getAttribute('data-id');
       var url = this.getAttribute('data-url');
       var pageSize = this.getAttribute('data-pageSize');
+      var cookieKey = this.getAttribute('data-cookie');
 
       // 初次加载，返回数据前
       that._renderData(this, {
@@ -153,9 +212,10 @@ var Table = {
             that._renderData(_this, {
               'id': id,
               'pageSize': pageSize,
+              'cookieKey': cookieKey,
               'data': res.data
             });
-          }, 500)
+          }, 1000)
             
         },
         error: function() {

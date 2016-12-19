@@ -18,6 +18,22 @@
 
 
 /* tag-table */
+table.dataTable th,
+table.dataTable td {
+    white-space: nowrap;
+}
+table.dataTable thead .header{
+	background-image: url(../resource/images/sort_both.png);
+	background-repeat: no-repeat;
+	background-position: center right;
+}
+table.dataTable thead .headerSortUp {
+	background-image: url(../resource/images/sort_desc.png);
+}
+table.dataTable thead .headerSortDown {
+	background-image: url(../resource/images/sort_asc.png);
+}
+
 .w_tableEmptyLoading {
     @extend %display_flex;
     @include flex_justify_content(center);
