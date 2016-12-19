@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 
     connect: {
       options: {
-        hostname: '192.168.0.227',
+        hostname: '192.168.0.182',
         port: 9000,
         base: config.devFolder,
         livereload: lrPort,
