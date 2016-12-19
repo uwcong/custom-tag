@@ -13,6 +13,7 @@ var Table = {
   _renderData: function(dom, obj) {
     var that = this;
     var headTemp = "";
+    var tableToolbar = '<div class="btn-toolbar"><div class="btn-group pull-right focus-btn-group"><button class="btn btn-success">导出Excel</button><button class="btn btn-success showAllColumns">显示所有列</button></div></div>';
     
     // 初次加载，返回数据后
     if(obj['data'] instanceof Object && obj['data'].sort.length > 0) {
@@ -22,7 +23,7 @@ var Table = {
       for(var i=0; i<headData.length; i++) {
         headTemp += '<th>' + headData[i] + '<span class="hideColumn" title="隐藏" data-column=' + i + '>×</span></th>';
       }
-      dom.innerHTML = '<table id="' + obj['id'] + '" class="display dt-bootstrap" cellspacing="0" width="100%"><thead><tr>' + headTemp + '</tr></thead><tbody></tbody></table>';
+      dom.innerHTML = tableToolbar + '<table id="' + obj['id'] + '" class="display dt-bootstrap" cellspacing="0" width="100%"><thead><tr>' + headTemp + '</tr></thead><tbody></tbody></table>';
       
       // 只对当前页进行排序，引入tablesorter
       $('#'+obj['id']).tablesorter().bind('sortEnd', function(sorter) {
@@ -124,11 +125,13 @@ var Table = {
         "columns": columns
       });
 
+      // trigger
       $('.hideColumn').bind('click', function(e) {
-        console.log(1);
-        // debugger
         e.stopPropagation();
         dataTableContent.column($(this).attr('data-column')).visible(false);
+      });
+      $('.showAllColumns').bind('click', function() {
+        dataTableContent.columns().visible(true);
       })
     }
 
@@ -151,7 +154,8 @@ var Table = {
   getCookie: function(cookieKey) {
     var cookieStr = window.decodeURIComponent($.cookie(cookieKey));
     var cookiesObj = {};
-    if(cookieStr) {
+
+    if(cookieStr !== "undefined") {
       var arr = cookieStr.split('&');
       // console.log(arr);
       var checkKey;
@@ -174,8 +178,9 @@ var Table = {
           }
       }
       // console.log(cookiesObj);
+      return cookiesObj;
     }
-    return cookiesObj;
+    return false;
   },
 
   /**

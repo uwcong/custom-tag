@@ -18,6 +18,9 @@
 
 
 /* tag-table */
+.dataTables_wrapper {
+	overflow-x: auto;
+}
 table.dataTable {
 	border-collapse: collapse;
 }
@@ -31,7 +34,7 @@ table.dataTable th {
 }
 table.dataTable th,
 table.dataTable td {
-	border: 1px solid #ddd;
+	border: 1px solid #ddd!important;
     white-space: nowrap;
 }
 table.dataTable th .hideColumn {
