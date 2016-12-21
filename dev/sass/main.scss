@@ -52,6 +52,9 @@ table.dataTable thead .headerSortUp {
 table.dataTable thead .headerSortDown {
 	background-image: url(../resource/images/sort_asc.png);
 }
+.btn-toolbar {
+	margin: 10px 0;
+}
 
 .w_tableEmptyLoading {
     @extend %display_flex;

@@ -39,14 +39,19 @@ var Selector = {
       temp += itemTemp;
     }
 
-    dom.innerHTML = '<div class="form-group col-md-4"><label class="control-label col-md-3">' + obj['title'] + '</label><div class="col-md-9"><select class="form-control" id="' + obj['id'] + '" name="' + obj['name'] + '" multiple>' + temp + '</select></div>';
+    // 设置单选、多选属性
+    var selectTypeAttr = "";
+    if(obj['selectType'] === 'multi') {
+      selectTypeAttr = "multiple";
+    }
+
+    dom.innerHTML = '<div class="form-group col-md-4"><label class="control-label col-md-3">' + obj['title'] + '</label><div class="col-md-9"><select class="form-control" id="' + obj['id'] + '" name="' + obj['name'] + '" ' + selectTypeAttr + '>' + temp + '</select></div>';
 
     $('#'+obj['id']).select2({
       placeholder: 'please select',
       allowClear: true
-    }).on('select2:open', function(){
-      // $(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
     });
+
   },
   
   /**
@@ -100,7 +105,8 @@ var Selector = {
     // 创建元素实例回调
     proto.createdCallback = function() {
       console.log("createdCallback");
-      
+
+      var selectType = this.getAttribute('data-selectType')
       var id = this.getAttribute('data-id');
       var title = this.getAttribute('data-title');
       var name = this.getAttribute('data-name');
@@ -108,6 +114,7 @@ var Selector = {
       var cookieKey = this.getAttribute('data-cookie');
       var selectorDefaultData = ['Data Loading...'];
       that._renderData(this, {
+        'selectType': selectType,
         'id': id,
         'title': title,
         'name': name,
@@ -125,6 +132,7 @@ var Selector = {
           console.log('%csuccess', 'background: green; color: white;');
           // debugger
           that._renderData(_this, {
+            'selectType': selectType,
             'id': id,
             'title': title,
             'name': name,
@@ -144,7 +152,7 @@ var Selector = {
     };
 
     // debugger
-    document.registerElement('tag-multiSelect', {prototype: proto});
+    document.registerElement('tag-select', {prototype: proto});
   },
 }
 

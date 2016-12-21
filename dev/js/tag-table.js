@@ -91,6 +91,7 @@ var Table = {
             cache: false,  //禁用缓存
             data: param,  //传入组装的参数
             dataType: "json",
+            contentType: "application/json",
             success: function (result) {
                 //封装返回数据
                 var returnData = {};
