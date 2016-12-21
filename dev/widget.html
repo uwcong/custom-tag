@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>tag-table</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="resource/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="resource/css/select2.min.css" rel="stylesheet">
+    <link href="resource/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="resource/js/jquery-3.1.1.min.js"></script>
+    <script src="resource/js/bootstrap.min.js"></script>
+    
+    <script src="resource/js/select2.min.js"></script>
+    <script src="resource/js/jquery.dataTables.min.js"></script>
+    <script src="resource/js/jquery.tablesorter.min.js"></script>
+    <script src="resource/js/jquery.cookie.js"></script>
+</head>
+<body>
+    <form class="form-horizontal" data-cookie="gameSingleCookies">
+        <div class="row">
+            <!--
+                @tagName: tag-select
+                @attributes:
+                    data-selectType
+                    data-id
+                    data-title
+                    data-name
+                    data-url
+                    data-cookie
+            -->
+            <tag-select
+                data-selectType="multi"
+                data-id="multiSelect1"
+                data-title="多选1"
+                data-name="multiSelect1"
+                data-url="/js/bag.json"
+                data-cookie="gameSingleCookies"></tag-select>
+            <tag-select
+                data-selectType="multi"
+                data-id="multiSelect2"
+                data-title="多选2"
+                data-name="multiSelect2"
+                data-url="/js/dimension.json"
+                data-cookie="gameSingleCookies"></tag-select>
+            <tag-select
+                data-selectType="single"
+                data-id="s1"
+                data-title="单选1"
+                data-name="single1"
+                data-url="/js/bag.json"
+                data-cookie="gameSingleCookies"></tag-select>
+            <tag-select
+                data-selectType="single"
+                data-id="s2"
+                data-title="单选2"
+                data-name="single2"
+                data-url="/js/dimension.json"
+                data-cookie="gameSingleCookies"></tag-select>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary col-md-offset-1" id="submit">查询</button>
+        </div>
+    </form>
+
+
+    <!--
+        @tagName: tag-table
+        @attributes:
+            data-id
+            data-ajaxType
+            data-url
+            data-pageSize
+            data-cookie     
+    -->
+    <tag-table
+        data-id="table"
+        data-ajaxType="GET"
+        data-url="/js/tablePage1.json"
+        data-pageSize="50"
+        data-cookie="gameAllCookies"></tag-tabl>
+
+    <script src="js/tag-select.js"></script>
+    <script src="js/tag-table.js"></script>
+</body>
+</html>
