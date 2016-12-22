@@ -4,6 +4,95 @@
  * @date 2016/12/15
  */
 var Table = {
+  // 局部变量
+  config: {
+    dom: "",
+    id: "",
+    ajaxType: "",
+    url: "",
+    pageSize: "",
+    cookieKey: "",
+    reqCookie: "",
+    reqData: {},
+  },
+
+  /**
+   * public function 初始化组件
+   */
+  init: function() {
+    console.log('table init');
+    var that = this;
+
+    var proto = Object.create(HTMLElement.prototype);
+    // 创建元素实例回调
+    proto.createdCallback = function() {
+      console.log("createdCallback");
+
+      that.config.dom = this;
+      that.config.id = this.getAttribute('data-id');
+      that.config.ajaxType = this.getAttribute('data-ajaxType');
+      that.config.url = this.getAttribute('data-url');
+      that.config.pageSize = this.getAttribute('data-pageSize');
+      that.config.cookieKey = this.getAttribute('data-cookie');
+      that.config.reqCookie = this.getAttribute('data-reqCookie');
+      
+      that.requestData();
+    };
+
+    // 向文档插入实例回调
+    proto.attachedCallback = function() {
+      console.log("attachedCallback");
+    };
+
+    // debugger
+    document.registerElement('tag-table', {prototype: proto});
+  },
+
+
+  /**
+   * public function 请求数据
+   */
+  requestData: function() {
+    var that = this;
+    
+    this.config.reqData = window.Selector.getCookie(this.config.reqCookie);
+    console.log(this.config.reqData)
+    this.config.reqData['pageSize'] = this.config.pageSize;
+    this.config.reqData['currentPage'] = 1;
+    if(this.config.reqData.hasOwnProperty("undefined"))  return false;
+
+    // 返回数据前
+    that._renderData(this, {
+        'id': that.config.id
+    });
+
+    // 返回数据后
+    $.ajax({
+      type: that.config.ajaxType,
+      url: that.config.url,
+      data: that.config.reqData,
+      dataType: "json",
+      contentType: "application/json",
+      success: function(res) {
+        console.log('%csuccess', 'background: green; color: white;');
+        // 为了延迟看loading
+        setTimeout(function() {
+          that._renderData(that.config.dom, {
+            'id': that.config.id,
+            'ajaxType': that.config.ajaxType,
+            'pageSize': that.config.pageSize,
+            'cookieKey': that.config.cookieKey,
+            'data': res.data
+          });
+        }, 1000)
+          
+      },
+      error: function() {
+        console.log('%cerror', 'background: red; color: white;');
+      }
+    });
+  },
+
 
   /**
    * private function 渲染选项数据
@@ -30,7 +119,7 @@ var Table = {
         var cookieKey = obj['cookieKey'];
         var sortList = sorter.target.config.sortList;
         var cookieStr = 'orderColumn=' + sortList[0][0] + '&orderDir=' + sortList[0][1];
-        that.setCookie(cookieKey, cookieStr, 7)
+        window.Selector.setCookie(cookieKey, cookieStr, 7)
         console.log(sorter.target.config.sortList);
       });
 
@@ -81,8 +170,7 @@ var Table = {
         "serverSide": true,  //启用服务器端分页
         "ajax": function(data, callback, settings) {
           console.log(data);
-          var param = {};
-          param.pageSize = obj['pageSize'];
+          var param = that.config.reqData;
           param.currentPage = (data.start / data.length) + 1;
 
           $.ajax({
@@ -113,8 +201,9 @@ var Table = {
                 // 初始化排序
                 setTimeout(function() {
                   var sorting = [[1,1]],
-                      cookies = that.getCookie(obj['cookieKey']);
-                  if(cookies) {
+                      cookies = window.Selector.getCookie(obj['cookieKey']);
+                      // debugger
+                  if(!cookies.hasOwnProperty("undefined")) {
                     sorting = [[parseInt(cookies.orderColumn[0]),parseInt(cookies.orderDir[0])]]
                   }
                   $('#'+obj['id']).trigger("sorton",[sorting]);
@@ -142,105 +231,6 @@ var Table = {
     }
   },
 
-  /**
-   * public function 设置cookie
-   */
-  setCookie: function(cookieKey, cookieStr, day) {
-    $.cookie(cookieKey, cookieStr, { expires: day })
-  },
-
-  /**
-   * public function 获取cookie
-   */
-  getCookie: function(cookieKey) {
-    var cookieStr = window.decodeURIComponent($.cookie(cookieKey));
-    var cookiesObj = {};
-
-    if(cookieStr !== "undefined") {
-      var arr = cookieStr.split('&');
-      // console.log(arr);
-      var checkKey;
-  
-      for(var j=0; j<arr.length; j++) {
-          var key = arr[j].split('=')[0];
-          var value = arr[j].split('=')[1];
-          var _arr = [];
-
-          if(checkKey !== key) {
-            checkKey = key;
-            _arr.push(value);
-            cookiesObj[checkKey] = _arr;
-          } else {
-            if(cookiesObj[key] instanceof Array) {
-              _arr = cookiesObj[key];
-            }
-            _arr.push(value);
-            cookiesObj[key] = _arr;
-          }
-      }
-      // console.log(cookiesObj);
-      return cookiesObj;
-    }
-    return false;
-  },
-
-  /**
-   * public function 初始化组件
-   */
-  init: function() {
-    var that = this;
-
-    var proto = Object.create(HTMLElement.prototype);
-    // 创建元素实例回调
-    proto.createdCallback = function() {
-      console.log("createdCallback");
-      var id = this.getAttribute('data-id');
-      var ajaxType = this.getAttribute('data-ajaxType');
-      var url = this.getAttribute('data-url');
-      var pageSize = this.getAttribute('data-pageSize');
-      var cookieKey = this.getAttribute('data-cookie');
-
-      // 初次加载，返回数据前
-      that._renderData(this, {
-        'id': id
-      });
-
-      // 初次加载，返回数据后
-      var _this = this;
-      $.ajax({
-        type: ajaxType,
-        url: url,
-        dataType: "json",
-        contentType: "application/json",
-        success: function(res) {
-          console.log('%csuccess', 'background: green; color: white;');
-          // 为了延迟看loading
-          setTimeout(function() {
-            that._renderData(_this, {
-              'id': id,
-              'ajaxType': ajaxType,
-              'pageSize': pageSize,
-              'cookieKey': cookieKey,
-              'data': res.data
-            });
-          }, 1000)
-            
-        },
-        error: function() {
-          console.log('%cerror', 'background: red; color: white;');
-        }
-      });
-
-    };
-
-    // 向文档插入实例回调
-    proto.attachedCallback = function() {
-      console.log("attachedCallback");
-    };
-
-    // debugger
-    document.registerElement('tag-table', {prototype: proto});
-  },
 }
 
 Table.init();

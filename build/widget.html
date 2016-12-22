@@ -26,48 +26,37 @@
                     data-id
                     data-title
                     data-name
+                    data-url
                     data-cookie
             -->
             <tag-select
-            data-selectType="multi"
-            data-id="multiSelect1"
-            data-title="多选1"
-            data-name="multiSelect1"
-            data-cookie="gameSingleCookies">
-                <option value="option1">多选1.1</option>
-                <option value="option2">多选1.2</option>
-                <option value="option3">多选1.3</option>    
-            </tag-select>
+                data-selectType="multi"
+                data-id="multiSelect1"
+                data-title="多选1"
+                data-name="multiSelect1"
+                data-url="/js/bag.json"
+                data-cookie="gameSingleCookies"></tag-select>
             <tag-select
-            data-selectType="multi"
-            data-id="multiSelect2"
-            data-title="多选2"
-            data-name="multiSelect2"
-            data-cookie="gameSingleCookies">
-                <option value="option1">多选2.1</option>
-                <option value="option2">多选2.2</option>
-                <option value="option3">多选2.3</option>
-            </tag-select>
+                data-selectType="multi"
+                data-id="multiSelect2"
+                data-title="多选2"
+                data-name="multiSelect2"
+                data-url="/js/dimension.json"
+                data-cookie="gameSingleCookies"></tag-select>
             <tag-select
-            data-selectType="single"
-            data-id="s1"
-            data-title="单选1"
-            data-name="single1"
-            data-cookie="gameSingleCookies">
-                <option value="option1">单选1.1</option>
-                <option value="option2">单选1.2</option>
-                <option value="option3">单选1.3</option>
-            </tag-select>
+                data-selectType="single"
+                data-id="s1"
+                data-title="单选1"
+                data-name="single1"
+                data-url="/js/bag.json"
+                data-cookie="gameSingleCookies"></tag-select>
             <tag-select
-            data-selectType="single"
-            data-id="s2"
-            data-title="单选2"
-            data-name="single2"
-            data-cookie="gameSingleCookies">
-                <option value="option1">单选2.1</option>
-                <option value="option2">单选2.2</option>
-                <option value="option3">单选2.3</option>
-            </tag-select>
+                data-selectType="single"
+                data-id="s2"
+                data-title="单选2"
+                data-name="single2"
+                data-url="/js/dimension.json"
+                data-cookie="gameSingleCookies"></tag-select>
         </div>
         <div class="row">
             <button type="submit" class="btn btn-primary col-md-offset-1" id="submit">查询</button>
@@ -89,8 +78,7 @@
         data-ajaxType="GET"
         data-url="/js/tablePage1.json"
         data-pageSize="50"
-        data-cookie="gameAllCookies"
-        data-reqCookie="gameSingleCookies"></tag-tabl>
+        data-cookie="gameAllCookies"></tag-tabl>
 
     <script src="js/tag-select.js"></script>
     <script src="js/tag-table.js"></script>
