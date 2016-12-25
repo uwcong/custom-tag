@@ -10,8 +10,6 @@ var Confirm = {
    * @author Cc
    */
   init: function() {
-    var that = this;
-
     var proto = Object.create(HTMLElement.prototype);
     // 创建元素实例回调
     proto.createdCallback = function() {
