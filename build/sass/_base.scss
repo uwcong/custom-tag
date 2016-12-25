@@ -13,14 +13,12 @@ body, input, textarea, select, button {
 body {
 	background: #fff;
 	font-size: 14px;
-	line-height: 1.5;
 	color: #000;
   	word-break: break-all;
   	-webkit-tap-highlight-color: transparent; // keyNote：该属性可继承，可以去掉button标签、textarea标签、标签绑定javascript事件等点击触发的高亮表现。a标签除外
 }
 
 a {
-	color: #1d8ae5;
 	-webkit-tap-highlight-color: transparent;
 
 	&, &:hover, &:active {

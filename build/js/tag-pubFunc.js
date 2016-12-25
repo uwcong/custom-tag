@@ -1,0 +1,2 @@
+/*! jodo-widget 2016-12-23 */
+var PubFunc={setCookie:function(a,b,c){$.cookie(a,b,{expires:c})},getCookie:function(a){var b=window.decodeURIComponent($.cookie("multiKeys")).split("&"),c=window.decodeURIComponent($.cookie(a)),d={};if(c)for(var e,f=c.split("&"),g=0;g<f.length;g++){for(var h=f[g].split("=")[0],i=f[g].split("=")[1],j=!1,k=0;k<b.length;k++)if(h===b[k]){j=!0;break}e!==h?(e=h,d[h]=i,j&&(d[h]=[i])):d[h].push(i)}return d}};

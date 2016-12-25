@@ -1,458 +1,236 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="robots" content="noindex">
 
-    <title>数据系统</title>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="resource/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<title>Jodo Data System</title>
+
+	<link href="resource/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link href="resource/css/sb-admin-2.min.css" rel="stylesheet">
+	<link href="resource/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="resource/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="resource/css/select2.min.css" rel="stylesheet">
+    <link href="resource/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="resource/css/daterangepicker.css" rel="stylesheet"/>
+    <link href="css/main.css" rel="stylesheet">
 
     <script src="resource/js/jquery-3.1.1.min.js"></script>
     <script src="resource/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="resource/css/daterangepicker.css" />
-      <link href="resource/css/select2.min.css" rel="stylesheet">
-      <style type="text/css">
-      .demo { position: relative; }
-      .demo i {
-        position: absolute; bottom: 10px; right: 24px; top: auto; cursor: pointer;
-      }
-      .table-bordered th{
-      	background-color: #428bca;
-      	color: #ffffff;
-      }
-      </style>
-
-      <script src="resource/js/jquery-3.1.1.min.js"></script>
-      <script src="resource/js/select2.min.js"></script>
-      <script src="resource/js/jquery.twbsPagination.min.js"></script>
-      <script type="text/javascript" src="js/require.js" data-main="js/main.js"></script>
-    <script type="text/javascript">
-        window.alert = function(){};
-        var defaultCSS = document.getElementById('bootstrap-css');
-        function changeCSS(css){
-            if(css) $('head > link').filter(':first').replaceWith('<link rel="stylesheet" href="'+ css +'" type="text/css" />'); 
-            else $('head > link').filter(':first').replaceWith(defaultCSS); 
-        }
-    </script>
+	<script src="resource/js/sb-admin-2.min.js"></script>
+	<script src="resource/js/metisMenu.min.js"></script>
+    
+    <script src="resource/js/select2.min.js"></script>
+    <script src="resource/js/jquery.dataTables.min.js"></script>
+    <script src="resource/js/jquery.tablesorter.min.js"></script>
+    <script src="resource/js/jquery.cookie.js"></script>
+    <script src="resource/js/moment.min.js"></script>
+    <script src="resource/js/daterangepicker.js"></script>
 </head>
-<body>
-	<nav class="navbar navbar-inverse navbar-static-top" style="background-color: #428bca">
-    <div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle navbar-toggle-sidebar collapsed">
-			MENU
-			</button>
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<h3 style="color: #ffffff;">JODO</h3>
-		</div>
 
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown " style="background-color: #428bca">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-						<font color='#ffffff'>Account</font>
-						<span class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
+<body>
+
+    <div id="wrapper">
+
+        <!-- 导航相关 -->
+		<tag-nav>
+			<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="index.html">Jodo Data System</a>
+				</div>
+
+				<ul class="nav navbar-top-links navbar-right">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+							<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+						</a>
+						<ul class="dropdown-menu dropdown-user">
+							<li><a href="#"><i class="fa fa-user fa-fw"></i> 设置</a>
+							</li>
+							<li><a href="#"><i class="fa fa-gear fa-fw"></i> 帮助</a>
+							</li>
 							<li class="divider"></li>
-							<li><a href="#">Logout</a></li>
+							<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> 登出</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
-			</div><!-- /.navbar-collapse -->
-		</div><!-- /.container-fluid -->
-	</nav>  	<div class="container-fluid main-container">
-  		<div class="col-md-2 sidebar">
-  			<div class="row">
-	<!-- uncomment code for absolute positioning tweek see top comment in css -->
-	<div class="absolute-wrapper"> </div>
-	<!-- Menu -->
-	<div class="side-menu">
-		<nav class="navbar navbar-default" role="navigation">
-			<!-- Main Menu -->
-			<div class="side-menu-container">
-				<ul class="nav navbar-nav">
-				<li>
-					<form class="navbar-form navbar-default" method="GET" role="search">
-				<div class="form-group">
-					<input type="text" name="q" class="form-control" placeholder="Search">
-				</div>
-				<button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-			</form>
-				</li>
-					<li class="panel panel-default" id="dropdown">
-						<a data-toggle="collapse" href="#dropdown-lvl1" id="market">
-							<span class="glyphicon glyphicon-book"></span>市场数据<span class="caret"></span>
-						</a>
 
-						<div id="dropdown-lvl1" class="open">
-							<div class="panel-body">
-								<ul class="nav navbar-nav">
-									<li><a href="#">市场日概况</a></li>
+				<div class="navbar-default sidebar" role="navigation">
+					<div class="sidebar-nav navbar-collapse">
+						<ul class="nav in" id="side-menu">
+							<li class="level1">
+								<a href="index.html" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+							</li>
+							<li class="level1">
+								<a href="#"><i class="fa fa-table fa-fw"></i> 市场概况<span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level collapse">
+									<li>
+										<a href="panels-wells.html">市场日概况</a>
+									</li>
 								</ul>
-							</div>
-						</div>
-					</li>
-					<!-- Dropdown-->
-					<li class="panel panel-default" id="dropdown">
-						<a data-toggle="collapse" href="#dropdown-lvl2">
-							<span class="glyphicon glyphicon-stats"></span>运营概况<span class="caret"></span>
-						</a>
-
-						<!-- Dropdown level 1 -->
-						<div id="dropdown-lvl2" class="open">
-							<div class="panel-body">
-								<ul class="nav navbar-nav">
-									<li><a href="login.html">运营所有游戏概况</a></li>
-									<li class="active"><a href="#">运营单个游戏概况</a></li>
-									<li><a href="#">运营游戏区服概况</a></li>
-									<li><a href="#">储值情况</a></li>
-									<li><a href="#">订单实时概况</a></li>
+							</li>
+							
+							<li class="leve1 active">
+								<a href="#"><i class="fa fa-table fa-fw"></i> 运营概况<span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level collapse in">
+									<li>
+										<a href="blank.html" class="active">运营所有游戏概况</a>
+									</li>
+									<li>
+										<a href="login.html">运营单个游戏概况</a>
+									</li>
+									<li>
+										<a href="login.html">运营游戏区概况</a>
+									</li>
+									<li>
+										<a href="login.html">运营游戏包卸载概况</a>
+									</li>
+									<li>
+										<a href="login.html">储值概况</a>
+									</li>
+									<li>
+										<a href="login.html">订单实时概况</a>
+									</li>
+									<li>
+										<a href="login.html">坏账订单概况</a>
+									</li>
 								</ul>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div><!-- /.navbar-collapse -->
-		</nav>
+								
+							</li>
+						</ul>
+					</div>
+					
+				</div>
+			</nav>
+		</tag-nav>
 
-	</div>
-</div> 
-</div>
-	<div class="container-fluid">
-  	<div class="col-md-10 content">
-  		<div class="panel panel-primary">
-		<div class="panel-heading">
-			市场日概况
-		</div>
-	<div class="panel-body">
-		<div class="container">
+		<!-- 主体内容区域 -->
+        <div id="page-wrapper">
+              <form class="form-horizontal">
         <div class="row">
-			<div class="row" style="margin-top: 20px">
-			<form role="form" class="form-horizontal">
-			<div class="row">
-			<div class="form-group col-md-4">
-			<label for="btime" class="control-label col-md-3">日期</label>
-			<div class="col-md-9 demo">
-				<input type="text" id="config-demo" class="form-control">
-				<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-			</div>
-			</div>
-			<div class="form-group col-md-4">
-				<label class="control-label col-md-3">维度</label>
-				<div class="col-md-9">
-				<select class="form-control" id="dimentions-select" name="dimentions" multiple>
-					<option value='pn'>包名</option>
-					<option value='ch'>渠道</option>
-					<option value='campaign'>广告campaign</option>
-					<option value='ad_set'>广告ad_set</option>
-					<option value='cty'>地区</option>
-				</select>
-				</div>		
-			</div>
-			<div class="form-group col-md-4">
-				<label class="control-label col-md-3">游戏</label>
-				<div class="col-md-9">
-				<select class="form-control" id="cgis-select" name="cgis" multiple>
-					<option value='shjibei_koudaidazuozhanios'>口袋大作战ios</option>
-					<option value='shjibei_koudaidazuozhan'>口袋大作战</option>
-					<option value='shjibei_koudaidaxunlianshiios'>口袋训练师ios</option>
-					<option value='shjibei_koudaidaxunlianshi'>口袋训练师</option>
-				</select>
-				</div>		
-			</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-md-4">
-					<label class="control-label col-md-3">包名</label>
-					<div class="col-md-9">
-					<select class="form-control" id="pns-select" name="pns" multiple>
-						<option value='com.farmon.holi.kk'>com.farmon.holi.kk</option>
-						<option value='com.lostar.puppy.ox'>com.lostar.puppy.ox</option>
-						<option value='com.pimon.scol.lw'>com.pimon.scol.lw</option>
-						<option value='com.pimon.scol.lx'>com.pimon.scol.lx</option>
-						<option value='com.reborn.battle.cl'>com.pimon.scol.lx</option>
-						<option value='com.verse.dream.ou'>com.verse.dream.ou</option>
-					</select>
-					</div>		
-				</div>
-				<div class="form-group col-md-4">
-				<label class="control-label col-md-3">地区</label>
-					<div class="col-md-9">
-					<select class="form-control" id="ctys-select" name="ctys" multiple>
-						<option>黑山</option>
-						<option>黎巴嫩</option>
-						<option>马里</option>
-						<option>马达加斯加</option>
-						<option>马耳他</option>
-						<option>马约特</option>
-						<option>马来西亚</option>
-						<option>马提尼克岛</option>
-						<option>马拉维</option>
-						<option>马恩岛</option>
-						<option>马尔代夫</option>
-						<option>马其顿</option>
-						<option>香港</option>
-						<option>韩国</option>
-					</select>
-					</div>
-				</div>
-				<div class="form-group col-md-4">
-				<label class="control-label col-md-3">渠道</label>
-					<div class="col-md-9">
-					<select class="form-control" id="chs-select" name="chs" multiple>
-						<option value="zd001">zd001</option>
-						<option value="FBShare001">FBShare001</option>
-						<option value="jodo1">jodo1</option>
-						<option value="Winnie">Winnie</option>
-						<option value="qiangxinQjiang">qiangxinQjiang</option>
-						<option value="fb001">fb001</option>
-						<option value="qcsg_005">qcsg_005</option>
-						<option value="qcsg_006">qcsg_006</option>
-					</select>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-md-4">
-				<label class="control-label col-md-3">Campaign</label>
-					<div class="col-md-9">
-					<select class="form-control" id="campaigns-select" name="campaigns" multiple>
-						<option value="3ds3_my_1119_hq_cpm4">3ds3_my_1119_hq_cpm4[正在投放]</option>
-						<option value="3ds3_tw_1124_hq_cpm1">3ds3_tw_1124_hq_cpm1[正在投放]</option>
-						<option value="3ds4_tw_1130_hq_cpm2_AudienceNetwork">3ds4_tw_1130_hq_cpm2_AudienceNetwork[正在投放]</option>
-						<option value="3ds4_tw_1201_hq_cpm4">3ds4_tw_1201_hq_cpm4[正在投放]</option>
-						<option value="3ds4_tw_1201_yz_cpm">3ds4_tw_1201_yz_cpm[正在投放]</option>
-						<option value="3ds5_hk_1207_hq_cpm1">3ds5_hk_1207_hq_cpm1[正在投放]</option>
-						<option value="3ds5_hk_1207_hq_cpm1_AudienceNetwork">3ds5_hk_1207_hq_cpm1_AudienceNetwork[正在投放]</option>
-						<option value="3ds5_hk_1207_hq_cpm2">3ds5_hk_1207_hq_cpm2[正在投放]</option>
-						<option value="3ds5_hk_1207_hq_cpm2_AudienceNetwork">3ds5_hk_1207_hq_cpm2_AudienceNetwork[正在投放]</option>
-						<option value="3ds5_hk_1207_hq_cpm3">3ds5_hk_1207_hq_cpm3[正在投放]</option>
-						<option value="3ds5_hk_1207_yz_cpm">3ds5_hk_1207_yz_cpm[正在投放]</option>
-						<option value="3ds5_tw_1206_hq_cpm2">3ds5_tw_1206_hq_cpm2[正在投放]</option>
-						<option value="3ds5_tw_1206_yz_cpm">3ds5_tw_1206_yz_cpm[正在投放]</option>
-					</select>
-					</div>
-				</div>
-				<div class="form-group col-md-4">
-				<label class="control-label col-md-3">ad_sets</label>
-					<div class="col-md-9">
-					<select class="form-control" id="ad_sets-select" name="ad_sets" multiple>
-						<option value="1%LL下載[18-40-男]視頻">1%LL下載[18-40-男]視頻[正在投放]</option>
-						<option value="1%LL活躍[16-40-男]">1%LL活躍[16-40-男][正在投放]</option>
-						<option value="1%_AudienceNetwork">1%_AudienceNetwork[正在投放]</option>
-						<option value="1-2%LL活躍[16-40-男]">1-2%LL活躍[16-40-男][正在投放]</option>
-						<option value="10%">10%[正在投放]</option>
-						<option value="1101-lal- hysh2">1101-lal- hysh2[正在投放]</option>
-						<option value="1101-lal- kzws">1101-lal- kzws[正在投放]</option>
-						<option value="1101-lal- xjhm">1101-lal- xjhm[正在投放]</option>
-						<option value="1201-16woc">1201-16woc[正在投放]</option>
-						<option value="1201-2entertainment">1201-2entertainment[正在投放]</option>
-						<option value="1201-34lhws">1201-34lhws[正在投放]</option>
-						<option value="1201-35zqlr">1201-35zqlr[正在投放]</option>
-						<option value="1201-5sport">1201-5sport[正在投放]</option>
-						<option value="16-22 all 男">16-22 all 男[正在投放]</option>
-					</select>
-					</div>
-				</div>
-				<div class="form-group col-md-4">
-				<label class="control-label col-md-3">数据类型</label>
-					<div class="col-md-9">
-					<select class="form-control" id="k1-select" name="k1">
-						<option value="false">不含J点数据</option>
-						<option value="true">包含J点数据</option>		
-					</select>
-					</div>
-				</div>		
-			</div>
-			<div class="row">
-				<div class="form-group col-md-4">
-				<label class="control-label col-md-3">N天LTV</label>
-					<div class="col-md-9">
-					<select class="form-control" id="ltvByDay-select" name="ltvByDay">
-						<option value="none">none</option>
-						<option value="all">all</option>		
-					</select>
-					</div>
-				</div>
-				<div class="form-group col-md-2 ">
-					<div class="checkbox col-md-offset-5">
-					<input type="checkbox" name="newjd" value="1" checked="checked"/>新版jb
-					</div>
-				</div>
-				<div class="form-group col-md-6">
-				<button type="submit" class="btn btn-primary col-md-offset-1">查询</button>
-				</div>
-			</div>
-			</form>
-          </div>
-        </div>
-        <div class="row">
-        	<div class="panel-title">
-				<p class="panel-title"  style='color:blue' ><span>付费率</span>:储值人数/注册数</p>
-				<p class="panel-title"  style='color:blue' ><span>ROI</span>:投放金额回本百分比</p>
-				<p class="panel-title"  style='color:blue' ><span>ARPU</span>:增加一个注册能获得的钱</p>
-				<p class="panel-title"  style='color:blue' ><span>注册成本</span>:增加一个注册花费的钱</p>
-				<p class="panel-title"  style='color:blue' ><span>ARPPU</span>:增加一个充值玩家能获得的钱</p>
-			</div>
+            
+            <div class="col-md-4 form-group">
+                <!--
+                @tagName: tag-datePicker
+                @attributes:
+                        data-cookie
+                -->
+                <tag-datePicker data-cookie="gameSingleCookies"></tag-datePicker>
+            </div>
+
+
+            <!--
+                @tagName: tag-select
+                @attributes:
+                    data-selectType
+                    data-id
+                    data-title
+                    data-name
+                    data-cookie
+            -->
+            <div class="col-md-4 form-group">
+                <tag-select
+                data-selectType="multi"
+                data-id="multiSelect1"
+                data-title="多选1"
+                data-name="multiSelect1"
+                data-cookie="gameSingleCookies">
+                    <option value="option1">多选1.1</option>
+                    <option value="option2">多选1.2</option>
+                    <option value="option3">多选1.3</option>    
+                </tag-select>
+            </div>
+
+            <div class="col-md-4 form-group">
+                <tag-select
+                data-selectType="multi"
+                data-id="multiSelect2"
+                data-title="多选2"
+                data-name="multiSelect2"
+                data-cookie="gameSingleCookies">
+                    <option value="option1">多选2.1</option>
+                    <option value="option2">多选2.2</option>
+                    <option value="option3">多选2.3</option>
+                </tag-select>
+            </div>
+
+            <div class="col-md-4 form-group">
+                <tag-select
+                data-selectType="single"
+                data-id="s1"
+                data-title="单选1"
+                data-name="single1"
+                data-cookie="gameSingleCookies">
+                    <option value="option1">单选1.1</option>
+                    <option value="option2">单选1.2</option>
+                    <option value="option3">单选1.3</option>
+                </tag-select>
+            </div>
+
+            <div class="col-md-4 form-group">
+                <tag-select
+                data-selectType="single"
+                data-id="s2"
+                data-title="单选2"
+                data-name="single2"
+                data-cookie="gameSingleCookies">
+                    <option value="option1">单选2.1</option>
+                    <option value="option2">单选2.2</option>
+                    <option value="option3">单选2.3</option>
+                </tag-select>
+            </div>
 
         </div>
         <div class="row">
-       			<hr style="filter:alpha(opacity=100,finishopacity=0,style=1);width:100%;background-color:#000000;height:1px" />
+            <!--
+                @tagName: tag-datePicker
+                @attributes:
+                    data-id
+                    data-cookie
+            -->
+            <tag-confirm data-id="submit" data-cookie="gameSingleCookies"></tag-confirm>
         </div>
-        <div class="row">
-        	<div class="table-wrapper">
-        	<div class="btn-toolbar">
-        		<div class="btn-group pull-right focus-btn-group">
-        			<button class="btn btn-success">图表</button>
-        			<button class="btn btn-success">导出Excel</button>
-        			<button class="btn btn-success">显示所有列</button>
-        		</div>
-        	</div>
-			<table class="table table-bordered">
-			 	<thead>
-			 		<tr>
-				 		<th>日期</th>
-				 		<th>游戏</th>
-				 		<th>包名</th>
-				 		<th>地区</th>
-				 		<th>渠道</th>
-			 		</tr>
-			 	</thead>
-			 	<tbody>
-			 		<tr>
-				 		<td>2016-12-01</td>
-				 		<td>口袋训练师</td>
-				 		<td>ioa.Spirit.Monster.en</td>
-				 		<td>美国</td>
-				 		<td>Facebook</td>
-			 		</tr>
-			 		<tr>
-				 		<td>2016-12-01</td>
-				 		<td>口袋训练师</td>
-				 		<td>ioa.Spirit.Monster.en</td>
-				 		<td>美国</td>
-				 		<td>Facebook</td>
-			 		</tr>
-			 		<tr>
-				 		<td>2016-12-01</td>
-				 		<td>口袋训练师</td>
-				 		<td>ioa.Spirit.Monster.en</td>
-				 		<td>美国</td>
-				 		<td>Facebook</td>
-			 		</tr>
-			 		<tr>
-				 		<td>2016-12-01</td>
-				 		<td>口袋训练师</td>
-				 		<td>ioa.Spirit.Monster.en</td>
-				 		<td>美国</td>
-				 		<td>Facebook</td>
-			 		</tr>
-			 		<tr>
-				 		<td>2016-12-01</td>
-				 		<td>口袋训练师</td>
-				 		<td>ioa.Spirit.Monster.en</td>
-				 		<td>美国</td>
-				 		<td>Facebook</td>
-			 		</tr>
-			 	</tbody>
-			</table>
-			<div style="text-align: center;">
-				 <nav aria-label="Page navigation">
-	        		<ul class="pagination" id="pagination"></ul>
-	    		</nav>
-    		</div>
-    		</div>
-        </div>
-      </div>
-	</div>
-</div>
-  		</div>
-  		</div>
-  		<footer class=">pull-left footer">
-  			<p class="col-md-12">
-  				<hr class="divider">
-  				Copyright &COPY; 2015 <a href="#">Gravitano</a>
-  			</p>
-  		</footer>
-  	</div>
-	<script type="text/javascript">
-	$(function () {
-  	var obj = $('#pagination').twbsPagination({
-  		 		first: '首页',  
-        		prev: '前一页',  
-        		next: '下一页',  
-        		last: '尾页',  
-	            totalPages: 35,
-	            visiblePages: 10,
-	            onPageClick: function (event, page) {
-	                console.info(page);
-	            }
-    });
-  	 $("tr:gt(0):even").attr("bgColor","#ffffff");
-  	 $("tr:gt(0):odd").attr("bgColor","#dff0d8");
+    </form>
 
 
-	   
-    $("#dimentions-select").select2({
-				placeholder: '不选',
-				allowClear: true
-			}).on('select2-open', function()
-				{
-				$(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
-			});
-			$("#cgis-select").select2({
-				placeholder: '不选',
-				allowClear: true
-			}).on('select2-open', function()
-				{
-				$(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
-			});
-			$("#pns-select").select2({
-				placeholder: '不选',
-				allowClear: true
-			}).on('select2-open', function()
-				{
-				$(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
-			});
-			$("#chs-select").select2({
-				placeholder: '不选',
-				allowClear: true
-			}).on('select2-open', function()
-				{
-				$(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
-			});
-			$("#campaigns-select").select2({
-				placeholder: '不选',
-				allowClear: true
-			}).on('select2-open', function()
-				{
-				$(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
-			});
-			$("#ad_sets-select").select2({
-				placeholder: '不选',
-				allowClear: true
-			}).on('select2-open', function()
-				{
-				$(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
-			});
-			$("#ctys-select").select2({
-				placeholder: '不选',
-				allowClear: true
-			}).on('select2-open', function()
-				{
-				$(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
-			})
-  });
-	</script>
+    <!--
+        @tagName: tag-table
+        @attributes:
+            data-id
+            data-ajaxType
+            data-url
+            data-pageSize
+            data-cookie
+            data-reqCookie
+            data-otherReqData
+    -->
+    <tag-table
+        data-id="table"
+        data-ajaxType="GET"
+        data-url="/js/tablePage1.json"
+        data-pageSize="50"
+        data-cookie="gameAllCookies"
+        data-reqCookie="gameSingleCookies"
+        data-otherReqData='{"stat":1}'></tag-tabl>
+    
+
+    <script src="js/tag-pubFunc.js"></script>
+    <script src="js/tag-confirm.js"></script>
+    <script src="js/tag-select.js"></script>
+    <script src="js/tag-datePicker.js"></script>
+    <script src="js/tag-table.js"></script>
+        </div>
+
+    </div>
 </body>
+
 </html>
