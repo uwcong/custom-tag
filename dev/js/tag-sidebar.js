@@ -1,11 +1,11 @@
 /**
- * 侧边栏
+ * 顶栏和边栏
  * @author Cc
  * @date 2016/12/14
  */
-var Sidebar = {
-  // 数据配置
-  config: [
+var TopSidebar = {
+  // 边栏配置
+  sidebarConfig: [
     {
       li1: 'Dashboard',
       li1Fa: 'fa-dashboard',
@@ -57,7 +57,6 @@ var Sidebar = {
     }
   ],
 
-
   /**
    * public function 初始化组件
    * @author Cc
@@ -69,44 +68,16 @@ var Sidebar = {
     // 创建元素实例回调
     proto.createdCallback = function() {
       // console.log("createdCallback");
-      var li1Index = this.getAttribute('data-li1Index');
-      var li2Index = this.getAttribute('data-li2Index');
+      var sbli1Index = this.getAttribute('data-sbli1Index');
+      var sbli2Index = this.getAttribute('data-sbli2Index');
 
-      // debugger
-      // var temp1 = '<li class="level1"><a href="index.html" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>';
-      // var temp2 = '<li class="level1"><a href="#"><i class="fa fa-table fa-fw"></i> 市场概况<span class="fa arrow"></span></a><ul class="nav nav-second-level collapse"><li class="level2"><a href="#2">市场日概况</a></li></ul></li>';
-      // var temp3 = ''
-      // <li class="leve1 active">
-      // 	<a href="#"><i class="fa fa-table fa-fw"></i> 运营概况<span class="fa arrow"></span></a>
-      // 	<ul class="nav nav-second-level collapse in">
-      // 		<li>
-      // 			<a href="blank.html" class="active">运营所有游戏概况</a>
-      // 		</li>
-      // 		<li>
-      // 			<a href="login.html">运营单个游戏概况</a>
-      // 		</li>
-      // 		<li>
-      // 			<a href="login.html">运营游戏区概况</a>
-      // 		</li>
-      // 		<li>
-      // 			<a href="login.html">运营游戏包卸载概况</a>
-      // 		</li>
-      // 		<li>
-      // 			<a href="login.html">储值概况</a>
-      // 		</li>
-      // 		<li>
-      // 			<a href="login.html">订单实时概况</a>
-      // 		</li>
-      // 		<li>
-      // 			<a href="login.html">坏账订单概况</a>
-      // 		</li>
-      // 	</ul>
-        
-      // </li>
+
+      var logoTemp = '<div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">Jodo Data System</a></div>';
+      var navbarTemp = '<ul class="nav navbar-top-links navbar-right"><li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu dropdown-user"><li><a href="#"><i class="fa fa-user fa-fw"></i> 设置</a></li><li><a href="#"><i class="fa fa-gear fa-fw"></i> 帮助</a></li><li class="divider"></li><li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> 登出</a></li></ul></li></ul>';
 
       var temp = '', li1ActiveCls, li2ActiveCls;
-      that.config.forEach(function(item, index) {
-        li1ActiveCls = parseInt(li1Index) === index ? ' class="active"' : '';
+      that.sidebarConfig.forEach(function(item, index) {
+        li1ActiveCls = parseInt(sbli1Index) === index ? ' class="active"' : '';
 
         // 无折叠
         if(item.li1Url) {
@@ -116,7 +87,7 @@ var Sidebar = {
         else {
           var item2Temp = '';
           item.li2List.forEach(function(item2, index2) {
-            if(li2Index) li2ActiveCls = parseInt(li2Index) === index2 ? ' class="active"' : '';
+            if(sbli2Index) li2ActiveCls = parseInt(sbli2Index) === index2 ? ' class="active"' : '';
             
             item2Temp += '<li class="li2"><a href="' + item2.li2Url + '"' + li2ActiveCls + '>' + item2.li2 + '</a></li>';
           });
@@ -124,10 +95,9 @@ var Sidebar = {
           temp += '<li' + li1ActiveCls + '><a href="#"><i class="fa ' + item.li1Fa + ' fa-fw"></i> ' + item.li1 + '<span class="fa arrow"></span></a><ul class="nav nav-second-level collapse">' + item2Temp + '</ul></li>'
         }
       });
-
-      this.innerHTML = '<div class="navbar-default sidebar" role="navigation"><div class="sidebar-nav navbar-collapse"><ul class="nav in" id="side-menu">' + temp + '</ul></div></div>';
-
-      // $('.li1')[li1Index]
+      var sidebarTemp = '<div class="navbar-default sidebar" role="navigation"><div class="sidebar-nav navbar-collapse"><ul class="nav in" id="side-menu">' + temp + '</ul></div></div>';
+      
+      this.innerHTML = '<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">' + logoTemp + navbarTemp + sidebarTemp + '</nav>';
 
     };
 
@@ -137,9 +107,9 @@ var Sidebar = {
     };
 
     // debugger
-    document.registerElement('tag-sidebar', {prototype: proto});
+    document.registerElement('tag-topSidebar', {prototype: proto});
   },
   
 }
 
-Sidebar.init();
+TopSidebar.init();
