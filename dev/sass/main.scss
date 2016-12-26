@@ -41,7 +41,7 @@
 
 /* tag-table */
 .dataTables_wrapper {
-	overflow-x: auto;
+	overflow: hidden;
 }
 table.dataTable {
 	border-collapse: collapse;
@@ -59,8 +59,17 @@ table.dataTable td {
 	border: 1px solid #ddd!important;
     white-space: nowrap;
 }
+table.dataTable th {
+	position: relative;
+}
 table.dataTable th .hideColumn {
-	padding-left: 10px;
+	position: absolute;
+	top: 16px;
+	right: 5px;
+	width: 7px;
+	height: 7px;
+	background: url(../resource/images/delCols.png) no-repeat;
+	background-size: contain;
 }
 table.dataTable thead .header{
 	background-image: url(../resource/images/sort_both.png);
@@ -74,6 +83,13 @@ table.dataTable thead .headerSortUp {
 table.dataTable thead .headerSortDown {
 	background-image: url(../resource/images/sort_asc.png);
 }
+table.dataTable td {
+	color: #555;
+}
+table.dataTable.no-footer {
+	border: 0;
+}
+
 .btn-toolbar {
 	margin: 10px 0;
 }

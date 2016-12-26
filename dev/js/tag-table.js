@@ -116,7 +116,7 @@ var Table = {
       var headData = obj['data'].head;
       console.log(headData);
       for(var i=0; i<headData.length; i++) {
-        headTemp += '<th>' + headData[i] + '<span class="hideColumn" title="隐藏" data-column=' + i + '>×</span></th>';
+        headTemp += '<th>' + headData[i] + '<span class="hideColumn" title="隐藏" data-column=' + i + '></span></th>';
       }
       dom.innerHTML = '<div class="m_dataTable">' + tableToolbar + '<table id="' + obj['id'] + '" class="display dt-bootstrap" cellspacing="0" width="100%"><thead><tr>' + headTemp + '</tr></thead><tbody></tbody></table></div>';
       
@@ -221,14 +221,35 @@ var Table = {
         "columns": columns
       });
 
-      // trigger
+      // 设置table的横向滚动态
+      // display: block时才能出现滚动条
+      // display: table时才能在内容少的时候自适应宽度撑满table
+      var _setTableLayout = function() {
+        if($('table.dataTable tbody').width() > $('.dataTables_wrapper').width()) {
+          $('table.dataTable').css({
+            'display': 'block',
+            'overflow-x': 'auto' 
+          })
+        } else {
+          $('table.dataTable').css({
+            'display': 'table'
+          })
+        }
+      }
+      _setTableLayout();
+
+      // 显示隐藏列
       $('.hideColumn').bind('click', function(e) {
         e.stopPropagation();
         dataTableContent.column($(this).attr('data-column')).visible(false);
+        _setTableLayout();
+
       });
       $('.showAllColumns').bind('click', function() {
         dataTableContent.columns().visible(true);
+        _setTableLayout();
       })
+
     }
 
     // 初次加载，返回数据前
