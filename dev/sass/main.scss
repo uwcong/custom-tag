@@ -15,7 +15,7 @@
 /* base 基础样式，一般改这个，看不同项目的需要 */
 @import "_base";
 
-
+/* tag-topSidebar */
 .navbar-brand {
 	width: 124px;
 	height: 37px;
@@ -32,6 +32,11 @@
 		background-color: #1d8ae5!important;
 		color: #fff!important;
 	}
+}
+
+/* tag-select */
+.select2-selection__choice {
+	white-space: normal;
 }
 
 /* tag-table */
