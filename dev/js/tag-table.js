@@ -56,16 +56,17 @@ var Table = {
    */
   requestData: function() {
     var that = this;
-    
     // 组装request data
+    // 读取cookies
     this.config.reqData = window.PubFunc.getCookie(this.config.reqCookie);
+    if(this.config.reqData.hasOwnProperty("undefined")) this.config.reqData = {};
+
     this.config.reqData['pageSize'] = this.config.pageSize;
     this.config.reqData['currentPage'] = 1;
     var otherReqData = JSON.parse(this.config.otherReqData);
     for(var i in otherReqData) {
       this.config.reqData[i] = otherReqData[i];
     }
-    if(this.config.reqData.hasOwnProperty("undefined"))  return false;
 
     // 返回数据前
     that._renderData(this, {
