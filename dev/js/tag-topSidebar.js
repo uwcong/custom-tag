@@ -95,9 +95,9 @@ var TopSidebar = {
           temp += '<li' + li1ActiveCls + '><a href="#"><i class="fa ' + item.li1Fa + ' fa-fw"></i> ' + item.li1 + '<span class="fa arrow"></span></a><ul class="nav nav-second-level collapse">' + item2Temp + '</ul></li>'
         }
       });
-      var sidebarTemp = '<div class="navbar-default sidebar" role="navigation"><div class="sidebar-nav navbar-collapse"><ul class="nav in" id="side-menu">' + temp + '</ul></div></div>';
+      var sidebarTemp = '<div class="navbar-default sidebar" role="navigation"><div class="sidebar-nav navbar-collapse" id="js_sidebar"><ul class="nav in" id="side-menu">' + temp + '</ul></div></div>';
       
-      this.innerHTML = '<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">' + logoTemp + navbarTemp + sidebarTemp + '</nav>';
+      this.innerHTML = '<nav class="navbar navbar-default navbar-fixed-top" role="navigation">' + logoTemp + navbarTemp + sidebarTemp + '</nav>';
 
     };
 
@@ -113,3 +113,4 @@ var TopSidebar = {
 }
 
 TopSidebar.init();
+// $('js_sideBar').niceScroll();

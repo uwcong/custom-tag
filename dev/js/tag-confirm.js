@@ -14,12 +14,12 @@ var Confirm = {
     // 创建元素实例回调
     proto.createdCallback = function() {
       // console.log("createdCallback");
-      var id = this.getAttribute('data-id');
-      var cookieKey = this.getAttribute('data-cookie');
+      var staticData = JSON.parse(this.getAttribute('data-staticData'));
+      console.log(staticData);
       // debugger
-      this.innerHTML = '<button type="submit" class="btn btn-primary col-md-offset-1" id="' + id + '">查询</button>';
+      this.innerHTML = '<button type="submit" class="btn btn-primary col-md-offset-1" id="' + staticData.id + '">查询</button>';
 
-      $('#'+id).bind('click', function(e) {
+      $('#'+staticData.id).bind('click', function(e) {
         e.stopPropagation();
         e.preventDefault();
 
@@ -33,8 +33,8 @@ var Confirm = {
 
         var $form = $(this).parents('form');
         var cookieStr = $form.serialize();
-        cookieStr ? window.PubFunc.setCookie(cookieKey, cookieStr, 7) : alert('请至少选择一项');
-        console.log(window.PubFunc.getCookie(cookieKey));
+        cookieStr ? window.PubFunc.setCookie(staticData.reqCookie, cookieStr, 7) : alert('请至少选择一项');
+        console.log(window.PubFunc.getCookie(staticData.reqCookie));
 
         window.Table.requestData();
         alert("已点击查询" + cookieStr);

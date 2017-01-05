@@ -21,6 +21,7 @@
 	<script src="resource/js/sb-admin-2.min.js"></script>
 	<script src="resource/js/metisMenu.min.js"></script>
     
+    <script src="resource/js/jquery.nicescroll.min.js"></script>
     <script src="resource/js/select2.min.js"></script>
     <script src="resource/js/jquery.dataTables.min.js"></script>
     <script src="resource/js/jquery.tablesorter.min.js"></script>
@@ -124,10 +125,12 @@
                     <!--
                         @tagName: tag-datePicker
                         @attributes:
-                            data-id
-                            data-cookie
+                            data-staticData: {
+                                "id": String,
+                                "reqCookie": String
+                            }
                     -->
-                    <tag-confirm data-id="submit" data-cookie="gameSingleCookies"></tag-confirm>
+                    <tag-confirm data-staticData='{"id": "submit","reqCookie": "gameSingleCookies"}'></tag-confirm>
                 </div>
             </form>
 
@@ -135,22 +138,24 @@
             <!--
                 @tagName: tag-table
                 @attributes:
-                    data-id
-                    data-ajaxType
-                    data-url
-                    data-pageSize
-                    data-cookie
-                    data-reqCookie
-                    data-otherReqData
+                    data-staticData: {
+                        "id": String,
+                        "orderColumn": Number,
+                        "orderDir": Number,
+                        "reqCookie": String,
+                        "ajaxType": String,
+                        "url": String
+                    }
+                    data-reqData: {
+                        "pageSize": String,
+                        "currentPage": Number,
+                        "stat": Number
+                    }
             -->
             <tag-table
-                data-id="table"
-                data-ajaxType="GET"
-                data-url="/js/tablePage1.json"
-                data-pageSize="50"
-                data-cookie="gameAllCookies"
-                data-reqCookie="gameSingleCookies"
-                data-otherReqData='{"stat":1}'></tag-tabl>
+                data-staticData='{"id": "table","orderColumn": 1,"orderDir": 1,"reqCookie": "gameSingleCookies","ajaxType": "GET","url": "/js/tablePage1.json"}'
+                data-reqData='{"pageSize": "50","currentPage": 1,"stat": 1}'>
+            </tag-tabl>
         </div>
 
     </div>
