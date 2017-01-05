@@ -57,20 +57,14 @@ var PubFunc = {
 }
 
 window.onload = function() {
-  
-  // $('#content').niceScroll({
-  //   background: 'red',
-  //   // horizrailenabled: false
-  // });
 
-  // $('#table').niceScroll({
-  //   background: 'red'
-  // });
 }
 
 $(function() {
-  var ns = $('#content').getNiceScroll();
-  console.log(ns);
-  ns['0'].opt.horizrailenabled = "false";
-  console.log(ns['0'].opt.horizrailenabled);
+  // var ns = $('#content').getNiceScroll(0);
+  // console.log(ns);
+  // console.log(ns.opt.cursorcolor);
+  // ns.opt.background = 'rgba(255,0,0)';
+  // if(ns['0'].opt.horizrailenabled) ns['0'].railh.scrollable = false;
+  // console.log(ns['0'].opt.background);
 })
