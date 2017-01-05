@@ -7,13 +7,8 @@ var TopSidebar = {
   // 边栏配置
   sidebarConfig: [
     {
-      li1: 'Dashboard',
-      li1Fa: 'fa-dashboard',
-      li1Url: '#0',
-    },
-    {
       li1: '市场概况',
-      li1Fa: 'fa-th-large',
+      li1Fa: 'fa-table',
       li2List: [
         {
           li2: '市场日概况',
@@ -23,7 +18,7 @@ var TopSidebar = {
     },
     {
       li1: '运营概况',
-      li1Fa: 'fa-th-large',
+      li1Fa: 'fa-table',
       li2List: [
         {
           li2: '运营所有游戏概况',
@@ -72,32 +67,35 @@ var TopSidebar = {
       var sbli2Index = this.getAttribute('data-sbli2Index');
 
 
-      var logoTemp = '<div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">Jodo Data System</a></div>';
-      var navbarTemp = '<ul class="nav navbar-top-links navbar-right"><li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu dropdown-user"><li><a href="#"><i class="fa fa-user fa-fw"></i> 设置</a></li><li><a href="#"><i class="fa fa-gear fa-fw"></i> 帮助</a></li><li class="divider"></li><li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> 登出</a></li></ul></li></ul>';
+      var logoTemp = '<div class="navbar-header col-md-2"><a class="navbar-brand" href="index.html"><strong>MIN</strong>IMAL</a><div class="sidebar-collapse"><a href="#"><i class="fa fa-bars"></i></a></div></div>';
+      
+      var navbarTemp = '<ul class="nav navbar-nav quick-actions"><li class="dropdown divided user" id="current-user"><a class="dropdown-toggle options" data-toggle="dropdown" href="#">Jodo管理员 <i class="fa fa-caret-down"></i></a><ul class="dropdown-menu arrow settings"><li><a href="#"><i class="fa fa-user"></i> 设置</a></li><li class="divider"></li><li><a href="#"><i class="fa fa-power-off"></i> 登出</a></li></ul></li></ul>';
 
       var temp = '', li1ActiveCls, li2ActiveCls;
       that.sidebarConfig.forEach(function(item, index) {
-        li1ActiveCls = parseInt(sbli1Index) === index ? ' class="active"' : '';
-
         // 无折叠
         if(item.li1Url) {
-          temp += '<li><a href="' + item.li1Url + '"' + li1ActiveCls + '><i class="fa ' + item.li1Fa + ' fa-fw"></i> ' + item.li1 + '</a></li>';
+          li1ActiveCls = parseInt(sbli1Index) === index ? ' class="active"' : '';
+
+          temp += '<li' + li1ActiveCls + '><a href="' + item.li1Url + '"><i class="fa ' + item.li1Fa + '"></i> ' + item.li1 + '</a></li>';
         } 
         // 一级折叠
         else {
+          li1ActiveCls = parseInt(sbli1Index) === index ? ' open active' : '';
+
           var item2Temp = '';
           item.li2List.forEach(function(item2, index2) {
             if(sbli2Index) li2ActiveCls = parseInt(sbli2Index) === index2 ? ' class="active"' : '';
-            
-            item2Temp += '<li class="li2"><a href="' + item2.li2Url + '"' + li2ActiveCls + '>' + item2.li2 + '</a></li>';
+
+            item2Temp += '<li' + li2ActiveCls + '><a href="' + item2.li2Url + '"><i class="fa fa-caret-right"></i> ' + item2.li2 + '</a></li>';
           });
 
-          temp += '<li' + li1ActiveCls + '><a href="#"><i class="fa ' + item.li1Fa + ' fa-fw"></i> ' + item.li1 + '<span class="fa arrow"></span></a><ul class="nav nav-second-level collapse">' + item2Temp + '</ul></li>'
+          temp += '<li class="dropdown' + li1ActiveCls + '"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa ' + item.li1Fa + '"></i> ' + item.li1 + ' <b class="fa fa-plus dropdown-plus"></b></a><ul class="dropdown-menu animated fadeInLeft">' + item2Temp + '</ul></li>'
         }
       });
-      var sidebarTemp = '<div class="navbar-default sidebar" role="navigation"><div class="sidebar-nav navbar-collapse"><ul class="nav in" id="side-menu">' + temp + '</ul></div></div>';
+      var sidebarTemp = '<ul class="nav navbar-nav side-nav" id="sidebar"><li class="navigation" id="navigation"><ul class="menu">' + temp + '</ul></li></ul>';
       
-      this.innerHTML = '<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">' + logoTemp + navbarTemp + sidebarTemp + '</nav>';
+      this.innerHTML = '<div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">' + logoTemp + '<div class="navbar-collapse">' + navbarTemp + sidebarTemp + '</div></div>';
 
     };
 
