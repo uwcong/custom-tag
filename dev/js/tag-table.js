@@ -8,7 +8,9 @@ var Table = {
   localVal: {
     tableSelf: "",
     staticDataObj: {},
-    reqDataObj: {}
+    reqDataObj: {},
+    columns: [],
+    tableHead: []
   },
 
   /**
@@ -41,8 +43,9 @@ var Table = {
 
   /**
    * public function 请求数据
+   * 
    */
-  requestData: function() {
+  requestData: function(isTriggered) {
     var that = this;
     var _this = this.localVal.tableSelf,
         _staticDataObj = this.localVal.staticDataObj,
@@ -57,7 +60,13 @@ var Table = {
     }
 
     // 返回数据前
-    this._renderData(_this, _staticDataObj);
+    this._renderTable();
+
+    // 再次触发更新表格
+    if(isTriggered === true) {
+      this._mainTable(reqData);
+      return false;
+    }
 
     // 返回数据后
     $.ajax({
@@ -70,7 +79,7 @@ var Table = {
         console.log('%csuccess', 'background: green; color: white;');
         // 为了延迟看loading
         setTimeout(function() {
-          that._renderData(_this, _staticDataObj, reqData, res.data);
+          that._renderTable(reqData, res.data);
         }, 1000)
           
       },
@@ -82,129 +91,141 @@ var Table = {
 
 
   /**
-   * private function 渲染选项数据
-   * @param {object} dom
-   * @param {object} obj
+   * private function 渲染表格
+   * 注：因为表头columns是动态渲染的，所以初始化表格时存在两次数据请求：一次返回表头，一次返回主体
+   * 
    */
-  _renderData: function(__this, __staticDataObj, __reqDataObj, renderDataObj) {
-    var that = this;
-    var headTemp = "";
-    var tableToolbar = '<div class="btn-toolbar"><div class="btn-group pull-right focus-btn-group"><button class="btn btn-success">导出Excel</button><button class="btn btn-success showAllColumns">显示所有列</button></div></div>';
+  _renderTable: function(__reqDataObj, renderTableObj) {
+    var __this = this.localVal.tableSelf,
+        __staticDataObj = this.localVal.staticDataObj;
     
-    // 初次加载，返回数据后
-    if(renderDataObj && renderDataObj.sort.length > 0) {
-      // 添加表头
-      var headData = renderDataObj.head;
-      for(var i=0; i<headData.length; i++) {
-        headTemp += '<th>' + headData[i] + '<span class="hideColumn" title="隐藏" data-column=' + i + '></span></th>';
-      }
-      __this.innerHTML = '<div class="m_dataTable">' + tableToolbar + '<table id="' + __staticDataObj.id + '" class="display dt-bootstrap" cellspacing="0" width="100%"><thead><tr>' + headTemp + '</tr></thead><tbody></tbody></table></div>';
-      
-      // 只对当前页进行排序，引入tablesorter
-      $('#'+__staticDataObj.id).tablesorter();
-
+    // 返回数据前
+    $(__this).html('<div class="m_dataTable"><div class="cssload-loader"><div class="cssload-top"></div><div class="cssload-bottom"></div><div class="cssload-line"></div></div></div>');
+    
+    // 返回数据后
+    if(renderTableObj && renderTableObj.head.length > 0) {
       // 设置列表表头字段顺序
-      console.log(renderDataObj);
-      var columns = [], sort = renderDataObj.sort;
+      var sort = renderTableObj.sort;
       for(var i=0; i<sort.length; i++) {
-        columns.push({
+        this.localVal.columns.push({
           "data": sort[i]
         })
       }
-      
-      // 渲染表格主体
-      var dataTableContent = $('#'+__staticDataObj.id).DataTable({
-        "pageLength": renderDataObj.page.pageSize + 1, // 算上“合计”一行，加1
-        "lengthChange": false,
-        "searching": false,
-        "language": that._dataTableConfig.lang,
-        // "order": [[1, "desc"]],
-        "ordering": false, // 因为开启了serverSide，所以排序也会发起ajax请求，但又因为只对当前页进行排序，因此要禁用这个排序
-        "processing": true,
-        "serverSide": true,  //启用服务器端分页
-        "ajax": function(data, callback, settings) {
-          // console.log(data);
-          var param = __reqDataObj;
-          param.currentPage = (data.start / data.length) + 1;
 
-          $.ajax({
-            type: __staticDataObj.ajaxType,
-            url: __staticDataObj.url,
-            cache: false,  //禁用缓存
-            data: JSON.stringify(param),  //传入组装的参数
-            dataType: "json",
-            contentType: "application/json",
-            success: function (result) {
-                //封装返回数据
-                var returnData = {};
-                returnData.draw = data.draw; //这里直接自行返回了draw计数器,应该由后台返回
-                returnData.recordsTotal = result.data.page.recordCount; //返回数据全部记录
-                returnData.recordsFiltered = result.data.page.recordCount; //后台不实现过滤功能，每次查询均视作全部结果
-                
-                var resList = result.data.page.resList;
-                resList.push(result.data.total); // 加上“总计”行
-                
-                returnData.data = resList; //返回的数据列表
-                //console.log(returnData);
-                //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                callback(returnData);
+      // 存储表头
+      this.localVal.tableHead = renderTableObj.head;
 
-                // 动态插入数据排序
-                $('#'+__staticDataObj.id).trigger("update");
-                // 初始化排序
-                setTimeout(function() {
-                  console.log(__staticDataObj);
-                  var sorting = [[__staticDataObj.orderColumn,__staticDataObj.orderDir]];
-                  //     cookies = window.PubFunc.getCookie(obj['cookieKey']);
-                  //     // debugger
-                  // if(!cookies.hasOwnProperty("undefined")) {
-                  //   sorting = [[parseInt(cookies.orderColumn[0]),parseInt(cookies.orderDir[0])]]
-                  // }
-                  $('#'+__staticDataObj.id).trigger("sorton",[sorting]);
-                }, 1)   
-            }
-          })
-        },
-        // 设置列表表头字段顺序
-        "columns": columns
-      });
+      this._mainTable(__reqDataObj);
+    }
 
-      // 设置table的横向滚动态
-      // display: block时才能出现滚动条
-      // display: table时才能在内容少的时候自适应宽度撑满table
-      var _setTableLayout = function() {
-        if($('table.dataTable tbody').width() > $('.dataTables_wrapper').width()) {
-          $('table.dataTable').css({
-            'display': 'block',
-            'overflow-x': 'auto' 
-          })
-        } else {
-          $('table.dataTable').css({
-            'display': 'table'
-          })
-        }
+  },
+
+  /**
+   * private function 渲染表格主体，操作表格
+   * 
+   */
+  _mainTable: function(___reqDataObj) {
+    var that = this,
+        ___this = this.localVal.tableSelf
+        ___staticDataObj = this.localVal.staticDataObj,
+        columns = this.localVal.columns;
+
+    // 添加表头
+    var tableToolbar = '<div class="btn-toolbar"><div class="btn-group pull-right focus-btn-group"><button class="btn btn-success">导出Excel</button><button class="btn btn-success showAllColumns">显示所有列</button></div></div>';
+    var headTemp = "",
+        headData = this.localVal.tableHead;
+    for(var i=0; i<headData.length; i++) {
+      headTemp += '<th>' + headData[i] + '<span class="hideColumn" title="隐藏" data-column=' + i + '></span></th>';
+    }
+    $(___this).html('<div class="m_dataTable">' + tableToolbar + '<table id="' + ___staticDataObj.id + '" class="display dt-bootstrap" cellspacing="0" width="100%"><thead><tr>' + headTemp + '</tr></thead><tbody></tbody></table></div>');
+
+    // 渲染主体
+    var dataTableContent = $('#'+___staticDataObj.id).DataTable({
+      "pageLength": parseInt(this.localVal.reqDataObj.pageSize),
+      "lengthChange": false,
+      "searching": false,
+      "language": that._dataTableConfig.lang,
+      // "order": [[1, "desc"]],
+      "ordering": false, // 因为开启了serverSide，所以排序也会发起ajax请求，但又因为只对当前页进行排序，因此要禁用这个排序
+      "processing": true,
+      "serverSide": true,  //启用服务器端分页
+      "ajax": function(data, callback, settings) {
+        // console.log(data);
+        var param = ___reqDataObj;
+        console.log("%cmaintable", "background: red", data);
+        param.currentPage = (data.start / data.length) + 1;
+
+        $.ajax({
+          type: ___staticDataObj.ajaxType,
+          url: ___staticDataObj.url,
+          cache: false,  //禁用缓存
+          data: JSON.stringify(param),  //传入组装的参数
+          dataType: "json",
+          contentType: "application/json",
+          success: function (result) {
+              console.log("%cmaintableReqSucc", "background: green", result);
+              //封装返回数据
+              var returnData = {};
+              returnData.draw = data.draw; //这里直接自行返回了draw计数器,应该由后台返回
+              returnData.recordsTotal = result.data.page.recordCount; //返回数据全部记录
+              returnData.recordsFiltered = result.data.page.recordCount; //后台不实现过滤功能，每次查询均视作全部结果
+              
+              var resList = result.data.page.resList;
+              resList.push(result.data.total); // 加上“总计”行，用于显示，但不计入pageLength，见上
+              returnData.data = resList; //返回的数据列表
+              // console.log(returnData);
+              //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+              //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+              callback(returnData);
+
+              // 动态插入数据排序
+              $('#'+___staticDataObj.id).trigger("update").tablesorter();
+              // 初始化排序
+              setTimeout(function() {
+                // console.log(___staticDataObj);
+                var sorting = [[___staticDataObj.orderColumn,___staticDataObj.orderDir]];
+                //     cookies = window.PubFunc.getCookie(obj['cookieKey']);
+                //     // debugger
+                // if(!cookies.hasOwnProperty("undefined")) {
+                //   sorting = [[parseInt(cookies.orderColumn[0]),parseInt(cookies.orderDir[0])]]
+                // }
+                $('#'+___staticDataObj.id).trigger("sorton",[sorting]);
+              }, 1)   
+          }
+        })
+      },
+      // 设置列表表头字段顺序
+      "columns": columns
+    });
+
+    // 设置table的横向滚动态
+    // display: block时才能出现滚动条
+    // display: table时才能在内容少的时候自适应宽度撑满table
+    var _setTableLayout = function() {
+      if($('table.dataTable tbody').width() > $('.dataTables_wrapper').width()) {
+        $('table.dataTable').css({
+          'display': 'block',
+          'overflow-x': 'auto' 
+        })
+      } else {
+        $('table.dataTable').css({
+          'display': 'table'
+        })
       }
+    }
+    _setTableLayout();
+
+    // 显示隐藏列
+    $('.hideColumn').bind('click', function(e) {
+      e.stopPropagation();
+      dataTableContent.column($(this).attr('data-column')).visible(false);
       _setTableLayout();
 
-      // 显示隐藏列
-      $('.hideColumn').bind('click', function(e) {
-        e.stopPropagation();
-        dataTableContent.column($(this).attr('data-column')).visible(false);
-        _setTableLayout();
-
-      });
-      $('.showAllColumns').bind('click', function() {
-        dataTableContent.columns().visible(true);
-        _setTableLayout();
-      })
-
-    }
-
-    // 初次加载，返回数据前
-    else {
-      __this.innerHTML = '<div class="m_dataTable"><div class="cssload-loader"><div class="cssload-top"></div><div class="cssload-bottom"></div><div class="cssload-line"></div></div></div>';
-    }
+    });
+    $('.showAllColumns').bind('click', function() {
+      dataTableContent.columns().visible(true);
+      _setTableLayout();
+    })
   },
 
 

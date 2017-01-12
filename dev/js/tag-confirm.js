@@ -15,8 +15,6 @@ var Confirm = {
     proto.createdCallback = function() {
       // console.log("createdCallback");
       var staticData = JSON.parse(this.getAttribute('data-staticData'));
-      console.log(staticData);
-      // debugger
       this.innerHTML = '<button type="submit" class="btn btn-primary col-md-offset-1" id="' + staticData.id + '">查询</button>';
 
       $('#'+staticData.id).bind('click', function(e) {
@@ -36,7 +34,7 @@ var Confirm = {
         cookieStr ? window.PubFunc.setCookie(staticData.reqCookie, cookieStr, 7) : alert('请至少选择一项');
         console.log(window.PubFunc.getCookie(staticData.reqCookie));
 
-        window.Table.requestData();
+        window.Table.requestData(true);
         alert("已点击查询" + cookieStr);
       });
       
