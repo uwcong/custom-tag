@@ -10,11 +10,13 @@ var Table = {
     staticDataObj: {},
     reqDataObj: {},
     columns: [],
-    tableHead: []
+    tableHead: [],
+    isFirstRender: true
   },
 
   /**
    * public function 初始化组件
+   * 
    */
   init: function() {
     console.log('table init');
@@ -46,6 +48,7 @@ var Table = {
 
   /**
    * public function 请求数据
+   * @param {boolean} isTriggered // 判断是否手动触发
    * 
    */
   requestData: function(isTriggered) {
@@ -97,10 +100,11 @@ var Table = {
 
   /**
    * private function 渲染表格
-   * 注：因为表头columns是动态渲染的，所以初始化表格时存在两次数据请求：一次返回表头，一次返回主体
+   * @param {object} __reqDataObj // 请求参数
+   * @param {object} resData // 返回数据
    * 
    */
-  _renderTable: function(__reqDataObj, renderTableObj) {
+  _renderTable: function(__reqDataObj, resData) {
     var __this = this.localVal.tableSelf,
         __staticDataObj = this.localVal.staticDataObj;
     
@@ -108,9 +112,9 @@ var Table = {
     $(__this).html('<div class="m_dataTable"><div class="cssload-loader"><div class="cssload-top"></div><div class="cssload-bottom"></div><div class="cssload-line"></div></div></div>');
     
     // 返回数据后
-    if(renderTableObj && renderTableObj.head.length > 0) {
+    if(resData && resData.head.length > 0) {
       // 设置列表表头字段顺序
-      var sort = renderTableObj.sort;
+      var sort = resData.sort;
       for(var i=0; i<sort.length; i++) {
         this.localVal.columns.push({
           "data": sort[i]
@@ -118,18 +122,20 @@ var Table = {
       }
 
       // 存储表头
-      this.localVal.tableHead = renderTableObj.head;
+      this.localVal.tableHead = resData.head;
 
-      this._mainTable(__reqDataObj);
+      this._mainTable(__reqDataObj, resData);
     }
 
   },
 
   /**
    * private function 渲染表格主体，操作表格
+   * @param {object} ___reqDataObj // 请求参数
+   * @param {object} _resData  // 返回数据
    * 
    */
-  _mainTable: function(___reqDataObj) {
+  _mainTable: function(___reqDataObj, _resData) {
     var that = this,
         ___this = this.localVal.tableSelf
         ___staticDataObj = this.localVal.staticDataObj,
@@ -152,6 +158,7 @@ var Table = {
       "language": that._dataTableConfig.lang,
       // "order": [[1, "desc"]],
       "ordering": false, // 因为开启了serverSide，所以排序也会发起ajax请求，但又因为只对当前页进行排序，因此要禁用这个排序
+      "columns": columns, // 设置列表表头字段顺序
       "processing": true,
       "serverSide": true,  //启用服务器端分页
       "ajax": function(data, callback, settings) {
@@ -159,8 +166,14 @@ var Table = {
         var param = ___reqDataObj;
         console.log("%cmaintable", "background: red", data);
         param.currentPage = (data.start / data.length) + 1;
-
         if(this.prepareDataFunc) this.prepareDataFunc(__this,param);//回调
+        
+        // 初次加载
+        if(that.localVal.isFirstRender) {
+          that._getTable(data, _resData, callback);
+          that.localVal.isFirstRender = false;
+          return false;
+        }
 
         $.ajax({
           type: ___staticDataObj.ajaxType,
@@ -172,38 +185,13 @@ var Table = {
           success: function (result) {
               console.log("%cmaintableReqSucc", "background: green", result);
               //封装返回数据
-              var returnData = {};
-              returnData.draw = data.draw; //这里直接自行返回了draw计数器,应该由后台返回
-              returnData.recordsTotal = result.data.page.recordCount; //返回数据全部记录
-              returnData.recordsFiltered = result.data.page.recordCount; //后台不实现过滤功能，每次查询均视作全部结果
-              
-              var resList = result.data.page.resList;
-              if(result.data.total) resList.push(result.data.total); // 加上“总计”行，用于显示，但不计入pageLength，见上
-              returnData.data = resList; //返回的数据列表
-              // console.log(returnData);
-              //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-              //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-              callback(returnData);
-
-              // 动态插入数据排序
-              $('#'+___staticDataObj.id).trigger("update").tablesorter();
-              // 初始化排序
-              setTimeout(function() {
-                // console.log(___staticDataObj);
-                var sorting = [[___staticDataObj.orderColumn,___staticDataObj.orderDir]];
-                //     cookies = window.PubFunc.getCookie(obj['cookieKey']);
-                //     // debugger
-                // if(!cookies.hasOwnProperty("undefined")) {
-                //   sorting = [[parseInt(cookies.orderColumn[0]),parseInt(cookies.orderDir[0])]]
-                // }
-                $('#'+___staticDataObj.id).trigger("sorton",[sorting]);
-              }, 1)   
+              that._getTable(data, result.data, callback);
           }
         })
       },
-      // 设置列表表头字段顺序
-      "columns": columns
+      
     });
+
 
     // 设置table的横向滚动态
     // display: block时才能出现滚动条
@@ -233,6 +221,38 @@ var Table = {
       dataTableContent.columns().visible(true);
       _setTableLayout();
     })
+  },
+
+
+  /**
+   * private function 主体数据插入
+   * @param {object} dataTableAjaxData // dataTable自带的ajax data
+   * @param {object} __resData // 返回数据
+   * @param {function} _callback // dataTable回调方法
+   * 
+   */
+  _getTable: function(dataTableAjaxData, __resData, _callback) {
+    var ____staticDataObj = this.localVal.staticDataObj;
+    var returnData = {};
+    returnData.draw = dataTableAjaxData.draw; //这里直接自行返回了draw计数器,应该由后台返回
+    returnData.recordsTotal = __resData.page.recordCount; //返回数据全部记录
+    returnData.recordsFiltered = __resData.page.recordCount; //后台不实现过滤功能，每次查询均视作全部结果
+    
+    var resList = __resData.page.resList;
+    if(__resData.total) resList.push(__resData.total); // 加上“总计”行，用于显示，但不计入pageLength，见上
+    returnData.data = resList; //返回的数据列表
+    // console.log(returnData);
+    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+    _callback(returnData);
+
+    // 动态插入数据排序
+    $('#'+____staticDataObj.id).trigger("update").tablesorter();
+    // 初始化排序
+    setTimeout(function() {
+      var sorting = [[____staticDataObj.orderColumn,____staticDataObj.orderDir]];
+      $('#'+____staticDataObj.id).trigger("sorton",[sorting]);
+    }, 1)   
   },
 
 

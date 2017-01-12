@@ -7,7 +7,7 @@ var Selector = {
 
   /**
    * public function 初始化组件
-   * @author Cc
+   * 
    */
   init: function() {
     var that = this;

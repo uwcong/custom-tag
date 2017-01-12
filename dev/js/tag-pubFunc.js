@@ -7,6 +7,7 @@ var PubFunc = {
   
   /**
    * public function 设置cookie
+   * 
    */
   setCookie: function(cookieKey, cookieStr, day) {
     $.cookie(cookieKey, cookieStr, { expires: day })
@@ -14,6 +15,7 @@ var PubFunc = {
 
   /**
    * public function 获取cookie
+   * 
    */
   getCookie: function(cookieKey) {
     var multiKeyArr = window.decodeURIComponent($.cookie('multiKeys')).split('&');
