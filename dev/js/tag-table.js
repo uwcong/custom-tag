@@ -27,6 +27,9 @@ var Table = {
       that.localVal.tableSelf = this;
       that.localVal.staticDataObj = JSON.parse(this.getAttribute('data-staticData'));
       that.localVal.reqDataObj = JSON.parse(this.getAttribute('data-reqData'));
+
+      eval("that.prepareDataFunc = " + this.getAttribute('data-prepareDataFunc') ); // 额外对请求的数据做处理
+      eval("that.afterGetDataFunc = " +  this.getAttribute('data-afterGetDataFunc') );// 收到数据后回调
       
       that.requestData();
     };
@@ -58,6 +61,8 @@ var Table = {
     for(var _reqDataObjItem in _reqDataObj) {
       reqData[_reqDataObjItem] = _reqDataObj[_reqDataObjItem];
     }
+
+    if(that.prepareDataFunc) that.prepareDataFunc(_this,reqData);
 
     // 返回数据前
     this._renderTable();
@@ -155,6 +160,8 @@ var Table = {
         console.log("%cmaintable", "background: red", data);
         param.currentPage = (data.start / data.length) + 1;
 
+        if(this.prepareDataFunc) this.prepareDataFunc(__this,param);//回调
+
         $.ajax({
           type: ___staticDataObj.ajaxType,
           url: ___staticDataObj.url,
@@ -171,7 +178,7 @@ var Table = {
               returnData.recordsFiltered = result.data.page.recordCount; //后台不实现过滤功能，每次查询均视作全部结果
               
               var resList = result.data.page.resList;
-              resList.push(result.data.total); // 加上“总计”行，用于显示，但不计入pageLength，见上
+              if(result.data.total) resList.push(result.data.total); // 加上“总计”行，用于显示，但不计入pageLength，见上
               returnData.data = resList; //返回的数据列表
               // console.log(returnData);
               //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染

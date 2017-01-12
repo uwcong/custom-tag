@@ -21,13 +21,17 @@ var Selector = {
       var title = this.getAttribute('data-title');
       var name = this.getAttribute('data-name');
       var cookieKey = this.getAttribute('data-cookie');
-
+      var defaultTips = this.getAttribute('data-defaultTips');
+      if(defaultTips == undefined){
+    	  defaultTips = ''
+      }
       that._renderData(this, {
         'selectType': selectType,
         'id': id,
         'title': title,
         'name': name,
         'data': $(this).html(),
+        'tips': defaultTips,
         'cookie': window.PubFunc.getCookie(cookieKey)
       });
     };
@@ -59,10 +63,9 @@ var Selector = {
     }
     var temp = obj['data'];
 
-    dom.innerHTML = '<label class="control-label col-md-3">' + obj['title'] + '</label><div class="col-md-9"><select class="form-control" id="' + obj['id'] + '" name="' + obj['name'] + '" ' + selectTypeAttr + '>' + temp + '</select>';
-
+    dom.innerHTML = '<label class="control-label col-sm-3">' + obj['title'] + '</label><div class="col-sm-9"><select class="form-control" id="' + obj['id'] + '" name="' + obj['name'] + '" ' + selectTypeAttr + '>' + temp + '</select>';
     $('#'+obj['id']).select2({
-      placeholder: 'please select',
+      placeholder: obj['tips'],
       allowClear: true
     });
 
