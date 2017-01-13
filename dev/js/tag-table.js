@@ -173,7 +173,7 @@ var Table = {
           that._getTable(data, _resData, callback);
           return false;
         }
-        debugger
+
         // dataTable本身组件的操作触发，更新表格
         $.ajax({
           type: ___staticDataObj.ajaxType,
@@ -253,11 +253,6 @@ var Table = {
       var sorting = [[____staticDataObj.orderColumn,____staticDataObj.orderDir]];
       $('#'+____staticDataObj.id).trigger("sorton",[sorting]);
     }, 1);
-
-    // young.luo
-    if(this.afterGetDataFunc) {
-      this.afterGetDataFunc(this,__resData);
-    }
   },
 
 

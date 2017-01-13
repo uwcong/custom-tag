@@ -63,7 +63,7 @@ var Selector = {
     }
     var temp = obj['data'];
 
-    dom.innerHTML = '<label class="control-label col-sm-3">' + obj['title'] + '</label><div class="col-sm-9"><select class="form-control" id="' + obj['id'] + '" name="' + obj['name'] + '" ' + selectTypeAttr + '>' + temp + '</select>';
+    dom.innerHTML = '<label>' + obj['title'] + '</label><div><select class="form-control" id="' + obj['id'] + '" name="' + obj['name'] + '" ' + selectTypeAttr + '>' + temp + '</select>';
     $('#'+obj['id']).select2({
       placeholder: obj['tips'],
       allowClear: true
