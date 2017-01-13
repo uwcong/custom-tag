@@ -119,96 +119,101 @@ table.dataTable.no-footer {
 	min-height: 300px;
 }
 
+
 // loading
-.cssload-loader {
+.cssload-container {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	height: 40px;
-	width: 40px;
-	margin: -20px 0 0 -20px;
-	animation: cssload-loader 1s cubic-bezier(.8,0,.2,1) infinite;
-	-webkit-animation: cssload-loader 1s cubic-bezier(.8,0,.2,1) infinite;
+	width: 117px;
+	height: 88px;
+	margin: -44px -58px;
 }
-
-.cssload-top {
-	animation: cssload-top 1s linear infinite;
-	-webkit-animation: cssload-top 1s linear infinite;
-	border-top: 19px solid #0a62b5;
-	border-right: 19px solid transparent;
-	border-left: 19px solid transparent;
-	height: 0px;
-	width: 1px;
-	transform-origin: 50% 100%;	
-	-webkit-transform-origin: 50% 100%;
-}
-
-.cssload-bottom {
-	animation: cssload-bottom 1s linear infinite;
-	-webkit-animation: cssload-bottom 1s linear infinite;
-	border-right: 19px solid transparent;
-	border-bottom: 19px solid #0a62b5;
-	border-left: 19px solid transparent;
-	height: 0px;
-	width: 1px;
-	transform: scale(0);	
-	-webkit-transform: scale(0);
-	transform-origin: 50% 100%;
-	-webkit-transform-origin: 50% 100%;
-}
-
-.cssload-line {
-	animation: cssload-line 1s linear infinite;
-	-webkit-animation: cssload-line 1s linear infinite;
-	border-left: 1px dotted #0a62b5;
-	height: 0px;
-	width: 0px;
+.cssload-dot {
+	background: #0a62b5;
+	border-radius: 50%; 
+	width: 29px;
+	height: 29px;
 	position: absolute;
-	top: 19px;
-	left: 19px;
+	bottom: 29px;
+	left: 26px;
+	transform-origin: center bottom;
+		-o-transform-origin: center bottom;
+		-ms-transform-origin: center bottom;
+		-webkit-transform-origin: center bottom;
+		-moz-transform-origin: center bottom;
+	animation: cssload-dot 0.69s ease-in-out infinite;
+		-o-animation: cssload-dot 0.69s ease-in-out infinite;
+		-ms-animation: cssload-dot 0.69s ease-in-out infinite;
+		-webkit-animation: cssload-dot 0.69s ease-in-out infinite;
+		-moz-animation: cssload-dot 0.69s ease-in-out infinite;
 }
 
 
-@keyframes cssload-loader {
-	90% { transform: rotate(0deg); }
-	100% { transform: rotate(180deg); }
+.step {
+	position: absolute;
+	width: 29px;
+	height: 29px;
+	border-top: 2px solid #0a62b5;
+	top: 0;
+	right:0;
 }
 
-@-webkit-keyframes cssload-loader {
-	90% { -webkit-transform: rotate(0deg); }
-	100% { -webkit-transform: rotate(180deg); }
+#cssload-s1 { border-color: red;animation: cssload-anim 2.07s linear infinite;
+		-webkit-animation: cssload-anim 2.07s linear infinite;}
+#cssload-s2 { border-color: #ff7a00;animation: cssload-anim 2.07s linear infinite -0.69s;
+		-webkit-animation: cssload-anim 2.07s linear infinite -0.69s;}
+#cssload-s3 { border-color: green;animation: cssload-anim 2.07s linear infinite -1.38s;
+		-webkit-animation: cssload-anim 2.07s linear infinite -1.38s;}
+
+@keyframes cssload-dot {
+ 0% { transform: scale(1,.7); }
+ 20% { transform: scale(.7,1.2); }
+ 40% { transform: scale(1,1);} 
+ 50% { bottom: 97px;} 
+ 46% { transform: scale(1,1);} 
+ 80% { transform: scale(.7,1.2);} 
+ 90% { transform: scale(.7,1.2);} 
+ 100% { transform: scale(1,0.7);}
 }
 
-@keyframes cssload-top {
-	90% { transform: scale(0); }
-	100% { transform: scale(0);}
+@-webkit-keyframes cssload-dot {
+ 0% { -webkit-transform: scale(1,.7); }
+ 20% { -webkit-transform: scale(.7,1.2); }
+ 40% { -webkit-transform: scale(1,1);} 
+ 50% { bottom: 97px;} 
+ 46% { -webkit-transform: scale(1,1);} 
+ 80% { -webkit-transform: scale(.7,1.2);} 
+ 90% { -webkit-transform: scale(.7,1.2);} 
+ 100% { -webkit-transform: scale(1,0.7);}
 }
 
-@-webkit-keyframes cssload-top {
-	90% { -webkit-transform: scale(0); }
-	100% { -webkit-transform: scale(0);}
+@keyframes cssload-anim { 
+	0% { 
+		opacity: 0;
+		top: 0; 
+		right: 0; 
+	}
+	50% { opacity: 1; }
+	100% { 
+		top: 88px; 
+		right: 88px;
+		opacity: 0;
+	}
 }
 
-@keyframes cssload-bottom {
-	10% { transform: scale(0); }
-	90% { transform: scale(1); }
-	100% { transform: scale(1); }
-}
-
-@-webkit-keyframes cssload-bottom {
-	10% { -webkit-transform: scale(0); }
-	90% { -webkit-transform: scale(1); }
-	100% { -webkit-transform: scale(1); }
-}
-
-@keyframes cssload-line {
-	10% { height: 19px; }
-	100% { height: 19px; }
-}
-
-@-webkit-keyframes cssload-line {
-	10% { height: 19px; }
-	100% { height: 19px; }
+@-webkit-keyframes cssload-anim { 
+	0% { 
+		opacity: 0;
+		top: 0; 
+		right: 0; 
+	}
+	50% { opacity: 1; }
+	100% { 
+		top: 88px; 
+		right: 88px;
+		opacity: 0;
+	}
 }
 
 

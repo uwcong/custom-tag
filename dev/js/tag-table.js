@@ -85,7 +85,7 @@ var Table = {
         // 为了延迟看loading
         setTimeout(function() {
           that._renderTable(reqData, res.data);
-        }, 1000);
+        }, 200000);
 
         // young.luo
         if(that.afterGetDataFunc) {
@@ -247,7 +247,7 @@ var Table = {
    * 
    */
   _tableLoading: function(dom) {
-    $(dom).html('<div class="m_dataTable"><div class="cssload-loader"><div class="cssload-top"></div><div class="cssload-bottom"></div><div class="cssload-line"></div></div></div>');
+    $(dom).html('<div class="m_dataTable"><div class="cssload-container"><div class="cssload-dot"></div><div class="step" id="cssload-s1"></div><div class="step" id="cssload-s2"></div><div class="step" id="cssload-s3"></div></div></div>');
   },
 
 
