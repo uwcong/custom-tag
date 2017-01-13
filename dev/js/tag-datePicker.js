@@ -14,9 +14,11 @@ var DatePicker = {
     // 创建元素实例回调
     proto.createdCallback = function() {
       // console.log("createdCallback");
-      var cookieKey = this.getAttribute('data-cookie');
+      var id = this.getAttribute('data-id'),
+          name = this.getAttribute('data-name'),
+          cookieKey = this.getAttribute('data-cookie');
       
-      this.innerHTML = '<label for="btime" class="control-label col-md-3">日期</label><div class="col-md-9"><input type="text" id="config-demo" class="form-control" name="time"><i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute;bottom: 10px;right: 24px;top: auto;cursor: pointer;"></i></div>';
+      this.innerHTML = '<label for="btime" class="control-label col-md-3">日期</label><div class="col-md-9"><input type="text" id="' + id + '" class="form-control" name="' + name + '"><i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute;bottom: 10px;right: 24px;top: auto;cursor: pointer;"></i></div>';
 
       var options = {};
       options.ranges = {
@@ -32,7 +34,7 @@ var DatePicker = {
           format: 'YYYY-MM-DD',
           "separator": ","
       }
-      var $input = $('input[name="time"]');
+      var $input = $('input[name="' + name + '"]');
       $input.daterangepicker(options, function(start, end, label) {});
 
       var name = $input.attr('name');
