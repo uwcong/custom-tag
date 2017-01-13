@@ -15,10 +15,11 @@ var DatePicker = {
     proto.createdCallback = function() {
       // console.log("createdCallback");
       var id = this.getAttribute('data-id'),
+          title = this.getAttribute('data-title'),
           name = this.getAttribute('data-name'),
           cookieKey = this.getAttribute('data-cookie');
       
-      this.innerHTML = '<label for="btime" class="control-label col-md-3">日期</label><div class="col-md-9"><input type="text" id="' + id + '" class="form-control" name="' + name + '"><i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute;bottom: 10px;right: 24px;top: auto;cursor: pointer;"></i></div>';
+      this.innerHTML = '<label for="btime" class="control-label col-md-3">' + title + '</label><div class="col-md-9"><input type="text" id="' + id + '" class="form-control" name="' + name + '"><i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute;bottom: 10px;right: 24px;top: auto;cursor: pointer;"></i></div>';
 
       var options = {};
       options.ranges = {
