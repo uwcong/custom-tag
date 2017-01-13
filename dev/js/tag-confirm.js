@@ -15,7 +15,7 @@ var Confirm = {
     proto.createdCallback = function() {
       // console.log("createdCallback");
       var staticData = JSON.parse(this.getAttribute('data-staticData'));
-      this.innerHTML = '<button type="submit" class="btn btn-primary col-md-offset-1" id="' + staticData.id + '">查询</button>';
+      this.innerHTML = '<button type="submit" class="btn btn-primary" id="' + staticData.id + '">查询</button>';
 
       $('#'+staticData.id).bind('click', function(e) {
         e.stopPropagation();

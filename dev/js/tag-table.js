@@ -191,33 +191,16 @@ var Table = {
       
     });
 
-
-    // 设置table的横向滚动态
-    // display: block时才能出现滚动条
-    // display: table时才能在内容少的时候自适应宽度撑满table
-    var _setTableLayout = function() {
-      if($('table.dataTable tbody').width() > $('.dataTables_wrapper').width()) {
-        $('table.dataTable').css({
-          'display': 'block',
-          'overflow-x': 'auto' 
-        })
-      } else {
-        $('table.dataTable').css({
-          'display': 'table'
-        })
-      }
-    }
-
     // 显示隐藏列
     $('.hideColumn').bind('click', function(e) {
       e.stopPropagation();
       dataTableContent.column($(this).attr('data-column')).visible(false);
-      _setTableLayout();
+      this._setTableDynamicStyle();
 
     });
     $('.showAllColumns').bind('click', function() {
       dataTableContent.columns().visible(true);
-      _setTableLayout();
+      this._setTableDynamicStyle();
     })
   },
 
@@ -253,6 +236,8 @@ var Table = {
       var sorting = [[____staticDataObj.orderColumn,____staticDataObj.orderDir]];
       $('#'+____staticDataObj.id).trigger("sorton",[sorting]);
     }, 1);
+
+    this._setTableDynamicStyle();
   },
 
 
@@ -263,6 +248,28 @@ var Table = {
    */
   _tableLoading: function(dom) {
     $(dom).html('<div class="m_dataTable"><div class="cssload-loader"><div class="cssload-top"></div><div class="cssload-bottom"></div><div class="cssload-line"></div></div></div>');
+  },
+
+
+  /**
+   * private function 设置表格动态样式
+   * 
+   */
+  _setTableDynamicStyle: function() {
+    // 设置table的横向滚动态
+    // display: block时才能出现滚动条
+    // display: table时才能在内容少的时候自适应宽度撑满table
+    if($('table.dataTable tbody').width() > $('.dataTables_wrapper').width()) {
+      $('table.dataTable').css({
+        'display': 'block',
+        'overflow-x': 'auto' 
+      })
+    } else {
+      $('table.dataTable').css({
+        'display': 'table'
+      })
+    }
+
   },
 
 
