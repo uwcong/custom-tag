@@ -11,7 +11,8 @@ var Table = {
     reqDataObj: {},
     columns: [],
     tableHead: [],
-    isFirstRender: true
+    isFirstRender: true, // 判断是否首次渲染
+    isSearch: false // 判断是否点击查询
   },
 
   /**
@@ -60,25 +61,19 @@ var Table = {
     // 读取cookies中form表单的参数
     var reqData = window.PubFunc.getCookie(_staticDataObj.reqCookie);
     if(reqData.hasOwnProperty("undefined")) return false;
+
+    // 点击查询加载表格
+    if(isTriggered) {
+      this.localVal.isSearch = true;
+    }
+
+    // 返回数据前
+    this._tableLoading(_this);
     
     // 组装request data，主要是翻页相关的和额外的参数
     for(var _reqDataObjItem in _reqDataObj) {
       reqData[_reqDataObjItem] = _reqDataObj[_reqDataObjItem];
     }
-
-    // young.luo
-    if(that.prepareDataFunc) that.prepareDataFunc(_this,reqData);
-    
-    // 返回数据前
-    this._renderTable();
-
-    // 再次触发更新表格
-    if(isTriggered === true) {
-      this._mainTable(reqData);
-      return false;
-    }
-
-    // 返回数据后
     $.ajax({
       type: _staticDataObj.ajaxType,
       url: _staticDataObj.url,
@@ -101,6 +96,9 @@ var Table = {
         console.log('%cerror', 'background: red; color: white;');
       }
     });
+
+    // young.luo
+    if(that.prepareDataFunc) that.prepareDataFunc(_this,reqData);
   },
 
 
@@ -111,14 +109,8 @@ var Table = {
    * 
    */
   _renderTable: function(__reqDataObj, resData) {
-    var __this = this.localVal.tableSelf,
-        __staticDataObj = this.localVal.staticDataObj;
-    
-    // 返回数据前
-    $(__this).html('<div class="m_dataTable"><div class="cssload-loader"><div class="cssload-top"></div><div class="cssload-bottom"></div><div class="cssload-line"></div></div></div>');
-    
-    // 返回数据后
     if(resData && resData.head.length > 0) {
+      this.localVal.columns = []; // 重置列表表头字段顺序
       // 设置列表表头字段顺序
       var sort = resData.sort;
       for(var i=0; i<sort.length; i++) {
@@ -132,7 +124,6 @@ var Table = {
 
       this._mainTable(__reqDataObj, resData);
     }
-
   },
 
   /**
@@ -176,13 +167,14 @@ var Table = {
         // young.luo 回调
         if(this.prepareDataFunc) this.prepareDataFunc(__this,param);
 
-        // 初次加载
-        if(that.localVal.isFirstRender) {
-          that._getTable(data, _resData, callback);
+        // 初次加载或点击查询，更新表格
+        if(that.localVal.isFirstRender || that.localVal.isSearch) {
           that.localVal.isFirstRender = false;
+          that._getTable(data, _resData, callback);
           return false;
         }
-
+        debugger
+        // dataTable本身组件的操作触发，更新表格
         $.ajax({
           type: ___staticDataObj.ajaxType,
           url: ___staticDataObj.url,
@@ -192,13 +184,7 @@ var Table = {
           contentType: "application/json",
           success: function (result) {
               console.log("%cmaintableReqSucc", "background: green", result);
-              //封装返回数据
               that._getTable(data, result.data, callback);
-
-              // young.luo
-              if(that.afterGetDataFunc) {
-              	that.afterGetDataFunc(that,result);
-              }
           }
         })
       },
@@ -221,7 +207,6 @@ var Table = {
         })
       }
     }
-    _setTableLayout();
 
     // 显示隐藏列
     $('.hideColumn').bind('click', function(e) {
@@ -245,6 +230,8 @@ var Table = {
    * 
    */
   _getTable: function(dataTableAjaxData, __resData, _callback) {
+    this.localVal.isSearch = false; // 重置为非点击查询
+
     var ____staticDataObj = this.localVal.staticDataObj;
     var returnData = {};
     returnData.draw = dataTableAjaxData.draw; //这里直接自行返回了draw计数器,应该由后台返回
@@ -265,7 +252,22 @@ var Table = {
     setTimeout(function() {
       var sorting = [[____staticDataObj.orderColumn,____staticDataObj.orderDir]];
       $('#'+____staticDataObj.id).trigger("sorton",[sorting]);
-    }, 1)   
+    }, 1);
+
+    // young.luo
+    if(this.afterGetDataFunc) {
+      this.afterGetDataFunc(this,__resData);
+    }
+  },
+
+
+  /**
+   * private function 等待表格数据
+   * @param {object} dom // table自身
+   * 
+   */
+  _tableLoading: function(dom) {
+    $(dom).html('<div class="m_dataTable"><div class="cssload-loader"><div class="cssload-top"></div><div class="cssload-bottom"></div><div class="cssload-line"></div></div></div>');
   },
 
 
