@@ -85,7 +85,7 @@ var Table = {
         // 为了延迟看loading
         setTimeout(function() {
           that._renderTable(reqData, res.data);
-        }, 200000);
+        }, 1500);
 
         // young.luo
         if(that.afterGetDataFunc) {
