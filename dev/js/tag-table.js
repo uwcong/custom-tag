@@ -195,12 +195,12 @@ var Table = {
     $('.hideColumn').bind('click', function(e) {
       e.stopPropagation();
       dataTableContent.column($(this).attr('data-column')).visible(false);
-      this._setTableDynamicStyle();
+      that._setTableDynamicStyle();
 
     });
     $('.showAllColumns').bind('click', function() {
       dataTableContent.columns().visible(true);
-      this._setTableDynamicStyle();
+      that._setTableDynamicStyle();
     })
   },
 
