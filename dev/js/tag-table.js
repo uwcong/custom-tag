@@ -30,6 +30,7 @@ var Table = {
       that.localVal.staticDataObj = JSON.parse(this.getAttribute('data-staticData'));
       that.localVal.reqDataObj = JSON.parse(this.getAttribute('data-reqData'));
 
+      // young.luo
       eval("that.prepareDataFunc = " + this.getAttribute('data-prepareDataFunc') ); // 额外对请求的数据做处理
       eval("that.afterGetDataFunc = " +  this.getAttribute('data-afterGetDataFunc') );// 收到数据后回调
       
@@ -65,8 +66,9 @@ var Table = {
       reqData[_reqDataObjItem] = _reqDataObj[_reqDataObjItem];
     }
 
+    // young.luo
     if(that.prepareDataFunc) that.prepareDataFunc(_this,reqData);
-
+    
     // 返回数据前
     this._renderTable();
 
@@ -88,8 +90,12 @@ var Table = {
         // 为了延迟看loading
         setTimeout(function() {
           that._renderTable(reqData, res.data);
-        }, 1000)
-          
+        }, 1000);
+
+        // young.luo
+        if(that.afterGetDataFunc) {
+        	that.afterGetDataFunc(that,res);
+        }
       },
       error: function() {
         console.log('%cerror', 'background: red; color: white;');
@@ -166,8 +172,10 @@ var Table = {
         var param = ___reqDataObj;
         console.log("%cmaintable", "background: red", data);
         param.currentPage = (data.start / data.length) + 1;
-        if(this.prepareDataFunc) this.prepareDataFunc(__this,param);//回调
-        
+
+        // young.luo 回调
+        if(this.prepareDataFunc) this.prepareDataFunc(__this,param);
+
         // 初次加载
         if(that.localVal.isFirstRender) {
           that._getTable(data, _resData, callback);
@@ -186,6 +194,11 @@ var Table = {
               console.log("%cmaintableReqSucc", "background: green", result);
               //封装返回数据
               that._getTable(data, result.data, callback);
+
+              // young.luo
+              if(that.afterGetDataFunc) {
+              	that.afterGetDataFunc(that,result);
+              }
           }
         })
       },
