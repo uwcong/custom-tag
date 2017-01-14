@@ -44,7 +44,7 @@ var Selector = {
   _renderData: function(dom, obj) {
     // 设置单选、多选属性
     var selectTypeAttr = "";
-    dom.innerHTML = '<label class="control-label col-md-4">' + obj['title'] + '</label><input id="' + obj['id'] + '" type="checkbox" name="' + obj['name'] + '" checked />';
+    dom.innerHTML = '<label>' + obj['title'] + '</label><div><input id="' + obj['id'] + '" type="checkbox" name="' + obj['name'] + '" checked /></div>';
     var mystate = true;
     if(obj['cookie'] && obj['name'] in obj['cookie']) {
         var valueArr = obj['cookie'][obj['name']];
@@ -55,7 +55,7 @@ var Selector = {
         }
     }
     $('#'+obj['id']).bootstrapSwitch({
-    	size:'mini',
+    	size:'normal',
 		onInit:function(){
 			if($(this).val() == 'on'){
 				$(this).val("1"); 

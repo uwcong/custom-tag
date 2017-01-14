@@ -14,6 +14,7 @@
 	<link href="resource/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="resource/css/select2.min.css" rel="stylesheet">
     <link href="resource/css/daterangepicker.css" rel="stylesheet"/>
+    <link href="resource/css/bootstrap-switch.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
 
     <script src="resource/js/jquery-3.1.1.min.js"></script>
@@ -28,6 +29,7 @@
     <script src="resource/js/jquery.cookie.js"></script>
     <script src="resource/js/moment.min.js"></script>
     <script src="resource/js/daterangepicker.js"></script>
+    <script src="resource/js/bootstrap-switch.min.js"></script>
 </head>
 
 <body>
@@ -127,6 +129,11 @@
                             <option value="option3">单选2.3</option>
                         </tag-select>
                     </div>
+                    
+                    <div class="col-md-3 form-group">
+                        <tag-switch data-id="newjd" data-title="新版JODO" data-name="newjd" data-cookie="marketDayCookies">
+                        </tag-switch>
+                    </div>
 
                 </div>
                 <div class="row">
@@ -138,8 +145,9 @@
                                 "reqCookie": String
                             }
                     -->
-                    <div class="col-md-3">
-                        <tag-confirm data-staticData='{"id": "submit","reqCookie": "gameSingleCookies"}'></tag-confirm>
+                    <div class="col-md-3 form-group">
+                        <tag-confirm data-staticData='{"id": "submit","reqCookie": "gameSingleCookies"}'>
+                        </tag-confirm>
                     </div>
                 </div>
             </form>
@@ -176,6 +184,7 @@
     <script src="js/tag-select.js"></script>
     <script src="js/tag-datePicker.js"></script>
     <script src="js/tag-table.js"></script>
+    <script src="js/tag-switch.js"></script>
 </body>
 
 </html>
