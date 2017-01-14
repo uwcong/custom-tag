@@ -84,15 +84,19 @@ var Table = {
       dataType: "json",
       contentType: "application/json",
       success: function(res) {
-        console.log('%csuccess', 'background: green; color: white;');
-        // 为了延迟看loading
-        setTimeout(function() {
-          that._renderTable(reqData, res.data);
-        }, 1500);
+        if(res.code === 200) {
+          console.log('%csuccess', 'background: green; color: white;');
+          // 为了延迟看loading
+          setTimeout(function() {
+            that._renderTable(reqData, res.data);
+          }, 1500);
 
-        // young.luo
-        if(that.afterGetDataFunc) {
-        	that.afterGetDataFunc(that,res);
+          // young.luo
+          if(that.afterGetDataFunc) {
+            that.afterGetDataFunc(that,res);
+          }
+        } else {
+          alert(res.msg);
         }
       },
       error: function() {
@@ -141,8 +145,8 @@ var Table = {
 
     // 添加表头
     var excelbtn = "";
-    if(___staticDataObj.excelFunc){
-    	excelbtn = '<button class="btn btn-success" onclick="' + ___staticDataObj.excelFunc + '">导出Excel</button>';
+    if(___staticDataObj.exportExcel){
+    	excelbtn = '<button class="btn btn-success" id="exportExcel">导出Excel</button>';
     }
     var tableToolbar = '<div class="btn-toolbar"><div class="btn-group pull-right focus-btn-group">' + excelbtn + '<button class="btn btn-success showAllColumns">显示所有列</button></div></div>';
     var headTemp = "",
@@ -187,9 +191,13 @@ var Table = {
           data: JSON.stringify(param),  //传入组装的参数
           dataType: "json",
           contentType: "application/json",
-          success: function (result) {
-              console.log("%cmaintableReqSucc", "background: green", result);
-              that._getTable(data, result.data, callback);
+          success: function (res) {
+            if(res.code === 200) {
+              console.log("%cmaintableReqSucc", "background: green", res);
+              that._getTable(data, res.data, callback);
+            } else {
+              alert(res.msg);
+            }
           }
         })
       },
@@ -206,7 +214,27 @@ var Table = {
     $('.showAllColumns').bind('click', function() {
       dataTableContent.columns().visible(true);
       that._setTableDynamicStyle();
-    })
+    });
+
+    // 导出Excel
+    $('#exportExcel').bind('click', function() {
+      $.ajax({
+        type: ___staticDataObj.ajaxType,
+        url: ___staticDataObj.url,
+        cache: false,
+        data: JSON.stringify(___reqDataObj),
+        isExportExcel: true,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (res) {
+          if(res.code === 200) {
+            console.log("%cexportExcelDataGet", "background: orange", res);
+          } else {
+            alert(res.msg);
+          }
+        }
+      });
+    });
   },
 
 
