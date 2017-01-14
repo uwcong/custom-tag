@@ -218,11 +218,19 @@ var Table = {
 
     // 导出Excel
     $('#exportExcel').bind('click', function() {
+      // 防止选中后没有点击查询，直接点击导出，所以这里重新组装请求参数
+      window.PubFunc.setCookie(___staticDataObj.reqCookie, $('form').serialize(), 7);
+      var reReqData = window.PubFunc.getCookie(___staticDataObj.reqCookie);
+      for(var i in that.localVal.reqDataObj) {
+        reReqData[i] = that.localVal.reqDataObj[i];
+      }
+      reReqData['isExportExcel'] = true;
+      
       $.ajax({
         type: ___staticDataObj.ajaxType,
         url: ___staticDataObj.url,
         cache: false,
-        data: JSON.stringify(___reqDataObj),
+        data: JSON.stringify(reReqData),
         isExportExcel: true,
         dataType: "json",
         contentType: "application/json",
