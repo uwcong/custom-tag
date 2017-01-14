@@ -40,10 +40,6 @@ var TopSidebar = {
           li2Url: 'game_server.do'
         },
         {
-          li2: '运营游戏包卸载概况',
-          li2Url: 'game_uninstall.do'
-        },
-        {
           li2: '储值概况',
           li2Url: 'game_recharge.do'
         },

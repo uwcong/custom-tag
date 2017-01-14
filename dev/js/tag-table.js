@@ -30,7 +30,7 @@ var Table = {
       that.localVal.tableSelf = this;
       that.localVal.staticDataObj = JSON.parse(this.getAttribute('data-staticData'));
       that.localVal.reqDataObj = JSON.parse(this.getAttribute('data-reqData'));
-
+      
       // young.luo
       eval("that.prepareDataFunc = " + this.getAttribute('data-prepareDataFunc') ); // 额外对请求的数据做处理
       eval("that.afterGetDataFunc = " +  this.getAttribute('data-afterGetDataFunc') );// 收到数据后回调
@@ -74,6 +74,9 @@ var Table = {
     for(var _reqDataObjItem in _reqDataObj) {
       reqData[_reqDataObjItem] = _reqDataObj[_reqDataObjItem];
     }
+	// young.luo
+    if(that.prepareDataFunc) that.prepareDataFunc(_this,reqData);
+    
     $.ajax({
       type: _staticDataObj.ajaxType,
       url: _staticDataObj.url,
@@ -97,8 +100,6 @@ var Table = {
       }
     });
 
-    // young.luo
-    if(that.prepareDataFunc) that.prepareDataFunc(_this,reqData);
   },
 
 
@@ -139,7 +140,11 @@ var Table = {
         columns = this.localVal.columns;
 
     // 添加表头
-    var tableToolbar = '<div class="btn-toolbar"><div class="btn-group pull-right focus-btn-group"><button class="btn btn-success">导出Excel</button><button class="btn btn-success showAllColumns">显示所有列</button></div></div>';
+    var excelbtn = "";
+    if(___staticDataObj.excelFunc){
+    	excelbtn = '<button class="btn btn-success" onclick="' + ___staticDataObj.excelFunc + '">导出Excel</button>';
+    }
+    var tableToolbar = '<div class="btn-toolbar"><div class="btn-group pull-right focus-btn-group">' + excelbtn + '<button class="btn btn-success showAllColumns">显示所有列</button></div></div>';
     var headTemp = "",
         headData = this.localVal.tableHead;
     for(var i=0; i<headData.length; i++) {

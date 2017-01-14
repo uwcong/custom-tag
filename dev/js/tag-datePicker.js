@@ -19,6 +19,11 @@ var DatePicker = {
           name = this.getAttribute('data-name'),
           cookieKey = this.getAttribute('data-cookie');
       
+      if(!id)id = "time";
+      if(!title)title= "日期";
+      if(!name)name = "time";
+      
+      
       this.innerHTML = '<label for="btime">' + title + '</label><div><input type="text" id="' + id + '" class="form-control" name="' + name + '"><i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute;bottom: 10px;right: 24px;top: auto;cursor: pointer;"></i></div>';
 
       var options = {};
