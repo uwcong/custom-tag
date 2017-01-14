@@ -33,7 +33,7 @@ var Table = {
       
       // young.luo
       eval("that.prepareDataFunc = " + this.getAttribute('data-prepareDataFunc') ); // 额外对请求的数据做处理
-      eval("that.afterGetDataFunc = " +  this.getAttribute('data-afterGetDataFunc') );// 收到数据后回调
+      eval("that.afterGetDataFunc = " +  this.getAttribute('data-afterGetDataFunc') ); // 收到数据后回调
       
       that.requestData();
     };
@@ -74,7 +74,8 @@ var Table = {
     for(var _reqDataObjItem in _reqDataObj) {
       reqData[_reqDataObjItem] = _reqDataObj[_reqDataObjItem];
     }
-	// young.luo
+
+	  // young.luo
     if(that.prepareDataFunc) that.prepareDataFunc(_this,reqData);
     
     $.ajax({
@@ -139,7 +140,7 @@ var Table = {
    */
   _mainTable: function(___reqDataObj, _resData) {
     var that = this,
-        ___this = this.localVal.tableSelf
+        ___this = this.localVal.tableSelf,
         ___staticDataObj = this.localVal.staticDataObj,
         columns = this.localVal.columns;
 
@@ -225,6 +226,9 @@ var Table = {
         reReqData[i] = that.localVal.reqDataObj[i];
       }
       reReqData['isExportExcel'] = true;
+
+      // young.luo
+      if(that.prepareDataFunc) that.prepareDataFunc(___this,reReqData);
       
       $.ajax({
         type: ___staticDataObj.ajaxType,
