@@ -22,6 +22,7 @@ var Selector = {
       var name = this.getAttribute('data-name');
       var cookieKey = this.getAttribute('data-cookie');
       var defaultTips = this.getAttribute('data-defaultTips');
+      var isRequired = this.getAttribute('data-isRequired');
       if(defaultTips == undefined){
     	  defaultTips = ''
       }
@@ -32,6 +33,7 @@ var Selector = {
         'name': name,
         'data': $(this).html(),
         'tips': defaultTips,
+        'isRequired': isRequired,
         'cookie': window.PubFunc.getCookie(cookieKey)
       });
     };
@@ -64,7 +66,9 @@ var Selector = {
     var temp = obj['data'];
 
     dom.innerHTML = '<label>' + obj['title'] + '</label><div><select class="form-control" id="' + obj['id'] + '" name="' + obj['name'] + '" ' + selectTypeAttr + '>' + temp + '</select>';
-    $('#'+obj['id']).select2({
+    // 调用select2方法生成选框
+    var $select = $('#'+obj['id']);
+    $select.select2({
       placeholder: obj['tips'],
       allowClear: true
     });
@@ -72,8 +76,27 @@ var Selector = {
     // 从cookies中读取上一次操作中已选中的值
     if(obj['cookie'] && obj['name'] in obj['cookie']) {
       var valueArr = obj['cookie'][obj['name']];
-      $('#'+obj['id']).val(valueArr).trigger('change');
+      $select.val(valueArr).trigger('change');
     }
+
+    // 检测是否必需
+    if(obj['isRequired']) {
+      // 加载时，检测是否必需
+      console.log($select.val());
+      if((obj['selectType'] === 'multi' && $select.val().length === 0) || !$select.val()) $(dom).attr('data-errorTip', '请选择'+obj['title']);
+
+      // 操作改变值时，检测是否必需
+      $select.bind('change', function() {
+        console.log($(this).val());
+        if((obj['selectType'] === 'multi' && $(this).val().length === 0) || !$(this).val()) {
+          $(dom).attr('data-errorTip', '请选择'+obj['title']);
+        } else {
+          $(dom).removeAttr('data-errorTip');
+        }
+      });
+    }
+    
+    
   },
   
 }

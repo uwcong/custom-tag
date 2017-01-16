@@ -20,6 +20,12 @@ var Confirm = {
       $('#'+staticData.id).bind('click', function(e) {
         e.stopPropagation();
         e.preventDefault();
+        
+        // 检测是否有必需项
+        var $errorTips = $('[data-errorTip]');
+        if($errorTips.length > 0) {
+          return alert($errorTips[0].getAttribute('data-errorTip'));
+        }
 
         // 设置多选的name到cookies中，方便后续getCookie()时组装请求数据
         var multiKeyArr = [], multiKeyStr = "";

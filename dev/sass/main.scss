@@ -58,6 +58,17 @@
 		display: none;
 	}
 }
+[data-isRequired] label:first-child {
+	position: relative;
+	padding-left: 8px;
+	&:before {
+		content: '*';
+		position: absolute;
+		left: 0;
+		top: 2px;
+		color: red;
+	}
+}
 
 /* tag-table */
 .dataTables_wrapper {
