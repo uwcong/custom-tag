@@ -235,11 +235,11 @@ var Table = {
         url: ___staticDataObj.url,
         cache: false,
         data: JSON.stringify(reReqData),
-        isExportExcel: true,
         dataType: "json",
         contentType: "application/json",
         success: function (res) {
           if(res.code === 200) {
+        	  window.location.href='download_file.do?file='+ res.data.filename + "&type=2";
             console.log("%cexportExcelDataGet", "background: orange", res);
           } else {
             alert(res.msg);
