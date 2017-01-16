@@ -30,6 +30,8 @@ var Table = {
       that.localVal.tableSelf = this;
       that.localVal.staticDataObj = JSON.parse(this.getAttribute('data-staticData'));
       that.localVal.reqDataObj = JSON.parse(this.getAttribute('data-reqData'));
+      if(!that.localVal.reqDataObj.pageSize) that.localVal.reqDataObj.pageSize = 200;
+      if(!that.localVal.reqDataObj.currentPage) that.localVal.reqDataObj.currentPage = 1;
       
       // young.luo
       eval("that.prepareDataFunc = " + this.getAttribute('data-prepareDataFunc') ); // 额外对请求的数据做处理
@@ -159,21 +161,20 @@ var Table = {
 
     // 渲染主体
     var dataTableContent = $('#'+___staticDataObj.id).DataTable({
-      "pageLength": parseInt(this.localVal.reqDataObj.pageSize),
-      "lengthChange": false,
+      "pageLength": this.localVal.reqDataObj.pageSize,
       "searching": false,
-      "language": that._dataTableConfig.lang,
+      "language": that._dataTableConfig(this.localVal.reqDataObj.pageSize),
       // "order": [[1, "desc"]],
       "ordering": false, // 因为开启了serverSide，所以排序也会发起ajax请求，但又因为只对当前页进行排序，因此要禁用这个排序
       "columns": columns, // 设置列表表头字段顺序
       "processing": true,
       "serverSide": true,  //启用服务器端分页
       "ajax": function(data, callback, settings) {
-        // console.log(data);
-        var param = ___reqDataObj;
         console.log("%cmaintable", "background: red", data);
+        var param = ___reqDataObj;
         param.currentPage = (data.start / data.length) + 1;
-
+        param.pageSize = data.length;
+        
         // young.luo 回调
         if(this.prepareDataFunc) this.prepareDataFunc(__this,param);
 
@@ -183,7 +184,9 @@ var Table = {
           that._getTable(data, _resData, callback);
           return false;
         }
-
+        
+        console.log('%cpage:', "background: pink", param.currentPage);
+        console.log('%clength:', "background: pink", data.length);
         // dataTable本身组件的操作触发，更新表格
         $.ajax({
           type: ___staticDataObj.ajaxType,
@@ -216,6 +219,12 @@ var Table = {
       dataTableContent.columns().visible(true);
       that._setTableDynamicStyle();
     });
+
+    // 每页显示项数
+    $('#js_menuLen').bind('keydown', function(e) {
+      var menuLenVal = $(this).val();
+      if(e.which == "13") dataTableContent.page.len(menuLenVal).draw();  
+    })
 
     // 导出Excel
     $('#exportExcel').bind('click', function() {
@@ -322,10 +331,11 @@ var Table = {
    * private object datatable配置
    * 
    */
-  _dataTableConfig: {
-    lang: {
+  _dataTableConfig: function(menuLen) {
+    return {
       "sProcessing": "处理中...",
-      "sLengthMenu": "每页 _MENU_ 项",
+      // "sLengthMenu": "每页 _MENU_ 项",
+      "sLengthMenu": '每页 <input type="text" class="form-control" id="js_menuLen" value="' + menuLen + '" /> 项',
       "sZeroRecords": "没有匹配结果",
       "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项",
       "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
@@ -347,9 +357,8 @@ var Table = {
           "sSortAscending": ": 以升序排列此列",
           "sSortDescending": ": 以降序排列此列"
       },
-    },
-  },
-
+    }
+  }
 }
 
 Table.init();

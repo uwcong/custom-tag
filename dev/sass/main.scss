@@ -127,6 +127,17 @@ table.dataTable.no-footer {
 	position: relative;
 	min-height: 300px;
 }
+.m_dataTable .dataTables_length {
+	position: absolute;
+	top: -44px;
+	left: 0;
+	height: 34px;;
+}
+.m_dataTable .dataTables_length .form-control {
+	display: inline-block;
+	width: 65px;
+	text-align: center;
+}
 
 
 // loading
