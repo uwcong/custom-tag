@@ -35,7 +35,7 @@ var Confirm = {
         console.log(window.PubFunc.getCookie(staticData.reqCookie));
 
         window.Table.requestData(true);
-        alert("已点击查询" + cookieStr);
+        // alert("已点击查询" + cookieStr);
       });
       
     };
