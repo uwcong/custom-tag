@@ -208,6 +208,20 @@ var Table = {
       
     });
 
+    // fixedHeader
+    new $.fn.dataTable.FixedHeader(dataTableContent, {
+      headerOffset: $('.navbar').height()
+    });
+    // $.each($('table.fixedHeader-floating th'), function(index, item) {
+    //   console.log($(item).width());
+    //   var tdItem = $('table.dataTable tbody tr:first-child td')[index];
+    //   $(item).width($(tdItem).width());
+    // });
+    $('table.dataTable').scroll(function() {
+      var tableScrollLeft = $(this).scrollLeft();
+      $('table.fixedHeader-floating').scrollLeft(tableScrollLeft);
+    });
+
     // 显示隐藏列
     $('.hideColumn').bind('click', function(e) {
       e.stopPropagation();

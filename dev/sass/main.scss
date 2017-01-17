@@ -138,6 +138,9 @@ table.dataTable.no-footer {
 	width: 65px;
 	text-align: center;
 }
+.fixedHeader-floating::-webkit-scrollbar  {
+	display: none;
+}
 
 
 // loading
