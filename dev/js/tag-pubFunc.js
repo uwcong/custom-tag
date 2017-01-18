@@ -13,6 +13,7 @@ var PubFunc = {
     $.cookie(cookieKey, cookieStr, { expires: day })
   },
 
+
   /**
    * public function 获取cookie
    * 
@@ -55,5 +56,19 @@ var PubFunc = {
     }
     return cookiesObj;
   },
+
+
+  /**
+   * public function loading显隐
+   * 
+   */
+  showLoading: function() {
+    $('body').append('<div class="m_dialog" id="js_loading"><div class="mask"></div><div class="cssload-container"><div class="cssload-dot"></div><div class="step" id="cssload-s1"></div><div class="step" id="cssload-s2"></div><div class="step" id="cssload-s3"></div></div></div>');
+
+    $('.m_dialog').height($(document).height());
+  },
+  hideLoading: function() {
+    $('#js_loading').remove();
+  }
   
 }

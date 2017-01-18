@@ -142,10 +142,24 @@ table.dataTable.no-footer {
 	display: none;
 }
 
-
+// dialog
+$dialogZIndex: 10000;
+.m_dialog {
+	position: absolute;
+	z-index: $dialogZIndex;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.m_dialog .mask {
+	@extend .m_dialog;
+	background: rgba(0,0,0,.7);
+} 
 // loading
 .cssload-container {
-	position: absolute;
+	position: fixed;
+	z-index: $dialogZIndex + 10;
 	top: 50%;
 	left: 50%;
 	width: 117px;
@@ -153,7 +167,7 @@ table.dataTable.no-footer {
 	margin: -44px -58px;
 }
 .cssload-dot {
-	background: #0a62b5;
+	background: #fff;
 	border-radius: 50%; 
 	width: 29px;
 	height: 29px;
@@ -177,16 +191,16 @@ table.dataTable.no-footer {
 	position: absolute;
 	width: 29px;
 	height: 29px;
-	border-top: 2px solid #0a62b5;
+	border-top: 2px solid #fff;
 	top: 0;
 	right:0;
 }
 
-#cssload-s1 { border-color: red;animation: cssload-anim 2.07s linear infinite;
+#cssload-s1 { border-color: #fff;animation: cssload-anim 2.07s linear infinite;
 		-webkit-animation: cssload-anim 2.07s linear infinite;}
-#cssload-s2 { border-color: #ff7a00;animation: cssload-anim 2.07s linear infinite -0.69s;
+#cssload-s2 { border-color: #fff;animation: cssload-anim 2.07s linear infinite -0.69s;
 		-webkit-animation: cssload-anim 2.07s linear infinite -0.69s;}
-#cssload-s3 { border-color: green;animation: cssload-anim 2.07s linear infinite -1.38s;
+#cssload-s3 { border-color: #fff;animation: cssload-anim 2.07s linear infinite -1.38s;
 		-webkit-animation: cssload-anim 2.07s linear infinite -1.38s;}
 
 @keyframes cssload-dot {

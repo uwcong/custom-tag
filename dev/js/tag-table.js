@@ -70,7 +70,7 @@ var Table = {
     }
 
     // 返回数据前
-    this._tableLoading(_this);
+    window.PubFunc.showLoading();
     
     // 组装request data，主要是翻页相关的和额外的参数
     for(var _reqDataObjItem in _reqDataObj) {
@@ -91,6 +91,7 @@ var Table = {
           console.log('%csuccess', 'background: green; color: white;');
           // 为了延迟看loading
           setTimeout(function() {
+            window.PubFunc.hideLoading();
             that._renderTable(reqData, res.data);
           }, 1500);
 
@@ -306,16 +307,6 @@ var Table = {
     }, 1);
 
     this._setTableDynamicStyle();
-  },
-
-
-  /**
-   * private function 等待表格数据
-   * @param {object} dom // table自身
-   * 
-   */
-  _tableLoading: function(dom) {
-    $(dom).html('<div class="m_dataTable"><div class="cssload-container"><div class="cssload-dot"></div><div class="step" id="cssload-s1"></div><div class="step" id="cssload-s2"></div><div class="step" id="cssload-s3"></div></div></div>');
   },
 
 
