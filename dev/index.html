@@ -6,12 +6,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Jodo Data System</title>
+    <title>Jodo Data System</title>
 
-	<link href="resource/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<link href="resource/css/sb-admin-2.min.css" rel="stylesheet">
-	<link href="resource/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link href="resource/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="resource/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="resource/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="resource/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="resource/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="resource/css/select2.min.css" rel="stylesheet">
     <link href="resource/css/daterangepicker.css" rel="stylesheet">
     <link href="resource/css/bootstrap-switch.min.css" rel="stylesheet">
@@ -20,9 +20,9 @@
 
     <script src="resource/js/jquery-3.1.1.min.js"></script>
     <script src="resource/js/bootstrap.min.js"></script>
-	<script src="resource/js/sb-admin-2.min.js"></script>
-	<script src="resource/js/metisMenu.min.js"></script>
-    
+    <script src="resource/js/sb-admin-2.min.js"></script>
+    <script src="resource/js/metisMenu.min.js"></script>
+
     <script src="resource/js/jquery.nicescroll.min.js"></script>
     <script src="resource/js/select2.min.js"></script>
     <script src="resource/js/jquery.dataTables.min.js"></script>
@@ -43,29 +43,23 @@
                 data-sbLi1Index // 必填，一级位置
                 data-sbLi2Index // 非必填，二级位置
         -->
-        <tag-topSidebar
-            data-sbLi1Index="2"
-            data-sbLi2Index="1"></tag-topSidebar>
+        <tag-topSidebar data-sbLi1Index="2" data-sbLi2Index="1"></tag-topSidebar>
 
 
-		<!-- 主体内容区域 -->
+        <!-- 主体内容区域 -->
         <div id="page-wrapper">
             <form id="js_searchFrom">
                 <div class="row">
-                    
+
                     <div class="col-md-3 form-group">
                         <!--
                         @tagName: tag-datePicker
                         @attributes:
                                 data-cookie
                         -->
-                        <tag-datePicker
-                        data-id="datePicker1"
-                        data-title="日期title"
-                        data-name="datePicker1"
-                        data-cookie="gameSingleCookies"></tag-datePicker>
+                        <tag-datePicker data-id="datePicker1" data-title="日期title" data-name="datePicker1" data-cookie="gameSingleCookies"></tag-datePicker>
                     </div>
-                    
+
                     <div class="col-md-3 form-group">
                         <!--
                             @tagName: tag-select
@@ -78,29 +72,15 @@
                                 data-defaultTips
                                 data-isRequired
                         -->
-                        <tag-select
-                        data-selectType="multi"
-                        data-id="multiSelect1"
-                        data-title="多选1"
-                        data-name="multiSelect1"
-                        data-defaultTips="选我"
-                        data-isRequired=true
-                        data-cookie="gameSingleCookies">
+                        <tag-select data-selectType="multi" data-id="multiSelect1" data-title="多选1" data-name="multiSelect1" data-defaultTips="选我" data-isRequired=true data-cookie="gameSingleCookies">
                             <option value="option1">多选1.1</option>
                             <option value="option2">多选1.2</option>
-                            <option value="option3">多选1.3</option>    
+                            <option value="option3">多选1.3</option>
                         </tag-select>
                     </div>
 
                     <div class="col-md-3 form-group">
-                        <tag-select
-                        data-selectType="multi"
-                        data-id="multiSelect2"
-                        data-title="多选2"
-                        data-name="multiSelect2"
-                        data-defaultTips="选我"
-                        data-isRequired=true
-                        data-cookie="gameSingleCookies">
+                        <tag-select data-selectType="multi" data-id="multiSelect2" data-title="多选2" data-name="multiSelect2" data-defaultTips="选我" data-isRequired=true data-cookie="gameSingleCookies">
                             <option value="option1">asdasdfadfasdf_wertyasdfasdfasdf</option>
                             <option value="option2">多选2.2</option>
                             <option value="option3">多选2.3</option>
@@ -108,33 +88,21 @@
                     </div>
 
                     <div class="col-md-3 form-group">
-                        <tag-select
-                        data-selectType="single"
-                        data-id="s1"
-                        data-title="单选1"
-                        data-name="single1"
-                        data-defaultTips="选我"
-                        data-cookie="gameSingleCookies">
+                        <tag-select data-selectType="single" data-id="s1" data-title="单选1" data-name="single1" data-defaultTips="选我" data-cookie="gameSingleCookies">
                             <option value="option1">单选1.1</option>
-                            <option value="option2" selected ="selected">单选1.2</option>
+                            <option value="option2" selected="selected">单选1.2</option>
                             <option value="option3">单选1.3</option>
                         </tag-select>
                     </div>
 
                     <div class="col-md-3 form-group">
-                        <tag-select
-                        data-selectType="single"
-                        data-id="s2"
-                        data-title="单选2"
-                        data-name="single2"
-                        data-defaultTips="选我"
-                        data-cookie="gameSingleCookies">
+                        <tag-select data-selectType="single" data-id="s2" data-title="单选2" data-name="single2" data-defaultTips="选我" data-cookie="gameSingleCookies">
                             <option value="option1">单选2.1</option>
                             <option value="option2">单选2.2</option>
-                            <option value="option3" selected ="selected">单选2.3</option>
+                            <option value="option3" selected="selected">单选2.3</option>
                         </tag-select>
                     </div>
-                    
+
                     <div class="col-md-3 form-group">
                         <tag-switch data-id="newjd" data-title="新版JODO" data-name="newjd" data-cookie="marketDayCookies">
                         </tag-switch>
@@ -175,10 +143,8 @@
                         "stat": Number
                     }
             -->
-            <tag-table
-                data-staticData='{"id": "table","orderColumn": 1,"orderDir": 1,"reqCookie": "gameSingleCookies","ajaxType": "GET","url": "/js/tablePage1.json","exportExcel": true}'
-                data-reqData='{"pageSize": 15,"currentPage": 1,"stat": 1}'>
-            </tag-tabl>
+            <tag-table data-staticData='{"id": "table","orderColumn": 1,"orderDir": 1,"reqCookie": "gameSingleCookies","ajaxType": "GET","url": "/js/tablePage1.json","exportExcel": true}' data-reqData='{"pageSize": 15,"currentPage": 1,"stat": 1}'>
+                </tag-tabl>
         </div>
 
     </div>
