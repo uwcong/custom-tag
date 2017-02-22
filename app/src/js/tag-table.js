@@ -12,7 +12,6 @@ var Table = {
         reqDataObj: {},
         columns: [],
         tableHead: [],
-        isFirstRender: true, // 判断是否首次渲染
         isSearch: false // 判断是否点击查询
     },
 
@@ -37,8 +36,6 @@ var Table = {
             // young.luo
             eval("that.prepareDataFunc = " + this.getAttribute('data-prepareDataFunc')); // 额外对请求的数据做处理
             eval("that.afterGetDataFunc = " + this.getAttribute('data-afterGetDataFunc')); // 收到数据后回调
-
-            that.requestData();
         };
 
         // 向文档插入实例回调
@@ -181,9 +178,8 @@ var Table = {
                 // young.luo 回调
                 if (this.prepareDataFunc) this.prepareDataFunc(__this, param);
 
-                // 初次加载或点击查询，更新表格
-                if (that.localVal.isFirstRender || that.localVal.isSearch) {
-                    that.localVal.isFirstRender = false;
+                // 点击查询，更新表格
+                if (that.localVal.isSearch) {
                     that._getTable(data, _resData, callback);
                     return false;
                 }
