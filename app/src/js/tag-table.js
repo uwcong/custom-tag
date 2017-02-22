@@ -112,20 +112,6 @@ var Table = {
 
     },
 
-    /**
-     * public function 获取form表单的json数据
-     * 
-     */
-    serializeString: function() {
-        var that = this,
-            ___staticDataObj = this.localVal.staticDataObj;
-        window.PubFunc.setCookie(___staticDataObj.reqCookie, $('#js_searchFrom').serialize(), 7);
-        var reReqData = window.PubFunc.getCookie(___staticDataObj.reqCookie);
-        for (var i in that.localVal.reqDataObj) {
-            reReqData[i] = that.localVal.reqDataObj[i];
-        }
-        return JSON.stringify(reReqData);
-    },
 
     /**
      * private function 渲染表格
