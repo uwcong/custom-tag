@@ -20,31 +20,18 @@ var Table = {
      * 
      */
     init: function() {
-        console.log('table init');
         var that = this;
-
-        var proto = Object.create(HTMLElement.prototype);
-        // 创建元素实例回调
-        proto.createdCallback = function() {
-            // console.log("createdCallback");
+        $('tag-table').each(function() {
             that.localVal.tableSelf = this;
-            that.localVal.staticDataObj = JSON.parse(this.getAttribute('data-staticData'));
-            that.localVal.reqDataObj = JSON.parse(this.getAttribute('data-reqData'));
+            that.localVal.staticDataObj = JSON.parse($(this).attr('data-staticData'));
+            that.localVal.reqDataObj = JSON.parse($(this).attr('data-reqData'));
             if (!that.localVal.reqDataObj.pageSize) that.localVal.reqDataObj.pageSize = 200;
             if (!that.localVal.reqDataObj.currentPage) that.localVal.reqDataObj.currentPage = 1;
 
             // young.luo
-            eval("that.prepareDataFunc = " + this.getAttribute('data-prepareDataFunc')); // 额外对请求的数据做处理
-            eval("that.afterGetDataFunc = " + this.getAttribute('data-afterGetDataFunc')); // 收到数据后回调
-        };
-
-        // 向文档插入实例回调
-        proto.attachedCallback = function() {
-            // console.log("attachedCallback");
-        };
-
-        // debugger
-        document.registerElement('tag-table', { prototype: proto });
+            eval("that.prepareDataFunc = " + $(this).attr('data-prepareDataFunc')); // 额外对请求的数据做处理
+            eval("that.afterGetDataFunc = " + $(this).attr('data-afterGetDataFunc')); // 收到数据后回调
+        });
     },
 
 

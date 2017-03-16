@@ -10,7 +10,7 @@ var Confirm = {
      * @author Cc
      */
     init: function() {
-        $('tag-switch').each(function() {
+        $('tag-confirm').each(function() {
             var oStaticData = JSON.parse($(this).attr('data-static'));
             $(this).html('<button type="submit" class="btn btn-primary" id="' + oStaticData.id + '">查询</button>');
 
