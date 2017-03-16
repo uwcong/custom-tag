@@ -56,7 +56,7 @@ var TopSidebar = {
      * 
      */
     init: function() {
-        var $tsb = $('#topSidebar'),
+        var $tsb = $('tag-topSidebar'),
             oStaticData = JSON.parse($tsb.attr('data-static')),
             sbLi1Index = oStaticData.sbLi1Index,
             sbLi2Index = oStaticData.sbLi2Index;

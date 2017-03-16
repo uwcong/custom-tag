@@ -20,7 +20,7 @@
 
     <script>
         (function() {
-            var a = ['header', 'footer', 'section', 'aside', 'article', 'nav', 'hgroup', 'figure', 'figcaption', 'time', 'mark', 'output', 'meter'];
+            var a = ['tag-topSidebar', 'tag-confirm', 'tag-select', 'tag-datePicker', 'tag-table', 'tag-switch'];
             for (var i = 0, m = a.length; i < m; i++) {
                 document.createElement(a[i]);
             }
@@ -46,17 +46,18 @@
 
     <div id="wrapper">
         <!--
-            @name: topSidebar 顶栏和边栏
+            @name: tag-topSidebar 顶栏和边栏
             @attributes:
                 data-static : {
                     "sbLi1Index": String, // 必填，一级位置
                     "sbLi2Index": String  // 非必填，二级位置
                 }
         -->
-        <div id="topSidebar" data-static='{
+        <tag-topSidebar data-static='{
+            "id": "topSidebar",
             "sbLi1Index": "2",
             "sbLi2Index": "1"
-        }'></div>
+        }'></tag-topSidebar>
 
 
         <!-- 主体内容区域 -->
@@ -66,7 +67,7 @@
 
                     <div class="col-md-3 form-group">
                         <!--
-                        @name: datePicker
+                        @name: tag-datePicker
                         @attributes:
                                 data-static : {
                                     "id": String,
@@ -75,12 +76,12 @@
                                     "cookie": String
                                 }
                         -->
-                        <div id="datePicker" data-static='{
+                        <tag-datePicker data-static='{
                             "id": "datePicker1",
                             "title": "日期title",
                             "name": "datePicker1",
                             "cookie": "gameSingleCookies"
-                        }'></div>
+                        }'></tag-datePicker>
                     </div>
 
                     <div class="col-md-3 form-group">
@@ -95,11 +96,18 @@
                                 data-defaultTips
                                 data-isRequired
                         -->
-                        <tag-select data-selectType="multi" data-id="multiSelect1" data-title="多选1" data-name="multiSelect1" data-defaultTips="选我" data-isRequired=true data-cookie="gameSingleCookies">
+                        <!--<tag-select data-static='{
+                            "selectType": "multi",
+                            "id": "multiSelect1",
+
+                        }' data-selectType="multi" data-id="multiSelect1" data-title="多选1" data-name="multiSelect1" data-defaultTips="选我" data-isRequired=true data-cookie="gameSingleCookies">
                             <option value="option1">多选1.1</option>
                             <option value="option2">多选1.2</option>
                             <option value="option3">多选1.3</option>
-                        </tag-select>
+                        </tag-select>-->
+
+                        <tag-select data-selectType="multi" data-id="multiSelect1" data-title="多选1" data-name="multiSelect1" data-defaultTips="选我" data-isRequired=true data-cookie="gameSingleCookies">
+
                     </div>
 
                     <div class="col-md-3 form-group">
@@ -176,10 +184,10 @@
     </div>
 
     <script src="../js/pubFunc.js"></script>
-    <script src="../js/topSidebar.js"></script>
+    <script src="../js/tag-topSidebar.js"></script>
     <script src="../js/tag-confirm.js"></script>
     <script src="../js/tag-select.js"></script>
-    <script src="../js/datePicker.js"></script>
+    <script src="../js/tag-datePicker.js"></script>
     <script src="../js/tag-table.js"></script>
     <script src="../js/tag-switch.js"></script>
 </body>
