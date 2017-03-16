@@ -57,9 +57,11 @@ var TopSidebar = {
      */
     init: function() {
         var $tsb = $('#topSidebar'),
-            sbli1Index = $tsb.attr('data-sbli1Index'),
-            sbli2Index = $tsb.attr('data-sbli2Index'),
-            logoTemp = '<div class="navbar-header">' +
+            oStaticData = JSON.parse($tsb.attr('data-static')),
+            sbLi1Index = oStaticData.sbLi1Index,
+            sbLi2Index = oStaticData.sbLi2Index;
+
+        var logoTemp = '<div class="navbar-header">' +
             '<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>' +
             '<a class="navbar-brand" href="' + this.mainUrl + '">Jodo Data System</a>' +
             '</div>',
@@ -80,7 +82,7 @@ var TopSidebar = {
             li2ActiveCls;
 
         this.sidebarConfig.forEach(function(item, index) {
-            li1ActiveCls = parseInt(sbli1Index) === index ? ' class="active"' : '';
+            li1ActiveCls = parseInt(sbLi1Index) === index ? ' class="active"' : '';
 
             // 无折叠
             if (item.li1Url) {
@@ -90,7 +92,7 @@ var TopSidebar = {
             else {
                 var item2Temp = '';
                 item.li2List.forEach(function(item2, index2) {
-                    if (sbli2Index) li2ActiveCls = parseInt(sbli2Index) === index2 ? ' class="active"' : '';
+                    if (sbLi2Index) li2ActiveCls = parseInt(sbLi2Index) === index2 ? ' class="active"' : '';
 
                     item2Temp += '<li class="li2"><a href="' + item2.li2Url + '"' + li2ActiveCls + '>' + item2.li2 + '</a></li>';
                 });

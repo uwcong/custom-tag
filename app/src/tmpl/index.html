@@ -46,12 +46,17 @@
 
     <div id="wrapper">
         <!--
-            @tagName: tag-topSidebar 顶栏和边栏
+            @name: topSidebar 顶栏和边栏
             @attributes:
-                data-sbLi1Index // 必填，一级位置
-                data-sbLi2Index // 非必填，二级位置
+                data-static : {
+                    "sbLi1Index": String, // 必填，一级位置
+                    "sbLi2Index": String  // 非必填，二级位置
+                }
         -->
-        <div id="topSidebar" data-sbLi1Index="2" data-sbLi2Index="1"></div>
+        <div id="topSidebar" data-static='{
+            "sbLi1Index": "2",
+            "sbLi2Index": "1"
+        }'></div>
 
 
         <!-- 主体内容区域 -->
@@ -61,11 +66,21 @@
 
                     <div class="col-md-3 form-group">
                         <!--
-                        @tagName: tag-datePicker
+                        @name: datePicker
                         @attributes:
-                                data-cookie
+                                data-static : {
+                                    "id": String,
+                                    "title": String,
+                                    "name": String,
+                                    "cookie": String
+                                }
                         -->
-                        <tag-datePicker data-id="datePicker1" data-title="日期title" data-name="datePicker1" data-cookie="gameSingleCookies"></tag-datePicker>
+                        <div id="datePicker" data-static='{
+                            "id": "datePicker1",
+                            "title": "日期title",
+                            "name": "datePicker1",
+                            "cookie": "gameSingleCookies"
+                        }'></div>
                     </div>
 
                     <div class="col-md-3 form-group">
@@ -127,7 +142,10 @@
                                     "reqCookie": String
                                 }
                         -->
-                        <tag-confirm data-staticData='{"id": "submit","reqCookie": "gameSingleCookies"}'>
+                        <tag-confirm data-staticData='{
+                            "id": "submit",
+                            "reqCookie": "gameSingleCookies"
+                        }'>
                         </tag-confirm>
                     </div>
                 </div>
@@ -157,11 +175,11 @@
 
     </div>
 
-    <script src="../js/tag-pubFunc.js"></script>
+    <script src="../js/pubFunc.js"></script>
     <script src="../js/topSidebar.js"></script>
     <script src="../js/tag-confirm.js"></script>
     <script src="../js/tag-select.js"></script>
-    <script src="../js/tag-datePicker.js"></script>
+    <script src="../js/datePicker.js"></script>
     <script src="../js/tag-table.js"></script>
     <script src="../js/tag-switch.js"></script>
 </body>
