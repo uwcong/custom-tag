@@ -5,56 +5,46 @@
  */
 var Confirm = {
 
-  /**
-   * public function 初始化组件
-   * @author Cc
-   */
-  init: function() {
-    var proto = Object.create(HTMLElement.prototype);
-    // 创建元素实例回调
-    proto.createdCallback = function() {
-      // console.log("createdCallback");
-      var staticData = JSON.parse(this.getAttribute('data-staticData'));
-      this.innerHTML = '<button type="submit" class="btn btn-primary" id="' + staticData.id + '">查询</button>';
+    /**
+     * public function 初始化组件
+     * @author Cc
+     */
+    init: function() {
+        $('tag-switch').each(function() {
+            var oStaticData = JSON.parse($(this).attr('data-static'));
+            $(this).html('<button type="submit" class="btn btn-primary" id="' + oStaticData.id + '">查询</button>');
 
-      $('#'+staticData.id).bind('click', function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        
-        // 检测是否有必需项
-        var $errorTips = $('[data-errorTip]');
-        if($errorTips.length > 0) {
-          return alert($errorTips[0].getAttribute('data-errorTip'));
-        }
+            $('#' + oStaticData.id).bind('click', function(e) {
+                e.stopPropagation();
+                e.preventDefault();
 
-        // 设置多选的name到cookies中，方便后续getCookie()时组装请求数据
-        var multiKeyArr = [], multiKeyStr = "";
-        for(var i=0; i<$('select[multiple]').length; i++) {
-          multiKeyArr.push($('select[multiple]')[i].getAttribute('name'));
-        }
-        multiKeyStr = multiKeyArr.join('&');
-        window.PubFunc.setCookie('multiKeys', multiKeyStr, 7);
+                // 检测是否有必需项
+                var $errorTips = $('[data-errorTip]');
+                if ($errorTips.length > 0) {
+                    return alert($errorTips[0].getAttribute('data-errorTip'));
+                }
 
-        var $form = $(this).parents('form');
-        var cookieStr = $form.serialize();
-        cookieStr ? window.PubFunc.setCookie(staticData.reqCookie, cookieStr, 7) : alert('请至少选择一项');
-        console.log(window.PubFunc.getCookie(staticData.reqCookie));
+                // 设置多选的name到cookies中，方便后续getCookie()时组装请求数据
+                var multiKeyArr = [],
+                    multiKeyStr = "";
+                for (var i = 0; i < $('select[multiple]').length; i++) {
+                    multiKeyArr.push($('select[multiple]')[i].getAttribute('name'));
+                }
+                multiKeyStr = multiKeyArr.join('&');
+                window.PubFunc.setCookie('multiKeys', multiKeyStr, 7);
 
-        window.Table.requestData(true);
-        // alert("已点击查询" + cookieStr);
-      });
-      
-    };
+                var $form = $(this).parents('form');
+                var cookieStr = $form.serialize();
+                cookieStr ? window.PubFunc.setCookie(oStaticData.reqCookie, cookieStr, 7) : alert('请至少选择一项');
+                console.log(window.PubFunc.getCookie(oStaticData.reqCookie));
 
-    // 向文档插入实例回调
-    proto.attachedCallback = function() {
-      // console.log("attachedCallback");
-    };
+                window.Table.requestData(true);
+                // alert("已点击查询" + cookieStr);
+            });
+        });
 
-    // debugger
-    document.registerElement('tag-confirm', {prototype: proto});
-  },
-  
+    },
+
 }
 
 Confirm.init();

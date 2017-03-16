@@ -176,8 +176,7 @@
                             "title": "新版JODO",
                             "name": "newjd",
                             "cookie": "marketDayCookies"
-                        }'>
-                        </tag-switch>
+                        }'></tag-switch>
                     </div>
 
                 </div>
@@ -186,16 +185,15 @@
                         <!--
                             @tagName: tag-confirm
                             @attributes:
-                                data-staticData: {
+                                data-static: {
                                     "id": String,
                                     "reqCookie": String
                                 }
                         -->
-                        <tag-confirm data-staticData='{
+                        <tag-confirm data-static='{
                             "id": "submit",
                             "reqCookie": "gameSingleCookies"
-                        }'>
-                        </tag-confirm>
+                        }'></tag-confirm>
                     </div>
                 </div>
             </form>
@@ -210,7 +208,8 @@
                         "orderDir": Number,
                         "reqCookie": String,
                         "ajaxType": String,
-                        "url": String
+                        "url": String,
+                        "exportExcel": Boolean
                     }
                     data-reqData: {
                         "pageSize": String,
@@ -218,8 +217,19 @@
                         "stat": Number
                     }
             -->
-            <tag-table data-staticData='{"id": "table","orderColumn": 1,"orderDir": 1,"reqCookie": "gameSingleCookies","ajaxType": "GET","url": "../js/tablePage1.json","exportExcel": true}' data-reqData='{"pageSize": 15,"currentPage": 1,"stat": 1}'>
-                </tag-tabl>
+            <tag-table data-staticData='{
+                "id": "table",
+                "orderColumn": 1,
+                "orderDir": 1,
+                "reqCookie": "gameSingleCookies",
+                "ajaxType": "GET",
+                "url": "../js/tablePage1.json",
+                "exportExcel": true
+                }' data-reqData='{
+                "pageSize": 15,
+                "currentPage": 1,
+                "stat": 1
+            }'></tag-tabl>
         </div>
 
     </div>
