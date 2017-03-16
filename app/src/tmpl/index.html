@@ -161,7 +161,22 @@
                     </div>
 
                     <div class="col-md-3 form-group">
-                        <tag-switch data-id="newjd" data-title="新版JODO" data-name="newjd" data-cookie="marketDayCookies">
+                        <!--
+                            @tagName: tag-switch
+                            @attributes:
+                                data-static: {
+                                    "id": String,
+                                    "title": String,
+                                    "name": String,
+                                    "cookie": String
+                                }
+                        -->
+                        <tag-switch data-static='{
+                            "id": "newjd",
+                            "title": "新版JODO",
+                            "name": "newjd",
+                            "cookie": "marketDayCookies"
+                        }'>
                         </tag-switch>
                     </div>
 
