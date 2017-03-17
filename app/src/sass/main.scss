@@ -189,10 +189,10 @@ table.dataTable.no-footer {
     display: none;
 }
 
-// dialog
+// 弹层、遮罩、弹窗、加载
 $dialogZIndex: 10000;
 .m_dialog {
-    position: absolute;
+    position: fixed;
     z-index: $dialogZIndex;
     top: 0;
     bottom: 0;
@@ -202,149 +202,78 @@ $dialogZIndex: 10000;
 
 .m_dialog .mask {
     @extend .m_dialog;
-    background: rgba(0, 0, 0, .7);
+    background: rgba(0, 0, 0, .8);
 }
 
 // loading
-.cssload-container {
-    position: fixed;
-    z-index: $dialogZIndex + 10;
+.w_pageLoading {
+    position: absolute;
+    z-index: $dialogZIndex + 1;
+    width: 100px;
+    height: 100px;
     top: 50%;
     left: 50%;
-    width: 117px;
-    height: 88px;
-    margin: -44px -58px;
+    margin: -50px 0 0 -50px;
+    box-sizing: border-box;
+    line-height: 100px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
 }
 
-.cssload-dot {
-    background: #fff;
-    border-radius: 50%;
-    width: 29px;
-    height: 29px;
+.w_pageLoading:before,
+.w_pageLoading:after {
+    opacity: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    content: "\0020";
     position: absolute;
-    bottom: 29px;
-    left: 26px;
-    transform-origin: center bottom;
-    -o-transform-origin: center bottom;
-    -ms-transform-origin: center bottom;
-    -webkit-transform-origin: center bottom;
-    -moz-transform-origin: center bottom;
-    animation: cssload-dot 0.69s ease-in-out infinite;
-    -o-animation: cssload-dot 0.69s ease-in-out infinite;
-    -ms-animation: cssload-dot 0.69s ease-in-out infinite;
-    -webkit-animation: cssload-dot 0.69s ease-in-out infinite;
-    -moz-animation: cssload-dot 0.69s ease-in-out infinite;
-}
-
-.step {
-    position: absolute;
-    width: 29px;
-    height: 29px;
-    border-top: 2px solid #fff;
     top: 0;
-    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 25px #fff, inset 0 0 25px #fff;
+    -webkit-box-shadow: 0 0 25px #fff, inset 0 0 25px #fff;
 }
 
-#cssload-s1 {
-    border-color: #fff;
-    animation: cssload-anim 2.07s linear infinite;
-    -webkit-animation: cssload-anim 2.07s linear infinite;
+.w_pageLoading:after {
+    z-index: 1;
+    animation: cssload 2.3s infinite 1.15s;
+    -webkit-animation: cssload 2.3s infinite 1.15s;
 }
 
-#cssload-s2 {
-    border-color: #fff;
-    animation: cssload-anim 2.07s linear infinite -0.69s;
-    -webkit-animation: cssload-anim 2.07s linear infinite -0.69s;
+.w_pageLoading:before {
+    z-index: 2;
+    animation: cssload 2.3s infinite;
+    -webkit-animation: cssload 2.3s infinite;
 }
 
-#cssload-s3 {
-    border-color: #fff;
-    animation: cssload-anim 2.07s linear infinite -1.38s;
-    -webkit-animation: cssload-anim 2.07s linear infinite -1.38s;
-}
-
-@keyframes cssload-dot {
+@keyframes cssload {
     0% {
-        transform: scale(1, .7);
-    }
-    20% {
-        transform: scale(.7, 1.2);
-    }
-    40% {
-        transform: scale(1, 1);
-    }
-    50% {
-        bottom: 97px;
-    }
-    46% {
-        transform: scale(1, 1);
-    }
-    80% {
-        transform: scale(.7, 1.2);
-    }
-    90% {
-        transform: scale(.7, 1.2);
-    }
-    100% {
-        transform: scale(1, 0.7);
-    }
-}
-
-@-webkit-keyframes cssload-dot {
-    0% {
-        -webkit-transform: scale(1, .7);
-    }
-    20% {
-        -webkit-transform: scale(.7, 1.2);
-    }
-    40% {
-        -webkit-transform: scale(1, 1);
-    }
-    50% {
-        bottom: 97px;
-    }
-    46% {
-        -webkit-transform: scale(1, 1);
-    }
-    80% {
-        -webkit-transform: scale(.7, 1.2);
-    }
-    90% {
-        -webkit-transform: scale(.7, 1.2);
-    }
-    100% {
-        -webkit-transform: scale(1, 0.7);
-    }
-}
-
-@keyframes cssload-anim {
-    0% {
+        transform: scale(0);
         opacity: 0;
-        top: 0;
-        right: 0;
     }
     50% {
         opacity: 1;
     }
     100% {
-        top: 88px;
-        right: 88px;
+        transform: scale(1);
         opacity: 0;
     }
 }
 
-@-webkit-keyframes cssload-anim {
+@-webkit-keyframes cssload {
     0% {
+        -webkit-transform: scale(0);
         opacity: 0;
-        top: 0;
-        right: 0;
     }
     50% {
         opacity: 1;
     }
     100% {
-        top: 88px;
-        right: 88px;
+        -webkit-transform: scale(1);
         opacity: 0;
     }
 }
