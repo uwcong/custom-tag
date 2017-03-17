@@ -27,19 +27,6 @@
         })();
     </script>
     <script src="../resource/js/jquery-3.1.1.min.js"></script>
-    <script src="../resource/js/bootstrap.min.js"></script>
-    <script src="../resource/js/sb-admin-2.min.js"></script>
-    <script src="../resource/js/metisMenu.min.js"></script>
-
-    <script src="../resource/js/jquery.nicescroll.min.js"></script>
-    <script src="../resource/js/select2.min.js"></script>
-    <script src="../resource/js/jquery.dataTables.min.js"></script>
-    <script src="../resource/js/jquery.tablesorter.min.js"></script>
-    <script src="../resource/js/jquery.cookie.js"></script>
-    <script src="../resource/js/moment.min.js"></script>
-    <script src="../resource/js/daterangepicker.js"></script>
-    <script src="../resource/js/bootstrap-switch.min.js"></script>
-    <script src="../resource/js/dataTables.fixedHeader.min.js"></script>
 </head>
 
 <body>
@@ -62,177 +49,198 @@
 
         <!-- 主体内容区域 -->
         <div id="page-wrapper">
-            <form id="js_searchFrom">
-                <div class="row">
+            <br />
+            <div class="panel panel-primary">
+                <div class="panel-heading">单个游戏概况</div>
+                <div class="panel-body">
+                    <div class="col-md-12 column mright">
+                        <form id="js_searchFrom">
+                            <div class="row">
 
-                    <div class="col-md-3 form-group">
-                        <!--
-                        @name: tag-datePicker
+                                <div class="col-md-3 form-group">
+                                    <!--
+                                        @name: tag-datePicker
+                                        @attributes:
+                                            data-static: {
+                                                "id": String,
+                                                "title": String,
+                                                "name": String,
+                                                "cookie": String
+                                            }
+                                    -->
+                                    <tag-datePicker data-static='{
+                                        "id": "datePicker1",
+                                        "title": "日期title",
+                                        "name": "datePicker1",
+                                        "cookie": "gameSingleCookies"
+                                    }'></tag-datePicker>
+                                </div>
+
+                                <div class="col-md-3 form-group">
+                                    <!--
+                                        @tagName: tag-select
+                                        @attributes:
+                                            data-static: {
+                                                "selectType": String,
+                                                "id": String,
+                                                "title": String,
+                                                "name": String,
+                                                "defaultTips": String,
+                                                "isRequired": Boolean,
+                                                "cookie": String
+                                            }
+                                    -->
+                                    <tag-select data-static='{
+                                        "selectType": "multi",
+                                        "id": "multiSelect1",
+                                        "title": "多选1",
+                                        "name": "multiSelect1",
+                                        "defaultTips": "选我",
+                                        "isRequired": true,
+                                        "cookie": "gameSingleCookies"
+                                    }'>
+                                        <option value="option1">多选1.1</option>
+                                        <option value="option2">多选1.2</option>
+                                        <option value="option3">多选1.3</option>
+                                    </tag-select>
+
+                                </div>
+
+                                <div class="col-md-3 form-group">
+                                    <tag-select data-static='{
+                                        "selectType": "multi",
+                                        "id": "multiSelect2",
+                                        "title": "多选2",
+                                        "name": "multiSelect2",
+                                        "defaultTips": "选我",
+                                        "isRequired": true,
+                                        "cookie": "gameSingleCookies"
+                                    }'>
+                                        <option value="option1">asdasdfadfasdf_wertyasdfasdfasdf</option>
+                                        <option value="option2">多选2.2</option>
+                                        <option value="option3">多选2.3</option>
+                                    </tag-select>
+                                </div>
+
+                                <div class="col-md-3 form-group">
+                                    <tag-select data-static='{
+                                        "selectType": "single",
+                                        "id": "s1",
+                                        "title": "单选1",
+                                        "name": "single1",
+                                        "defaultTips": "选我",
+                                        "cookie": "gameSingleCookies"
+                                    }'>
+                                        <option value="option1">单选1.1</option>
+                                        <option value="option2" selected="selected">单选1.2</option>
+                                        <option value="option3">单选1.3</option>
+                                    </tag-select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3 form-group">
+                                    <tag-select data-static='{
+                                        "selectType": "single",
+                                        "id": "s2",
+                                        "title": "单选2",
+                                        "name": "single2",
+                                        "defaultTips": "选我",
+                                        "cookie": "gameSingleCookies"
+                                    }'>
+                                        <option value="option1">单选2.1</option>
+                                        <option value="option2">单选2.2</option>
+                                        <option value="option3" selected="selected">单选2.3</option>
+                                    </tag-select>
+                                </div>
+
+                                <div class="col-md-3 form-group">
+                                    <!--
+                                        @tagName: tag-switch
+                                        @attributes:
+                                            data-static: {
+                                                "id": String,
+                                                "title": String,
+                                                "name": String,
+                                                "cookie": String
+                                            }
+                                    -->
+                                    <tag-switch data-static='{
+                                        "id": "newjd",
+                                        "title": "新版JODO",
+                                        "name": "newjd",
+                                        "cookie": "marketDayCookies"
+                                    }'></tag-switch>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 form-group">
+                                    <!--
+                                        @tagName: tag-confirm
+                                        @attributes:
+                                            data-static: {
+                                                "id": String,
+                                                "reqCookie": String
+                                            }
+                                    -->
+                                    <tag-confirm data-static='{
+                                        "id": "submit",
+                                        "reqCookie": "gameSingleCookies"
+                                    }'></tag-confirm>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!--
+                        @tagName: tag-table
                         @attributes:
-                                data-static: {
-                                    "id": String,
-                                    "title": String,
-                                    "name": String,
-                                    "cookie": String
-                                }
-                        -->
-                        <tag-datePicker data-static='{
-                            "id": "datePicker1",
-                            "title": "日期title",
-                            "name": "datePicker1",
-                            "cookie": "gameSingleCookies"
-                        }'></tag-datePicker>
-                    </div>
-
-                    <div class="col-md-3 form-group">
-                        <!--
-                            @tagName: tag-select
-                            @attributes:
-                                data-static: {
-                                    "selectType": String,
-                                    "id": String,
-                                    "title": String,
-                                    "name": String,
-                                    "defaultTips": String,
-                                    "isRequired": Boolean,
-                                    "cookie": String
-                                }
-                        -->
-                        <tag-select data-static='{
-                            "selectType": "multi",
-                            "id": "multiSelect1",
-                            "title": "多选1",
-                            "name": "multiSelect1",
-                            "defaultTips": "选我",
-                            "isRequired": true,
-                            "cookie": "gameSingleCookies"
-                        }'>
-                            <option value="option1">多选1.1</option>
-                            <option value="option2">多选1.2</option>
-                            <option value="option3">多选1.3</option>
-                        </tag-select>
-
-                    </div>
-
-                    <div class="col-md-3 form-group">
-                        <tag-select data-static='{
-                            "selectType": "multi",
-                            "id": "multiSelect2",
-                            "title": "多选2",
-                            "name": "multiSelect2",
-                            "defaultTips": "选我",
-                            "isRequired": true,
-                            "cookie": "gameSingleCookies"
-                        }'>
-                            <option value="option1">asdasdfadfasdf_wertyasdfasdfasdf</option>
-                            <option value="option2">多选2.2</option>
-                            <option value="option3">多选2.3</option>
-                        </tag-select>
-                    </div>
-
-                    <div class="col-md-3 form-group">
-                        <tag-select data-static='{
-                            "selectType": "single",
-                            "id": "s1",
-                            "title": "单选1",
-                            "name": "single1",
-                            "defaultTips": "选我",
-                            "cookie": "gameSingleCookies"
-                        }'>
-                            <option value="option1">单选1.1</option>
-                            <option value="option2" selected="selected">单选1.2</option>
-                            <option value="option3">单选1.3</option>
-                        </tag-select>
-                    </div>
-
-                    <div class="col-md-3 form-group">
-                        <tag-select data-static='{
-                            "selectType": "single",
-                            "id": "s2",
-                            "title": "单选2",
-                            "name": "single2",
-                            "defaultTips": "选我",
-                            "cookie": "gameSingleCookies"
-                        }'>
-                            <option value="option1">单选2.1</option>
-                            <option value="option2">单选2.2</option>
-                            <option value="option3" selected="selected">单选2.3</option>
-                        </tag-select>
-                    </div>
-
-                    <div class="col-md-3 form-group">
-                        <!--
-                            @tagName: tag-switch
-                            @attributes:
-                                data-static: {
-                                    "id": String,
-                                    "title": String,
-                                    "name": String,
-                                    "cookie": String
-                                }
-                        -->
-                        <tag-switch data-static='{
-                            "id": "newjd",
-                            "title": "新版JODO",
-                            "name": "newjd",
-                            "cookie": "marketDayCookies"
-                        }'></tag-switch>
-                    </div>
-
+                            data-staticData: {
+                                "id": String,
+                                "orderColumn": Number,
+                                "orderDir": Number,
+                                "reqCookie": String,
+                                "ajaxType": String,
+                                "url": String,
+                                "exportExcel": Boolean
+                            }
+                            data-reqData: {
+                                "pageSize": String,
+                                "currentPage": Number,
+                                "stat": Number
+                            }
+                    -->
+                    <tag-table data-staticData='{
+                        "id": "table",
+                        "orderColumn": 1,
+                        "orderDir": 1,
+                        "reqCookie": "gameSingleCookies",
+                        "ajaxType": "GET",
+                        "url": "../js/tablePage1.json",
+                        "exportExcel": true
+                        }' data-reqData='{
+                        "pageSize": 15,
+                        "currentPage": 1,
+                        "stat": 1
+                    }'></tag-table>
                 </div>
-                <div class="row">
-                    <div class="col-md-3 form-group">
-                        <!--
-                            @tagName: tag-confirm
-                            @attributes:
-                                data-static: {
-                                    "id": String,
-                                    "reqCookie": String
-                                }
-                        -->
-                        <tag-confirm data-static='{
-                            "id": "submit",
-                            "reqCookie": "gameSingleCookies"
-                        }'></tag-confirm>
-                    </div>
-                </div>
-            </form>
-
-
-            <!--
-                @tagName: tag-table
-                @attributes:
-                    data-staticData: {
-                        "id": String,
-                        "orderColumn": Number,
-                        "orderDir": Number,
-                        "reqCookie": String,
-                        "ajaxType": String,
-                        "url": String,
-                        "exportExcel": Boolean
-                    }
-                    data-reqData: {
-                        "pageSize": String,
-                        "currentPage": Number,
-                        "stat": Number
-                    }
-            -->
-            <tag-table data-staticData='{
-                "id": "table",
-                "orderColumn": 1,
-                "orderDir": 1,
-                "reqCookie": "gameSingleCookies",
-                "ajaxType": "GET",
-                "url": "../js/tablePage1.json",
-                "exportExcel": true
-                }' data-reqData='{
-                "pageSize": 15,
-                "currentPage": 1,
-                "stat": 1
-            }'></tag-table>
+            </div>
         </div>
-
     </div>
+
+    <script src="../resource/js/bootstrap.min.js"></script>
+    <script src="../resource/js/sb-admin-2.min.js"></script>
+    <script src="../resource/js/metisMenu.min.js"></script>
+    <script src="../resource/js/jquery.nicescroll.min.js"></script>
+    <script src="../resource/js/select2.min.js"></script>
+    <script src="../resource/js/jquery.dataTables.min.js"></script>
+    <script src="../resource/js/jquery.tablesorter.min.js"></script>
+    <script src="../resource/js/jquery.cookie.js"></script>
+    <script src="../resource/js/moment.min.js"></script>
+    <script src="../resource/js/daterangepicker.js"></script>
+    <script src="../resource/js/bootstrap-switch.min.js"></script>
+    <script src="../resource/js/dataTables.fixedHeader.min.js"></script>
 
     <script src="../js/pubFunc.js"></script>
     <script src="../js/tag-topSidebar.js"></script>

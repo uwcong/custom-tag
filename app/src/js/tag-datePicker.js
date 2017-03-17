@@ -23,21 +23,13 @@ var DatePicker = {
             $(this).html('<label for="btime">' + title + '</label><div><input type="text" id="' + id + '" class="form-control" name="' + name + '"><i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute;bottom: 10px;right: 24px;top: auto;cursor: pointer;"></i></div>');
 
             var options = {};
-            options.ranges = {
-                'Today': [moment(), moment()],
-                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            };
+            options.showDropdowns = true;
             options.alwaysShowCalendars = true;
-            options.locale = {
-                format: 'YYYY-MM-DD',
-                "separator": ","
-            }
+            options.format = 'YYYY-MM-DD';
+            options.separator = ', ';
+
             var $input = $('input[name="' + name + '"]');
-            $input.daterangepicker(options, function(start, end, label) {});
+            $input.daterangepicker(options);
 
             var name = $input.attr('name');
             var value = window.PubFunc.getCookie(cookieKey)[name];

@@ -51,10 +51,22 @@
 .sidebar ul li {}
 
 
+/* tag-datePicker */
+
+.daterangepicker .ranges {
+    width: 172px;
+}
+
+.daterangepicker .ranges .input-mini {
+    width: 80px;
+}
+
+
 /* tag-select */
 
 .select2-selection__choice {
-    white-space: normal;
+    max-width: 88%;
+    @extend %text_ellipsis;
 }
 
 .select2-container {
