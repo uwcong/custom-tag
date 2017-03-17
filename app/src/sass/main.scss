@@ -20,6 +20,13 @@
 
 @import "_base";
 
+/* frame */
+
+#page-wrapper {
+    padding-top: 120px;
+}
+
+
 /* tag-topSidebar */
 
 .navbar-brand {
@@ -41,6 +48,11 @@
         background-color: #1d8ae5!important;
         color: #fff!important;
     }
+}
+
+.navbar-top-links .dropdown-user {
+    right: auto;
+    left: 0;
 }
 
 .navbar-fixed-bottom .navbar-collapse,
@@ -282,7 +294,7 @@ $frameWidth: 190px;
 @include setMedia('min-width', 768px) {
     #page-wrapper {
         margin-left: $frameWidth;
-        padding-top: 50px;
+        padding-top: 70px;
         border-left: 0;
     }
     .sidebar {
