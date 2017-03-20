@@ -14,6 +14,7 @@ var DatePicker = {
                 id = oStaticData.id,
                 title = oStaticData.title,
                 name = oStaticData.name,
+                type = oStaticData.type,
                 cookieKey = oStaticData.cookie;
 
             if (!id) id = "time";
@@ -26,7 +27,9 @@ var DatePicker = {
             options.showDropdowns = true;
             options.alwaysShowCalendars = true;
             options.format = 'YYYY-MM-DD';
+            options.startDate = moment().format('YYYY-MM-DD');
             options.separator = ', ';
+            if (type === "singleDate") options.singleDatePicker = true;
 
             var $input = $('input[name="' + name + '"]');
             $input.daterangepicker(options);
