@@ -19,20 +19,20 @@ var PubFunc = {
      * 
      */
     getCookie: function(cookieKey) {
-        var multiKeyArr = window.decodeURIComponent($.cookie('multiKeys')).split('&');
         var cookieStr = window.decodeURIComponent($.cookie(cookieKey));
         var cookiesObj = {};
         if (cookieStr) {
             var arr = cookieStr.split('&');
-            var checkKey;
+            var checkKey,
+                multiKeyArr;
 
             for (var j = 0; j < arr.length; j++) {
-                var key = arr[j].split('=')[0];
-                var value = arr[j].split('=')[1];
-                var _arr = [];
+                var key = arr[j].split('=')[0],
+                    value = arr[j].split('=')[1];
                 var isMulti = false;
+                if (j === 0) multiKeyArr = value.split('|');
 
-                // 判断该key是否为多选
+                // 判断该key是否为多选。若该key是多选，cookiesObj[key]一定要转成数组
                 for (var i = 0; i < multiKeyArr.length; i++) {
                     if (key === multiKeyArr[i]) {
                         isMulti = true;
@@ -40,19 +40,18 @@ var PubFunc = {
                     }
                 }
 
-                // key不重复，value可能是数组或字符
+                // key不重复，cookiesObj[key]可能是数组或字符
                 if (checkKey !== key) {
                     checkKey = key;
                     cookiesObj[key] = value;
-                    // 若该key是多选，对应的value为数组
+                    // 若该key是多选，cookiesObj[key]一定要转成数组
                     if (isMulti) cookiesObj[key] = [value];
                 }
-                // key重复，value肯定为数组
+                // key重复，cookiesObj[key]肯定为数组
                 else {
                     cookiesObj[key].push(value);
                 }
             }
-            // console.log(cookiesObj);
         }
         return cookiesObj;
     },

@@ -25,16 +25,19 @@ var Confirm = {
                 }
 
                 // 设置多选的name到cookies中，方便后续getCookie()时组装请求数据
-                var multiKeyArr = [],
-                    multiKeyStr = "";
+                var multiKeyStr = "";
                 for (var i = 0; i < $('select[multiple]').length; i++) {
-                    multiKeyArr.push($('select[multiple]')[i].getAttribute('name'));
+                    var multiItem = $('select[multiple]')[i].getAttribute('name');
+                    if (i === 0) {
+                        multiKeyStr = "multiKeys=" + multiItem;
+                    } else {
+                        multiKeyStr += "|" + multiItem;
+                    }
                 }
-                multiKeyStr = multiKeyArr.join('&');
-                window.PubFunc.setCookie('multiKeys', multiKeyStr, 7);
 
                 var $form = $(this).parents('form');
-                var cookieStr = $form.serialize();
+                // 要先判断有没有multiKeys，才能知道后续哪些key是multi类型的
+                var cookieStr = multiKeyStr + (multiKeyStr === "" ? "" : "&") + $form.serialize();
                 cookieStr ? window.PubFunc.setCookie(oStaticData.reqCookie, cookieStr, 7) : alert('请至少选择一项');
                 console.log(window.PubFunc.getCookie(oStaticData.reqCookie));
 
