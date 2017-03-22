@@ -38,6 +38,7 @@ var Confirm = {
                 var $form = $(this).parents('form');
                 // 要先判断有没有multiKeys，才能知道后续哪些key是multi类型的
                 var cookieStr = multiKeyStr + (multiKeyStr === "" ? "" : "&") + $form.serialize();
+                console.log(cookieStr);
                 cookieStr ? window.PubFunc.setCookie(oStaticData.reqCookie, cookieStr, 7) : alert('请至少选择一项');
                 console.log(window.PubFunc.getCookie(oStaticData.reqCookie));
 

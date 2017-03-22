@@ -24,13 +24,13 @@ var PubFunc = {
         if (cookieStr) {
             var arr = cookieStr.split('&');
             var checkKey,
-                multiKeyArr;
+                multiKeyArr = [];
 
             for (var j = 0; j < arr.length; j++) {
                 var key = arr[j].split('=')[0],
                     value = arr[j].split('=')[1];
                 var isMulti = false;
-                if (j === 0) multiKeyArr = value.split('|');
+                if (key === 'multiKeys') multiKeyArr = value.split('|');
 
                 // 判断该key是否为多选。若该key是多选，cookiesObj[key]一定要转成数组
                 for (var i = 0; i < multiKeyArr.length; i++) {
@@ -53,6 +53,7 @@ var PubFunc = {
                 }
             }
         }
+        delete cookiesObj['multiKeys'];
         return cookiesObj;
     },
 

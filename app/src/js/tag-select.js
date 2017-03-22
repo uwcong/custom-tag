@@ -72,7 +72,7 @@ var Selector = {
         // 检测是否必需
         if (obj['isRequired']) {
             // 加载时，检测是否必需
-            console.log($select.val());
+            // console.log($select.val());
             if ((obj['selectType'] === 'multi' && $select.val().length === 0) || !$select.val()) $(dom).attr('data-errorTip', '请选择' + obj['title']);
 
             // 操作改变值时，检测是否必需
