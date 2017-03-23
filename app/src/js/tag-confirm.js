@@ -24,24 +24,9 @@ var Confirm = {
                     return alert($errorTips[0].getAttribute('data-errorTip'));
                 }
 
-                // 设置多选的name到cookies中，方便后续getCookie()时组装请求数据
-                var multiKeyStr = "";
-                for (var i = 0; i < $('select[multiple]').length; i++) {
-                    var multiItem = $('select[multiple]')[i].getAttribute('name');
-                    if (i === 0) {
-                        multiKeyStr = "multiKeys=" + multiItem;
-                    } else {
-                        multiKeyStr += "|" + multiItem;
-                    }
-                }
-
                 var $form = $(this).parents('form');
-                // 要先判断有没有multiKeys，才能知道后续哪些key是multi类型的
-                var cookieStr = multiKeyStr + (multiKeyStr === "" ? "" : "&") + $form.serialize();
-                console.log(cookieStr);
-                cookieStr ? window.PubFunc.setCookie(oStaticData.reqCookie, cookieStr, 7) : alert('请至少选择一项');
-                console.log(window.PubFunc.getCookie(oStaticData.reqCookie));
-
+                $form.serialize() ? window.PubFunc.setCookie(oStaticData.reqCookie, $form.serialize(), 1) : alert('请至少选择一项');
+                console.log('%cjson format:', 'background: green;color: #fff', window.PubFunc.getCookie(oStaticData.reqCookie));
                 window.Table.requestData(true);
                 // alert("已点击查询" + cookieStr);
             });

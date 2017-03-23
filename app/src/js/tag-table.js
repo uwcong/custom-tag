@@ -234,7 +234,7 @@ var Table = {
                 return;
             }
             // 防止选中后没有点击查询，直接点击导出，所以这里重新组装请求参数
-            window.PubFunc.setCookie(___staticDataObj.reqCookie, $('#js_searchFrom').serialize(), 7);
+            window.PubFunc.setCookie(___staticDataObj.reqCookie, $('#js_searchFrom').serialize(), 1);
             var reReqData = window.PubFunc.getCookie(___staticDataObj.reqCookie);
             for (var i in that.localVal.reqDataObj) {
                 reReqData[i] = that.localVal.reqDataObj[i];
