@@ -9,7 +9,7 @@ var PubFunc = {
      * public function form提交字符串转JSON对象
      * 
      */
-    formSubmitStr2Json: function(_str) {
+    formSubmitStr2json: function(_str) {
         /**
          * form提交的字符串拼接处理
          * 要先判断有没有multiKeys，才能知道后续哪些key是multi类型的，所以放置于前面
@@ -81,7 +81,7 @@ var PubFunc = {
         var cookieJsonStr = "";
         switch (typeof cookieVal) {
             case 'string':
-                cookieJsonStr = JSON.stringify(this.formSubmitStr2Json(cookieVal));
+                cookieJsonStr = JSON.stringify(this.formSubmitStr2json(cookieVal));
                 break;
             case 'object':
                 cookieJsonStr = JSON.stringify(cookieVal);
@@ -115,6 +115,8 @@ var PubFunc = {
         } else if (key in updatedCookieJson) {
             delete updatedCookieJson[key];
         }
+
+        if (!updatedCookieJson['isUpdate']) updatedCookieJson['isUpdate'] = true;
         this.setCookie(cookieKey, updatedCookieJson, 1);
     },
 
@@ -128,6 +130,34 @@ var PubFunc = {
     },
     hideLoading: function() {
         $('#js_loading').remove();
-    }
+    },
 
+    /**
+     * public function 时间戳转换格式
+     * 
+     */
+    date: function(s, fmt) {
+        if (typeof s == "string") {
+            s = Number(s);
+        }
+        fmt = fmt || "yyyy-MM-dd hh:mm:ss";
+        var date = new Date(s);
+        if (typeof s == "object") {
+            date = s;
+        }
+        var o = {
+            "M+": date.getMonth() + 1, //月份
+            "d+": date.getDate(), //日
+            "h+": date.getHours(), //小时
+            "m+": date.getMinutes(), //分
+            "s+": date.getSeconds(), //秒
+            "q+": Math.floor((date.getMonth() + 3) / 3), //季度
+            "S": date.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        }
+        return fmt;
+    },
 }

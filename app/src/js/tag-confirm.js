@@ -32,6 +32,15 @@ var Confirm = {
             });
         });
 
+        window.onload = function() {
+            var oStaticData = JSON.parse($('tag-confirm').attr('data-static')),
+                cookieJson = window.PubFunc.getCookie(oStaticData.reqCookie);
+            if (cookieJson['isUpdate']) {
+                delete cookieJson['isUpdate'];
+                window.PubFunc.setCookie(oStaticData.reqCookie, cookieJson, 1)
+                window.Table.requestData(true);
+            }
+        }
     },
 
 }

@@ -101,7 +101,7 @@
                                     }'>
                                         <option value="option1">多选1.1</option>
                                         <option value="option2">多选1.2</option>
-                                        <option value="option3">多选1.3</option>
+                                        <option value="option3" selected="selected">多选1.3</option>
                                     </tag-select>
 
                                 </div>
@@ -118,7 +118,7 @@
                                     }'>
                                         <option value="option1">asdasdfadfasdf_wertyasdfasdfasdf</option>
                                         <option value="option2">多选2.2</option>
-                                        <option value="option3">多选2.3</option>
+                                        <option value="option3" selected="selected">多选2.3</option>
                                     </tag-select>
                                 </div>
 
@@ -193,6 +193,8 @@
                         </form>
                     </div>
 
+                    <a href="javascript:;" id="all2single">1、点击测试动态更新查询条件</a>
+
                     <!--
                         @tagName: tag-table
                         @attributes:
@@ -248,6 +250,13 @@
     <script src="../js/tag-select.js"></script>
     <script src="../js/tag-datePicker.js"></script>
     <script src="../js/tag-table.js"></script>
+
+    <script>
+        $('#all2single').click(function() {
+            window.PubFunc.updateCookie('gameSingleCookies', 'datePicker1', window.PubFunc.date((new Date()).getTime()));
+            window.location.reload();
+        })
+    </script>
 </body>
 
 </html>
