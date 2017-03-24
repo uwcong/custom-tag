@@ -89,6 +89,7 @@ var PubFunc = {
             default:
                 break;
         }
+        cookieJsonStr = decodeURIComponent(cookieJsonStr);
         $.cookie(cookieKey, cookieJsonStr, { expires: day });
         console.log('%cjson string format:', 'background: green;color: #fff', cookieJsonStr);
     },
