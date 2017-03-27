@@ -197,6 +197,10 @@ table.dataTable.no-footer {
     text-align: center;
 }
 
+.m_dataTable tbody td span {
+    color: #337ab7;
+}
+
 .fixedHeader-floating::-webkit-scrollbar {
     display: none;
 }
