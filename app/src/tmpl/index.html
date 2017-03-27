@@ -199,8 +199,8 @@
                         @attributes:
                             data-staticData: {
                                 "id": String,
-                                "orderColumn": Number,
-                                "orderDir": Number,
+                                "orderColumn": Number, // 可选，指定默认排序列，配合orderDir设置
+                                "orderDir": Number, // 可选，指定默认排序规则，配合orderColumn设置
                                 "reqCookie": String,
                                 "ajaxType": String,
                                 "url": String,
@@ -214,8 +214,6 @@
                     -->
                     <tag-table data-staticData='{
                         "id": "table",
-                        "orderColumn": 1,
-                        "orderDir": 1,
                         "reqCookie": "gameSingleCookies",
                         "ajaxType": "GET",
                         "url": "../js/tablePage1.json",
