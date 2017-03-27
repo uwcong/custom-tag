@@ -292,13 +292,13 @@ var Table = {
         _callback(returnData);
 
         // 动态插入数据排序
-        $('#' + ____staticDataObj.id).tablesorter((function() {
-            return ____staticDataObj.orderColumn || ____staticDataObj.orderColumn === 0 ? {
-                sortList: [
-                    [____staticDataObj.orderColumn, ____staticDataObj.orderDir]
-                ]
-            } : {}
-        })());
+        var sorterObj = {};
+        if (____staticDataObj.orderColumn || ____staticDataObj.orderColumn === 0) {
+            sorterObj['sortList'] = [
+                [____staticDataObj.orderColumn, ____staticDataObj.orderDir]
+            ]
+        }
+        $('#' + ____staticDataObj.id).tablesorter(sorterObj);
 
         this._setTableDynamicStyle();
     },

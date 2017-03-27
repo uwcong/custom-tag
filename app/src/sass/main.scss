@@ -140,18 +140,18 @@ table.dataTable thead {
     background: #eee;
 }
 
-table.dataTable thead .header {
+table.dataTable thead .tablesorter-header {
     background-image: url(../resource/images/sort_both.png);
     background-repeat: no-repeat;
     background-position: center left;
     cursor: pointer;
 }
 
-table.dataTable thead .headerSortUp {
+table.dataTable thead .tablesorter-headerDesc {
     background-image: url(../resource/images/sort_desc.png);
 }
 
-table.dataTable thead .headerSortDown {
+table.dataTable thead .tablesorter-headerAsc {
     background-image: url(../resource/images/sort_asc.png);
 }
 
