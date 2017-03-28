@@ -3,7 +3,6 @@
  * @author Cc
  * @date 2016/12/15
  */
-gbClick = false;
 var Table = {
     // 局部变量
     localVal: {
@@ -12,7 +11,9 @@ var Table = {
         reqDataObj: {},
         columns: [],
         tableHead: [],
-        isSearch: false // 判断是否点击查询
+        isSearch: false, // 判断是否点击查询
+        gbClick: false,
+        fixHeaderScrollLeft: 0
     },
 
     /**
@@ -205,9 +206,14 @@ var Table = {
         //   $(item).width($(tdItem).width());
         // });
         $('table.dataTable').scroll(function() {
-            var tableScrollLeft = $(this).scrollLeft();
-            $('table.fixedHeader-floating').scrollLeft(tableScrollLeft);
+            that.localVal.fixHeaderScrollLeft = $(this).scrollLeft();
+            $('table.fixedHeader-floating').scrollLeft(that.localVal.fixHeaderScrollLeft);
         });
+        $(window).bind('scroll', function() {
+            if ($('table.fixedHeader-floating').length) {
+                $('table.fixedHeader-floating').scrollLeft(that.localVal.fixHeaderScrollLeft);
+            }
+        })
 
         // 显示隐藏列
         $('.hideColumn').bind('click', function(e) {
@@ -229,7 +235,7 @@ var Table = {
 
         // 导出Excel
         $('#exportExcel').bind('click', function() {
-            if (gbClick) {
+            if (that.localVal.gbClick) {
                 alert("上一个下载任务还在进行中!");
                 return;
             }
@@ -243,7 +249,7 @@ var Table = {
 
             // young.luo
             if (that.prepareDataFunc) that.prepareDataFunc(___this, reReqData);
-            gbClick = true;
+            that.localVal.gbClick = true;
             $.ajax({
                 type: ___staticDataObj.ajaxType,
                 url: ___staticDataObj.url,
@@ -252,7 +258,7 @@ var Table = {
                 dataType: "json",
                 contentType: "application/json",
                 success: function(res) {
-                    gbClick = false;
+                    that.localVal.gbClick = false;
                     if (res.code === 200) {
                         alert("文件生成成功: " + res.data.filename);
                         //window.location.href='download_file.do?file='+ res.data.filename + "&type=2";
